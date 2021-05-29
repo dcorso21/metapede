@@ -1,0 +1,37 @@
+<h1>Show Topic</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, MetapedeWeb.TopicLive.FormComponent,
+    id: @topic.id,
+    title: @page_title,
+    action: @live_action,
+    topic: @topic,
+    return_to: Routes.topic_show_path(@socket, :show, @topic) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @topic.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @topic.description %>
+  </li>
+
+  <li>
+    <strong>Info:</strong>
+    <%= @topic.info %>
+  </li>
+
+  <li>
+    <strong>Post:</strong>
+    <%= @topic.post_id %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.topic_show_path(@socket, :edit, @topic), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.topic_index_path(@socket, :index) %></span>
