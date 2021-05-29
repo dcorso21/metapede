@@ -19,5 +19,7 @@ defmodule Metapede.Relations.TopicRelations do
       [:relation_id, :topic_id],
       name: :relation_topic_index
     )
+    |> Ecto.Changeset.foreign_key_constraint(:topic_id)
+    |> Ecto.Changeset.foreign_key_constraint(:relation_id)
   end
 end

@@ -11,12 +11,14 @@ defmodule Metapede.Collection.Topic do
     many_to_many :sub_topics,
                  Topic,
                  join_through: TopicRelations,
-                 join_keys: [topic_id: :id, relation_id: :id]
+                 join_keys: [topic_id: :id, relation_id: :id],
+                 on_delete: :delete_all
 
     many_to_many :parent_topics,
                  Topic,
                  join_through: TopicRelations,
-                 join_keys: [relation_id: :id, topic_id: :id]
+                 join_keys: [relation_id: :id, topic_id: :id],
+                 on_delete: :delete_all
 
     timestamps()
   end
@@ -25,6 +27,8 @@ defmodule Metapede.Collection.Topic do
     struct
     |> Ecto.Changeset.cast(params, [:name, :description])
     |> Ecto.Changeset.validate_required([:name, :description])
+    |> Ecto.Changeset.foreign_key_constraint(:sub_topics)
+    |> Ecto.Changeset.foreign_key_constraint(:parent_topics)
   end
 end
 

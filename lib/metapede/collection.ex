@@ -88,6 +88,8 @@ defmodule Metapede.Collection do
 
   """
   def delete_topic(%Topic{} = topic) do
+    IO.puts("See Deleted Topic Here")
+    IO.inspect(topic)
     Repo.delete(topic)
   end
 

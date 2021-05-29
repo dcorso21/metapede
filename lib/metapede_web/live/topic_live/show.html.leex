@@ -21,16 +21,6 @@
     <%= @topic.description %>
   </li>
 
-  <li>
-    <strong>Info:</strong>
-    <%= @topic.info %>
-  </li>
-
-  <li>
-    <strong>Post:</strong>
-    <%= @topic.post_id %>
-  </li>
-
 </ul>
 
 <span><%= live_patch "Edit", to: Routes.topic_show_path(@socket, :edit, @topic), class: "button" %></span>
