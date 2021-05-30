@@ -1,39 +1,32 @@
 defmodule MetapedeWeb.PageLive do
   use MetapedeWeb, :live_view
 
-  @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{})}
+    socket =
+      socket
+      |> assign(text: "Metapede")
+      |> assign(hhh: nil)
+
+    {:ok, socket}
   end
 
-  @impl true
-  def handle_event("suggest", %{"q" => query}, socket) do
-    {:noreply, assign(socket, results: search(query), query: query)}
+  def render(assigns) do
+    ~L"""
+    <h1> <%= @text %> </h1>
+      <p phx-click="say_hi">Hello</p>
+      <div
+        id="my-test"
+        phx-hook="Testing">
+      </div>
+      <%= if @hhh do %>
+        <p> <%= @hhh %> </p>
+      <% end %>
+    """
   end
 
-  @impl true
-  def handle_event("search", %{"q" => query}, socket) do
-    case search(query) do
-      %{^query => vsn} ->
-        {:noreply, redirect(socket, external: "https://hexdocs.pm/#{query}/#{vsn}")}
-
-      _ ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "No dependencies found matching \"#{query}\"")
-         |> assign(results: %{}, query: query)}
-    end
-  end
-
-  defp search(query) do
-    if not MetapedeWeb.Endpoint.config(:code_reloader) do
-      raise "action disabled when not in development"
-    end
-
-    for {app, desc, vsn} <- Application.started_applications(),
-        app = to_string(app),
-        String.starts_with?(app, query) and not List.starts_with?(desc, ~c"ERTS"),
-        into: %{},
-        do: {app, vsn}
+  def handle_event("say_hi", _, socket) do
+    IO.puts("Hi There")
+    socket = assign(socket, hhh: "Hellooooo")
+    {:noreply, socket}
   end
 end

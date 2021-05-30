@@ -5,7 +5,6 @@ defmodule Metapede.Collection do
 
   import Ecto.Query, warn: false
   alias Metapede.Repo
-
   alias Metapede.Collection.Topic
 
   @doc """
@@ -88,8 +87,8 @@ defmodule Metapede.Collection do
 
   """
   def delete_topic(%Topic{} = topic) do
-    IO.puts("See Deleted Topic Here")
-    IO.inspect(topic)
+    # IO.puts("See Deleted Topic Here")
+    # IO.inspect(topic)
     Repo.delete(topic)
   end
 

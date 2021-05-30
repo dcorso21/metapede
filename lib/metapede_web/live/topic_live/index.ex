@@ -14,6 +14,13 @@ defmodule MetapedeWeb.TopicLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
+  @impl true
+  def handle_event("delete", %{"id" => id}, socket) do
+    topic = Collection.get_topic!(id)
+    {:ok, _} = Collection.delete_topic(topic)
+    {:noreply, assign(socket, :topics, list_topics())}
+  end
+
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Topic")
@@ -30,14 +37,6 @@ defmodule MetapedeWeb.TopicLive.Index do
     socket
     |> assign(:page_title, "Listing Topics")
     |> assign(:topic, nil)
-  end
-
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    topic = Collection.get_topic!(id)
-    {:ok, _} = Collection.delete_topic(topic)
-
-    {:noreply, assign(socket, :topics, list_topics())}
   end
 
   defp list_topics do
