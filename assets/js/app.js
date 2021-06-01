@@ -16,22 +16,15 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import topbar from "topbar";
 import { LiveSocket } from "phoenix_live_view";
-import TestHook from "./hooks/test_hook";
+import Testing from "./hooks/test_hook";
 
-let hooks = { TestHook };
+let hooks = { Testing };
 
 let csrfToken = document
     .querySelector("meta[name='csrf-token']")
     .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
-    hooks: {
-        Testing:{
-            mounted () {
-                console.log(this);
-                this.el.innerHTML = "asdgalskdjgl"
-            }
-        }
-    },
+    hooks,
     params: { _csrf_token: csrfToken },
 });
 

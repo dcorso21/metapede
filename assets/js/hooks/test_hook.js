@@ -1,5 +1,11 @@
+import * as d3 from "d3"
+
+
+
 export default {
     mounted() {
-        this.el.innerHTML = "My Man!"
+        d3.select(this.el)
+            .append("div")
+            .text("helllllyy")
     }
 }

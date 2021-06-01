@@ -1,6 +1,5 @@
 defmodule MetapedeWeb.TopicLive.Index do
   use MetapedeWeb, :live_view
-
   alias Metapede.Collection
   alias Metapede.Collection.Topic
 
