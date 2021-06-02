@@ -17,6 +17,8 @@ defmodule MetapedeWeb.Router do
   scope "/", MetapedeWeb do
     pipe_through :browser
 
+    live "/tester", TesterLive.Index, :index
+
     live "/topics", TopicLive.Index, :index
     live "/topics/new", TopicLive.Index, :new
     live "/topics/:id/edit", TopicLive.Index, :edit

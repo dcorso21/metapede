@@ -14,13 +14,7 @@ defmodule MetapedeWeb.PageLive do
     ~L"""
     <h1> <%= @text %> </h1>
       <p phx-click="say_hi">Hello</p>
-      <div
-        id="my-test"
-        phx-hook="Testing">
-      </div>
-      <%= if @hhh do %>
-        <p> <%= @hhh %> </p>
-      <% end %>
+      <form phx-submit=""></form>
     """
   end
 

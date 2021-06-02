@@ -18,7 +18,7 @@ defmodule Metapede.Collection do
   """
   def list_topics do
     Topic
-    |> Repo.all
+    |> Repo.all()
     |> Repo.preload([:sub_topics])
   end
 
@@ -103,5 +103,11 @@ defmodule Metapede.Collection do
   """
   def change_topic(%Topic{} = topic, attrs \\ %{}) do
     Topic.changeset(topic, attrs)
+  end
+
+  def search_topics(query) do
+    # wild = "s" <> query <> "s"
+    # IO.puts(query)
+    Repo.all(from t in Topic, where: ilike(t.name, ^"%#{query}%"))
   end
 end
