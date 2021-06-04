@@ -11,16 +11,16 @@ defmodule MetapedeWeb.TesterLive.Index do
 
   def render(assigns) do
     ~L"""
-        <h1><%= @title %></h1>
-        <%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit"], fn f -> %>
-            <%= search_input f, :query %>
-            <%= submit "Search" %>
-        <% end %>
-        <%= for topic <- @topics do %>
-        <div>
-            <span><%= topic.name %></span>
-        </div>
-        <% end %>
+    <h1><%= @title %></h1>
+    <%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit"], fn f -> %>
+    <%= search_input f, :query %>
+    <%= submit "Search" %>
+    <% end %>
+    <%= for topic <- @topics do %>
+    <div>
+    <span><%= topic.name %></span>
+    </div>
+    <% end %>
     """
   end
 
@@ -29,6 +29,16 @@ defmodule MetapedeWeb.TesterLive.Index do
   end
 
   def handle_event("change", %{"my_form" => %{"query" => query}}, socket) do
+    url ="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&formatversion=2&search=brazil&namespace=0&limit=10"
+    case HTTPoison.get(url) do
+      {:ok, response} ->
+        res = Poison.decode(response)
+        IO.puts res
+      {:error, message} ->
+        IO.puts message
+    end
+
+
     {:noreply, socket |> assign(topics: Collection.search_topics(query))}
   end
 
