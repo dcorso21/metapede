@@ -18,14 +18,8 @@ defmodule MetapedeWeb.TesterLive.Index do
   end
 
   def handle_event("change", %{"my_form" => %{"query" => query}}, socket) do
-    new_query = String.replace(query, " ", "\%20")
 
-    url =
-      "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&formatversion=2&search=#{
-        new_query
-      }&namespace=0&limit=10"
-
-    case HTTPoison.get(url) do
+    case Metapede.WikiFuncs.search_light(query) do
       {:ok, response} ->
         res = Poison.decode!(response.body)
         names = Enum.at(res, 1)
