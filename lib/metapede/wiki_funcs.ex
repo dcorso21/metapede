@@ -42,7 +42,8 @@ defmodule Metapede.WikiFuncs do
   end
 
   defp convert_query_string(query) do
-    String.replace(query, " ", "\%20")
+    # String.replace(query, " ", "\%20")
+    URI.encode(query)
   end
 
   defp make_wiki_request(headers, options) do
