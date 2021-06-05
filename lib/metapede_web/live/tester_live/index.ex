@@ -19,14 +19,9 @@ defmodule MetapedeWeb.TesterLive.Index do
 
   def handle_event("change", %{"my_form" => %{"query" => query}}, socket) do
 
-    case Metapede.WikiFuncs.search_light(query) do
+    case Metapede.WikiFuncs.search_moderate(query) do
       {:ok, response} ->
-        res = Poison.decode!(response.body)
-        names = Enum.at(res, 1)
-        urls = Enum.at(res, 3)
-        my_list = transform_wiki_response(names, urls)
-
-        IO.puts(inspect(my_list))
+        my_list = Metapede.WikiFuncs.transform_search_moderate(response)
 
         {:noreply,
          socket
@@ -44,17 +39,4 @@ defmodule MetapedeWeb.TesterLive.Index do
     {:noreply, socket}
   end
 
-  defp transform_wiki_response(names, urls) do
-    length = length(names)
-
-    transformed =
-      for ind <- 0..length do
-        %{
-          name: Enum.at(names, ind),
-          url: Enum.at(urls, ind)
-        }
-      end
-
-    transformed
-  end
 end

@@ -28,7 +28,9 @@ defmodule Metapede.WikiFuncs do
     ]
 
     e_url =
-      "?action=query&format=json&generator=prefixsearch&prop=pageprops%7Cpageimages%7Cdescription&redirects=&ppprop=displaytitle&piprop=thumbnail&pithumbsize=160&pilimit=6&gpssearch=#{convert_query_string(query)}&gpsnamespace=0&gpslimit=6"
+      "?action=query&format=json&generator=prefixsearch&prop=pageprops%7Cpageimages%7Cdescription&redirects=&ppprop=displaytitle&piprop=thumbnail&pithumbsize=160&pilimit=6&gpssearch=#{
+        convert_query_string(query)
+      }&gpsnamespace=0&gpslimit=6"
 
     HTTPoison.get(@base_url <> e_url, headers)
   end
@@ -47,4 +49,20 @@ defmodule Metapede.WikiFuncs do
     HTTPoison.get(@base_url, headers, options)
   end
 
+  defp transform_search_light(response) do
+    res = Poison.decode!(response.body)
+    names = Enum.at(res, 1)
+    urls = Enum.at(res, 3)
+    length = length(names)
+
+    transformed =
+      for ind <- 0..length do
+        %{
+          name: Enum.at(names, ind),
+          url: Enum.at(urls, ind)
+        }
+      end
+
+    transformed
+  end
 end

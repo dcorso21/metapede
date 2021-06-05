@@ -9,7 +9,8 @@
 <%= if length(@wiki_info) > 0 do %>
 	<%= for w_topic <- @wiki_info do %>
 		<div>
-		<a href="<%= w_topic.url %>" target="_blank"><%= w_topic.name %></a>
+		<div><%= w_topic["title"] %></div>
+		<div><%= w_topic["description"] %></div>
 		</div>
 	<% end %>
 <% end %>
