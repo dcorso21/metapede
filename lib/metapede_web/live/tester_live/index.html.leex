@@ -1,0 +1,22 @@
+
+<h1><%= @title %></h1>
+<%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit"], fn f -> %>
+<%= search_input f, :query %>
+<%= submit "Search" %>
+<% end %>
+
+<h1>Wiki Info</h1>
+<%= if length(@wiki_info) > 0 do %>
+	<%= for w_topic <- @wiki_info do %>
+		<div>
+		<a href="<%= w_topic.url %>" target="_blank"><%= w_topic.name %></a>
+		</div>
+	<% end %>
+<% end %>
+
+<h1>Internal</h1>
+<%= for topic <- @topics do %>
+<div>
+<span><%= topic.name %></span>
+</div>
+<% end %>

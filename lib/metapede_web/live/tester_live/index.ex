@@ -6,44 +6,61 @@ defmodule MetapedeWeb.TesterLive.Index do
     {:ok,
      socket
      |> assign(title: "My Searcher")
+     |> assign(wiki_info: [])
      |> assign(topics: Metapede.Collection.list_topics())}
   end
 
-  def render(assigns) do
-    ~L"""
-    <h1><%= @title %></h1>
-    <%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit"], fn f -> %>
-    <%= search_input f, :query %>
-    <%= submit "Search" %>
-    <% end %>
-    <%= for topic <- @topics do %>
-    <div>
-    <span><%= topic.name %></span>
-    </div>
-    <% end %>
-    """
-  end
-
   def handle_event("change", %{"my_form" => %{"query" => ""}}, socket) do
-    {:noreply, socket |> assign(topics: Collection.list_topics())}
+    {:noreply,
+     socket
+     |> assign(topics: Collection.list_topics())
+     |> assign(wiki_info: [])}
   end
 
   def handle_event("change", %{"my_form" => %{"query" => query}}, socket) do
-    url ="https://en.wikipedia.org/w/api.php?action=opensearch&format=json&formatversion=2&search=brazil&namespace=0&limit=10"
+    new_query = String.replace(query, " ", "\%20")
+
+    url =
+      "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&formatversion=2&search=#{
+        new_query
+      }&namespace=0&limit=10"
+
     case HTTPoison.get(url) do
       {:ok, response} ->
-        res = Poison.decode(response)
-        IO.puts res
+        res = Poison.decode!(response.body)
+        names = Enum.at(res, 1)
+        urls = Enum.at(res, 3)
+        my_list = transform_wiki_response(names, urls)
+
+        IO.puts(inspect(my_list))
+
+        {:noreply,
+         socket
+         |> assign(topics: Collection.search_topics(query))
+         |> assign(wiki_info: my_list)}
+
       {:error, message} ->
-        IO.puts message
+        IO.puts(message)
+        {:noreply, socket |> assign(topics: Collection.search_topics(query))}
     end
-
-
-    {:noreply, socket |> assign(topics: Collection.search_topics(query))}
   end
 
   def handle_event("submit", params, socket) do
     IO.puts(inspect(params))
     {:noreply, socket}
+  end
+
+  defp transform_wiki_response(names, urls) do
+    length = length(names)
+
+    transformed =
+      for ind <- 0..length do
+        %{
+          name: Enum.at(names, ind),
+          url: Enum.at(urls, ind)
+        }
+      end
+
+    transformed
   end
 end
