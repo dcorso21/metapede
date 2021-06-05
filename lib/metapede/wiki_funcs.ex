@@ -36,8 +36,13 @@ defmodule Metapede.WikiFuncs do
   end
 
   def transform_search_moderate(res) do
+    #  Get pages from result
     pages = Poison.decode!(res.body)["query"]["pages"]
-    trans = for {_page_num, info} <- Map.to_list(pages), do: info
+    #  convert to an array, (empty if no results)
+    page_list = if pages == nil, do: [], else: Map.to_list(pages)
+    #  The array will have tuples, but we only need the second value
+    trans = for {_page_num, info} <- page_list, do: info
+    #  Sort by index and return
     Enum.sort(trans, &(&1["index"] < &2["index"]))
   end
 
