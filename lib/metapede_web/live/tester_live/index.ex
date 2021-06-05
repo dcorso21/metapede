@@ -11,6 +11,28 @@ defmodule MetapedeWeb.TesterLive.Index do
      |> assign(topics: Metapede.Collection.list_topics())}
   end
 
+  def render(assigns) do
+    ~L"""
+    <h1><%= @title %></h1>
+    <div id="form_wrapper">
+    <%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit", autocomplete: "off"], fn f -> %>
+    <div id="form_elements">
+    <%= search_input f, :query %>
+    <%= submit "Search" %>
+    </div>
+    <% end %>
+    <%= live_component @socket, MetapedeWeb.TesterLive.SearchResultsComponent, wiki_info: @wiki_info, wiki_base_path: @wiki_base_path %>
+    </div>
+
+    <h1>Internal</h1>
+    <%= for topic <- @topics do %>
+    <div>
+    <span><%= topic.name %></span>
+    </div>
+    <% end %>
+    """
+  end
+
   def handle_event("change", %{"my_form" => %{"query" => ""}}, socket) do
     {:noreply,
      socket
@@ -19,7 +41,6 @@ defmodule MetapedeWeb.TesterLive.Index do
   end
 
   def handle_event("change", %{"my_form" => %{"query" => query}}, socket) do
-
     case Metapede.WikiFuncs.search_moderate(query) do
       {:ok, response} ->
         my_list = Metapede.WikiFuncs.transform_search_moderate(response)
@@ -39,5 +60,4 @@ defmodule MetapedeWeb.TesterLive.Index do
     IO.puts(inspect(params))
     {:noreply, socket}
   end
-
 end

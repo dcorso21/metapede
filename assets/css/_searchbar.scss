@@ -1,0 +1,16 @@
+#form_wrapper {
+	position: relative;
+	// display: flex;
+	// flex-direction: row;
+
+	#form_elements {
+		display: flex;
+	}
+
+	#search_results {
+		background-color: white;
+		position: absolute;
+		top: 40px;
+		width: 100%;
+	}
+}

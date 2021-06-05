@@ -1,35 +1,36 @@
 .wiki_topic {
     display: flex;
     flex-direction: row;
-	height: 50px;
-	box-shadow: 2px 2px 4px rgba(70, 70, 70, 0.295);
-	transition: all .05s ease-out;
-	background-color: white;
-	
-	&:hover {
-		background-color: rgb(245, 254, 255);
-		transform: translate(2px, -2px);
-		box-shadow: 4px 4px 6px rgba(51, 121, 168, 0.151);
-	}
+    height: 60px;
+    box-shadow: 2px 2px 4px rgba(70, 70, 70, 0.295);
+    transition: all 0.05s ease-out;
+    background-color: white;
+    padding: 5px 5px;
 
-	.thumb {
-		height: 50px;
-		width: 50px;
-		object-fit: contain;
-	}
+    &:hover {
+        background-color: rgb(245, 254, 255);
+        transform: translate(1px, -1px);
+        // box-shadow: 4px 4px 6px rgba(51, 121, 168, 0.151);
+    }
+
+    .thumb {
+        height: 50px;
+        width: 50px;
+        object-fit: contain;
+    }
 
     .info {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: center;
-		margin: 0 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 0 20px;
 
         .title {
             font-size: 1em;
         }
         .desc {
-            font-size: .8em;
+            font-size: 0.8em;
             color: rgb(119, 119, 119);
         }
     }
