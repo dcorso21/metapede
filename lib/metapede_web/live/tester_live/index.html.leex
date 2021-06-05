@@ -5,16 +5,11 @@
 	<%= submit "Search" %>
 <% end %>
 
+
 <h1>Wiki Info</h1>
 <%= if length(@wiki_info) > 0 do %>
 	<%= for w_topic <- @wiki_info do %>
-		<div>
-			<%= if Map.get(w_topic, "thumbnail") != nil do %>
-				<img src="<%= w_topic["thumbnail"]["source"] %>" alt="#">
-			<% end %>
-			<div><%= w_topic["title"] %></div>
-			<div><%= w_topic["description"] %></div>
-		</div>
+		<%= live_component @socket, MetapedeWeb.TesterLive.WikiTopicCompmonent, topic: w_topic %>
 	<% end %>
 <% end %>
 

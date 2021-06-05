@@ -7,6 +7,7 @@ defmodule MetapedeWeb.TesterLive.Index do
      socket
      |> assign(title: "My Searcher")
      |> assign(wiki_info: [])
+     |> assign(wiki_base_path: "https://en.wikipedia.org/wiki/")
      |> assign(topics: Metapede.Collection.list_topics())}
   end
 
