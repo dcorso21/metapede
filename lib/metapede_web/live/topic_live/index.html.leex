@@ -9,28 +9,8 @@
     return_to: Routes.topic_index_path(@socket, :index) %>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="topics">
     <%= for topic <- @topics do %>
-      <tr id="topic-<%= topic.id %>">
-        <td><%= topic.name %></td>
-        <td><%= topic.description %></td>
-        <td>
-          <span><%= live_redirect "Show", to: Routes.topic_show_path(@socket, :show, topic) %></span>
-          <span><%= live_patch "Edit", to: Routes.topic_index_path(@socket, :edit, topic) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: topic.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
+      <%= live_component @socket, MetapedeWeb.TopicLive.TopicComponent, topic: topic %>
     <% end %>
-  </tbody>
-</table>
 
 <span><%= live_patch "New Topic", to: Routes.topic_index_path(@socket, :new) %></span>

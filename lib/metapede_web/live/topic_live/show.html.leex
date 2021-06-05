@@ -1,4 +1,3 @@
-<h1>Show Topic</h1>
 
 <%= if @live_action in [:edit] do %>
   <%= live_modal @socket, MetapedeWeb.TopicLive.FormComponent,
@@ -9,19 +8,11 @@
     return_to: Routes.topic_show_path(@socket, :show, @topic) %>
 <% end %>
 
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @topic.name %>
-  </li>
-
-  <li>
+<h1><%= @topic.name %></h1>
+<div>
     <strong>Description:</strong>
     <%= @topic.description %>
-  </li>
-
-</ul>
+</div>
 
 <span><%= live_patch "Edit", to: Routes.topic_show_path(@socket, :edit, @topic), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.topic_index_path(@socket, :index) %></span>

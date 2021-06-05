@@ -7,7 +7,7 @@
     background-color: white;
     padding: 5px 5px;
 
-    &:hover {
+    &:hover, &:focus {
         background-color: rgb(245, 254, 255);
         transform: translate(1px, -1px);
         // box-shadow: 4px 4px 6px rgba(51, 121, 168, 0.151);

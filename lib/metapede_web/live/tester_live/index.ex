@@ -16,10 +16,10 @@ defmodule MetapedeWeb.TesterLive.Index do
     <h1><%= @title %></h1>
     <div id="form_wrapper">
     <%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit", autocomplete: "off"], fn f -> %>
-    <div id="form_elements">
-    <%= search_input f, :query %>
-    <%= submit "Search" %>
-    </div>
+      <div id="form_elements">
+        <%= search_input f, :query %>
+        <%= submit "Search" %>
+      </div>
     <% end %>
     <%= live_component @socket, MetapedeWeb.TesterLive.SearchResultsComponent, wiki_info: @wiki_info, wiki_base_path: @wiki_base_path %>
     </div>

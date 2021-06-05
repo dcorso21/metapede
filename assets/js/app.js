@@ -12,13 +12,15 @@ import "../css/app.scss";
 //     import {Socket} from "phoenix"
 //     import socket from "./socket"
 //
+
 import "phoenix_html";
 import { Socket } from "phoenix";
 import topbar from "topbar";
 import { LiveSocket } from "phoenix_live_view";
 import Testing from "./hooks/test_hook";
+import SearchHook from './hooks/search_bar'
 
-let hooks = { Testing };
+let hooks = { Testing, SearchHook };
 
 let csrfToken = document
     .querySelector("meta[name='csrf-token']")
