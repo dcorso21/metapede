@@ -27,7 +27,7 @@ defmodule MetapedeWeb.TesterLive.Index do
     <h1>Internal</h1>
     <%= for topic <- @topics do %>
     <div>
-    <span><%= topic.name %></span>
+      <span><%= topic.name %></span>
     </div>
     <% end %>
     """
