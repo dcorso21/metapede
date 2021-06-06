@@ -1,7 +1,6 @@
-defmodule MetapedeWeb.TesterLive.WikiTopicCompmonent do
-  #   use MetapedeWeb, :live_view
+defmodule MetapedeWeb.LiveComponents.WikiTopicCompmonent do
   use MetapedeWeb, :live_component
-  #   alias Metapede.Collection
+  # needs @socket, topic, wiki_base_path
 
   def render(assigns) do
     ~L"""
