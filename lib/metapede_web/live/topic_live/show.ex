@@ -2,10 +2,6 @@ defmodule MetapedeWeb.TopicLive.Show do
   use MetapedeWeb, :live_view
   alias Metapede.Collection
 
-  @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
-  end
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
@@ -17,4 +13,5 @@ defmodule MetapedeWeb.TopicLive.Show do
 
   defp page_title(:show), do: "Show Topic"
   defp page_title(:edit), do: "Edit Topic"
+  defp page_title(:search), do: "Search"
 end

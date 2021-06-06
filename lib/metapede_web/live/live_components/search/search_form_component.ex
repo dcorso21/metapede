@@ -1,7 +1,13 @@
 defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   use MetapedeWeb, :live_component
   alias Metapede.Collection
-  # needs @socket, wiki_info, wiki_base_path
+
+
+  def update(_assigns, socket) do
+    {:ok,
+     socket
+     |> assign(:wiki_info, [])}
+  end
 
   def render(assigns) do
     ~L"""

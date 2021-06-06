@@ -9,9 +9,9 @@
     return_to: Routes.topic_topics_path(@socket, :topics) %>
 <% end %>
 
-<%= if length(@topics) > 0 do %>
+<%= if length(@show_topics) > 0 do %>
 <div class="topics_container">
-  <%= for topic <- @topics do %>
+  <%= for topic <- @show_topics do %>
     <%= live_component @socket, MetapedeWeb.LiveComponents.Topic.TopicComponent, topic: topic %>
   <% end %>
 </div>

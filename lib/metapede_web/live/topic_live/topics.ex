@@ -5,7 +5,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :topics, list_topics())}
+    {:ok, assign(socket, :show_topics, list_topics())}
   end
 
   @impl true
@@ -17,7 +17,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
   def handle_event("delete", %{"id" => id}, socket) do
     topic = Collection.get_topic!(id)
     {:ok, _} = Collection.delete_topic(topic)
-    {:noreply, assign(socket, :topics, list_topics())}
+    {:noreply, assign(socket, :show_topics, list_topics())}
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do

@@ -14,7 +14,7 @@ defmodule MetapedeWeb.TesterLive.Test do
   def render(assigns) do
     ~L"""
     <h1><%= @title %></h1>
-    <%= live_component @socket, MetapedeWeb.LiveComponents.SearchFormComponent, wiki_info: @wiki_info, id: :search_form %>
+    <%= live_component @socket, MetapedeWeb.LiveComponents.SearchFormComponent, id: :search_form %>
     <h1>Internal</h1>
     <%= for topic <- @topics do %>
       <div>

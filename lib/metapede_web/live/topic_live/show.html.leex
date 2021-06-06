@@ -8,6 +8,15 @@
     return_to: Routes.topic_show_path(@socket, :show, @topic) %>
 <% end %>
 
+<%= if @live_action in [:search] do %>
+  <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
+    id: :search_form,
+    return_to: Routes.topic_show_path(@socket, :show, @topic) %>
+<% end %>
+
+
+
+
 <h1><%= @topic.name %></h1>
 <div>
     <strong>Description:</strong>
@@ -18,6 +27,7 @@
 <span><%= live_patch "Edit", to: Routes.topic_show_path(@socket, :edit, @topic), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.topic_topics_path(@socket, :topics) %></span>
 
+<div><%= live_patch "Add Subtopic", to: Routes.topic_show_path(@socket, :search, @topic) %></div>
 
 <div>
   <%= inspect(@topic.sub_topics) %>
