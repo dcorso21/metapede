@@ -11,7 +11,7 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
         <%= submit "Search" %>
       </div>
     <% end %>
-      <%= live_component @socket, MetapedeWeb.LiveComponents.SearchResultsComponent, wiki_info: @wiki_info, wiki_base_path: @wiki_base_path %>
+      <%= live_component @socket, MetapedeWeb.LiveComponents.SearchResultsComponent, wiki_info: @wiki_info%>
     </div>
     """
   end

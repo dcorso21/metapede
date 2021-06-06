@@ -1,4 +1,4 @@
-defmodule MetapedeWeb.TopicLive.Index do
+defmodule MetapedeWeb.TopicLive.Topics do
   use MetapedeWeb, :live_view
   alias Metapede.Collection
   alias Metapede.Collection.Topic
@@ -32,7 +32,7 @@ defmodule MetapedeWeb.TopicLive.Index do
     |> assign(:topic, %Topic{})
   end
 
-  defp apply_action(socket, :index, _params) do
+  defp apply_action(socket, :topics, _params) do
     socket
     |> assign(:page_title, "Listing Topics")
     |> assign(:topic, nil)

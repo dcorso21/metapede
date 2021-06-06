@@ -17,11 +17,11 @@ defmodule MetapedeWeb.Router do
   scope "/", MetapedeWeb do
     pipe_through :browser
 
-    live "/tester", TesterLive.Index, :index
+    live "/tester", TesterLive.Test, :test
 
-    live "/topics", TopicLive.Index, :index
-    live "/topics/new", TopicLive.Index, :new
-    live "/topics/:id/edit", TopicLive.Index, :edit
+    live "/topics", TopicLive.Topics, :topics
+    live "/topics/new", TopicLive.Topics, :new
+    live "/topics/:id/edit", TopicLive.Topics, :edit
 
     live "/topics/:id", TopicLive.Show, :show
     live "/topics/:id/show/edit", TopicLive.Show, :edit

@@ -6,15 +6,15 @@
     title: @page_title,
     action: @live_action,
     topic: @topic,
-    return_to: Routes.topic_index_path(@socket, :index) %>
+    return_to: Routes.topic_topics_path(@socket, :topics) %>
 <% end %>
 
 <%= if length(@topics) > 0 do %>
 <div class="topics_container">
   <%= for topic <- @topics do %>
-    <%= live_component @socket, MetapedeWeb.TopicLive.TopicComponent, topic: topic %>
+    <%= live_component @socket, MetapedeWeb.LiveComponents.Topic.TopicComponent, topic: topic %>
   <% end %>
 </div>
 <% end %>
 
-<span><%= live_patch "New Topic", to: Routes.topic_index_path(@socket, :new) %></span>
+<span><%= live_patch "New Topic", to: Routes.topic_topics_path(@socket, :new) %></span>

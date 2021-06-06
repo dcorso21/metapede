@@ -1,4 +1,4 @@
-defmodule MetapedeWeb.TesterLive.Index do
+defmodule MetapedeWeb.TesterLive.Test do
   use MetapedeWeb, :live_view
   alias Metapede.Collection
 
@@ -7,14 +7,14 @@ defmodule MetapedeWeb.TesterLive.Index do
      socket
      |> assign(title: "My Searcher")
      |> assign(wiki_info: [])
-     |> assign(wiki_base_path: "https://en.wikipedia.org/wiki/")
+    #  |> assign(wiki_base_path: "https://en.wikipedia.org/wiki/")
      |> assign(topics: Metapede.Collection.list_topics())}
   end
 
   def render(assigns) do
     ~L"""
     <h1><%= @title %></h1>
-    <%= live_component @socket, MetapedeWeb.LiveComponents.SearchFormComponent, wiki_info: @wiki_info, wiki_base_path: @wiki_base_path %>
+    <%= live_component @socket, MetapedeWeb.LiveComponents.SearchFormComponent, wiki_info: @wiki_info %>
     <h1>Internal</h1>
     <%= for topic <- @topics do %>
     <div>

@@ -1,4 +1,4 @@
-defmodule MetapedeWeb.TopicLive.TopicComponent do
+defmodule MetapedeWeb.LiveComponents.Topic.TopicComponent do
   use MetapedeWeb, :live_component
 
   def render(assigns) do
