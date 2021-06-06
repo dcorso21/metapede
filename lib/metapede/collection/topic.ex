@@ -31,20 +31,3 @@ defmodule Metapede.Collection.Topic do
     |> Ecto.Changeset.foreign_key_constraint(:parent_topics)
   end
 end
-
-"""
-alias Metapede.Collection.Topic
-alias Metapede.Repo
-alias Metapede.Relations.TopicRelations
-
-davey = %Topic{
-  name: "davey",
-  description: "this description"
-}
-
-andreia = %Topic{
-  name: "new",
-  description: "ayooo",
-  sub_topics: [d]
-}
-"""

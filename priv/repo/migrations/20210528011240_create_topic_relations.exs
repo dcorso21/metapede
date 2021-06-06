@@ -3,8 +3,8 @@ defmodule Metapede.Repo.Migrations.CreateTopicRelations do
 
   def change do
     create table(:topic_relations) do
-      add :topic_id, references(:topics)
-      add :relation_id, references(:topics)
+      add :topic_id, references(:topics, on_delete: :delete_all)
+      add :relation_id, references(:topics, on_delete: :delete_all)
       timestamps()
     end
 

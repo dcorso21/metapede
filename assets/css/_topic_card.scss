@@ -1,0 +1,19 @@
+
+.topics_container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+
+.topic_card {
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.281);
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 300px;
+	padding: 20px;
+	background-color: white;
+	margin: 5px;
+}

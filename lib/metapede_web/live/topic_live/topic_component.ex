@@ -3,8 +3,8 @@ defmodule MetapedeWeb.TopicLive.TopicComponent do
 
   def render(assigns) do
     ~L"""
-    <div id="@topic-<%= @topic.id %>">
-        <div><%= @topic.name %></div>
+    <div id="@topic-<%= @topic.id %>" class="topic_card">
+        <h3><%= @topic.name %></h3>
         <div><%= @topic.description %></div>
         <div>
             <span><%= live_redirect "Show", to: Routes.topic_show_path(@socket, :show, @topic) %></span>
