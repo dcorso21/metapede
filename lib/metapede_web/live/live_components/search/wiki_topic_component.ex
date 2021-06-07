@@ -2,13 +2,14 @@ defmodule MetapedeWeb.LiveComponents.WikiTopicCompmonent do
   use MetapedeWeb, :live_component
 
   def render(assigns) do
-    wiki_base_path = "https://en.wikipedia.org/wiki/"
+    # wiki_base_path = "https://en.wikipedia.org/wiki/"
 
     ~L"""
-    <a
-    id="<%= @topic["pageid"] %>"
-    href="<%= wiki_base_path <> String.replace(@topic["title"], " ", "_") %>"
-    target="_blank">
+    <div
+      phx-click="send_topic"
+      phx-value-data = "<%= Poison.encode!(@topic) %>"
+      id="<%= @topic["pageid"] %>"
+    >
       <div class="wiki_topic">
           <%= if Map.get(@topic, "thumbnail") != nil do %>
               <img class="thumb" src="<%= @topic["thumbnail"]["source"] %>" alt="<%= @topic["title"] %>">
@@ -21,7 +22,7 @@ defmodule MetapedeWeb.LiveComponents.WikiTopicCompmonent do
               <div class="desc"><%= @topic["description"] %></div>
           </div>
       </div>
-    </a>
+    </div>
     """
   end
 end

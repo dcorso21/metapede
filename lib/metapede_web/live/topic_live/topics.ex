@@ -20,6 +20,12 @@ defmodule MetapedeWeb.TopicLive.Topics do
     {:noreply, assign(socket, :show_topics, list_topics())}
   end
 
+  def handle_event("send_topic", %{"data" => selected_topic}, socket) do
+    data = Poison.decode!(selected_topic)
+    IO.puts inspect(data)
+    {:noreply, socket}
+  end
+
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Topic")
