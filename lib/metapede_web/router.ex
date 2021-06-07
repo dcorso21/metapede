@@ -21,6 +21,7 @@ defmodule MetapedeWeb.Router do
 
     live "/topics", TopicLive.Topics, :topics
     live "/topics/new", TopicLive.Topics, :new
+    live "/topics/search", TopicLive.Topics, :search
     live "/topics/:id/edit", TopicLive.Topics, :edit
 
     live "/topics/:id", TopicLive.Show, :show

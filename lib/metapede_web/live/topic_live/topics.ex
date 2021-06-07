@@ -38,6 +38,12 @@ defmodule MetapedeWeb.TopicLive.Topics do
     |> assign(:topic, nil)
   end
 
+  defp apply_action(socket, :search, _params) do
+    socket
+    |> assign(:page_title, "Searching Wikipedia")
+    |> assign(:topic, nil)
+  end
+
   defp list_topics do
     Collection.list_topics()
   end

@@ -9,6 +9,12 @@
     return_to: Routes.topic_topics_path(@socket, :topics) %>
 <% end %>
 
+<%= if @live_action in [:search] do %>
+  <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
+    id: :search_form,
+    return_to: Routes.topic_topics_path(@socket, :topics) %>
+<% end %>
+
 <%= if length(@show_topics) > 0 do %>
 <div class="topics_container">
   <%= for topic <- @show_topics do %>
@@ -17,4 +23,5 @@
 </div>
 <% end %>
 
-<span><%= live_patch "New Topic", to: Routes.topic_topics_path(@socket, :new) %></span>
+<div><%= live_patch "New Topic", to: Routes.topic_topics_path(@socket, :new) %></div>
+<div><%= live_patch "Search for new topic", to: Routes.topic_topics_path(@socket, :search) %></div>
