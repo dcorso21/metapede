@@ -112,4 +112,8 @@ defmodule Metapede.Collection do
   def search_topics(query) do
     Repo.all(from t in Topic, where: ilike(t.title, ^"%#{query}%"))
   end
+
+  def check_for_page_id(page_id) do
+    Repo.all(from t in Topic, where: t.page_id == ^page_id, select: t.id)
+  end
 end
