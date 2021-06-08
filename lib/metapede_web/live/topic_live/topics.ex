@@ -26,19 +26,19 @@ defmodule MetapedeWeb.TopicLive.Topics do
       Poison.decode!(selected_topic)
       |> WikiTransforms.transform_wiki_data()
 
-    IO.puts inspect(data)
+    IO.puts(inspect(data))
 
-    {:noreply, socket}
-    # case Collection.create_topic(data) do
-    #   {:ok, _topic} ->
-    #     {:noreply,
-    #      socket
-    #      |> put_flash(:info, "Topic created successfully")
-    #      |> push_redirect(to: socket.assigns.return_to)}
+    # {:noreply, socket}
+    case Collection.create_topic(data) do
+      {:ok, _topic} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Topic created successfully")
+         |> push_redirect(to: socket.assigns.return_to)}
 
-    #   {:error, %Ecto.Changeset{} = changeset} ->
-    #     {:noreply, assign(socket, changeset: changeset)}
-    # end
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do

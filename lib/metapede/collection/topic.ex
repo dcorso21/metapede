@@ -5,8 +5,10 @@ defmodule Metapede.Collection.Topic do
   alias Metapede.Relations.TopicRelations
 
   schema "topics" do
-    field :name, :string
+    field :title, :string
     field :description, :string
+    field :thumbnail, :string
+    field :page_id, :integer
 
     many_to_many :sub_topics,
                  Topic,
@@ -25,8 +27,8 @@ defmodule Metapede.Collection.Topic do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> Ecto.Changeset.cast(params, [:name, :description])
-    |> Ecto.Changeset.validate_required([:name, :description])
+    |> Ecto.Changeset.cast(params, [:title, :description])
+    |> Ecto.Changeset.validate_required([:title, :description])
     |> Ecto.Changeset.foreign_key_constraint(:sub_topics)
     |> Ecto.Changeset.foreign_key_constraint(:parent_topics)
   end
