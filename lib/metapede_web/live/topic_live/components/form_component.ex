@@ -1,6 +1,5 @@
 defmodule MetapedeWeb.TopicLive.FormComponent do
   use MetapedeWeb, :live_component
-
   alias Metapede.Collection
 
   @impl true

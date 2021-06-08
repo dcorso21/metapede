@@ -2,6 +2,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
   use MetapedeWeb, :live_view
   alias Metapede.Collection
   alias Metapede.Collection.Topic
+  alias MetapedeWeb.Controllers.Transforms.WikiTransforms
 
   @impl true
   def mount(_params, _session, socket) do
@@ -21,9 +22,23 @@ defmodule MetapedeWeb.TopicLive.Topics do
   end
 
   def handle_event("send_topic", %{"data" => selected_topic}, socket) do
-    data = Poison.decode!(selected_topic)
+    data =
+      Poison.decode!(selected_topic)
+      |> WikiTransforms.transform_wiki_data()
+
     IO.puts inspect(data)
+
     {:noreply, socket}
+    # case Collection.create_topic(data) do
+    #   {:ok, _topic} ->
+    #     {:noreply,
+    #      socket
+    #      |> put_flash(:info, "Topic created successfully")
+    #      |> push_redirect(to: socket.assigns.return_to)}
+
+    #   {:error, %Ecto.Changeset{} = changeset} ->
+    #     {:noreply, assign(socket, changeset: changeset)}
+    # end
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
