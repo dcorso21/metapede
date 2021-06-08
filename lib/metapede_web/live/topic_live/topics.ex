@@ -34,7 +34,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
         {:noreply,
          socket
          |> put_flash(:info, "Topic created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_redirect(to: Routes.topic_topics_path(socket, :topics))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

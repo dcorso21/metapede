@@ -5,7 +5,7 @@ defmodule Metapede.Repo.Migrations.CreateTopic do
     create table(:topics) do
       add :title, :string
       add :description, :string
-      add :page_id, :string
+      add :page_id, :integer
       add :thumbnail, :string
       timestamps()
     end
