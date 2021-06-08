@@ -110,8 +110,6 @@ defmodule Metapede.Collection do
   end
 
   def search_topics(query) do
-    # wild = "s" <> query <> "s"
-    # IO.puts(query)
-    Repo.all(from t in Topic, where: ilike(t.name, ^"%#{query}%"))
+    Repo.all(from t in Topic, where: ilike(t.title, ^"%#{query}%"))
   end
 end
