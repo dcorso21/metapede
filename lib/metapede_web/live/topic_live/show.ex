@@ -1,7 +1,7 @@
 defmodule MetapedeWeb.TopicLive.Show do
   use MetapedeWeb, :live_view
   alias Metapede.Collection
-  alias Metapede.Collection.{Topic}
+  # alias Metapede.Collection.{Topic}
   alias MetapedeWeb.Controllers.Transforms.WikiTransforms
 
   @impl true
@@ -18,32 +18,52 @@ defmodule MetapedeWeb.TopicLive.Show do
       Poison.decode!(selected_topic)
       |> WikiTransforms.transform_wiki_data()
 
-    # selected =
-    #   socket.assigns.topic
-    #   |> Map.replace(:sub_topics, [new_sub_topic | socket.assigns.topic.sub_topics])
-
-    # IO.puts(inspect(selected))
-
-    # check db
     existing_ids = Collection.check_for_page_id(new_sub_topic["page_id"])
 
     case existing_ids do
-      [_id] ->
-        IO.puts("Existing")
-
-      # make connection in relation table
       [] ->
         IO.puts("New")
-        # create topic, then make connection
-    end
+        add_sub_topic(new_sub_topic, socket, :new)
 
-    {:noreply, socket}
-    # case Collection.update_topic(%Topic{}, selected) do
-    #   {:ok, _topic} ->
-    #     {:noreply, socket}
-    #   {:error, %Ecto.Changeset{} = changeset} ->
-    #     {:noreply, assign(socket, changeset: changeset)}
-    # end
+      [_id] ->
+        IO.puts("Existing")
+        add_sub_topic(new_sub_topic, socket)
+    end
+  end
+
+  defp add_sub_topic(sub_topic, socket, :new) do
+    case Collection.create_topic(sub_topic) do
+      {:ok, topic} ->
+        IO.puts("New Topic Created:")
+        IO.puts(inspect(topic))
+        add_sub_topic(topic, socket)
+
+      {:error, message} ->
+        IO.puts(message)
+        {:noreply, socket}
+    end
+  end
+
+  defp add_sub_topic(sub_topic, socket) do
+    updated =
+      socket.assigns.topic
+      |> Map.update(
+        :sub_topics,
+        [],
+        fn current_sub_topics -> [sub_topic | current_sub_topics] end
+      )
+
+    case Collection.update_sub_topics(updated) do
+      {:ok, topic} ->
+        {:ok, assign(socket, :topic, topic)}
+
+      {:error, message} ->
+        IO.puts(message)
+        {:noreply, socket}
+
+      what ->
+        IO.puts(inspect(what))
+    end
   end
 
   defp page_title(:show), do: "Show Topic"

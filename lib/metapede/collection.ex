@@ -116,4 +116,7 @@ defmodule Metapede.Collection do
   def check_for_page_id(page_id) do
     Repo.all(from t in Topic, where: t.page_id == ^page_id, select: t.id)
   end
+
+  def update_sub_topics(topic), do: Repo.update(Topic, topic)
+
 end
