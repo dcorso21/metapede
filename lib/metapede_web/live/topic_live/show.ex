@@ -23,11 +23,27 @@ defmodule MetapedeWeb.TopicLive.Show do
     case existing_ids do
       [] ->
         IO.puts("New")
-        add_sub_topic(new_sub_topic, socket, :new)
+        # add_sub_topic(new_sub_topic, socket, :new)
+        test_add(new_sub_topic, socket)
 
       [_id] ->
         IO.puts("Existing")
         add_sub_topic(new_sub_topic, socket)
+    end
+  end
+
+  defp test_add(topic, socket) do
+    result =
+      topic
+      |> Map.put("parent_topics", [socket.assigns.topic])
+      |> Collection.create_topic()
+
+    case result do
+      {:ok, _topic} ->
+        {:noreply, socket}
+      {:error, message} ->
+        IO.puts(inspect(message))
+        {:noreply, socket}
     end
   end
 
@@ -52,18 +68,26 @@ defmodule MetapedeWeb.TopicLive.Show do
         [],
         fn current_sub_topics -> [sub_topic | current_sub_topics] end
       )
+      |> Map.take([:title, :description, :thumbnail, :page_id, :sub_topics, :id])
 
-    case Collection.update_sub_topics(updated) do
-      {:ok, topic} ->
-        {:ok, assign(socket, :topic, topic)}
+    IO.puts("Updated:")
+    IO.puts(inspect(updated))
 
-      {:error, message} ->
-        IO.puts(message)
-        {:noreply, socket}
+    # case Collection.update_sub_topics(updated) do
+    #   {:ok, topic} ->
+    #     {:ok, assign(socket, :topic, topic)}
 
-      what ->
-        IO.puts(inspect(what))
-    end
+    #   {:error, message} ->
+    #     IO.puts(message)
+    #     {:noreply, socket}
+
+    #   what ->
+    #     IO.puts(inspect(what))
+    #     {:noreply, socket}
+    # end
+    # {:noreply, socket}
+    IO.puts(inspect(Collection.update_sub_topics(updated)))
+    {:noreply, socket}
   end
 
   defp page_title(:show), do: "Show Topic"

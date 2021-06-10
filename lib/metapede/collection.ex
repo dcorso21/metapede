@@ -19,7 +19,7 @@ defmodule Metapede.Collection do
   def list_topics do
     Topic
     |> Repo.all()
-    |> Repo.preload([:sub_topics])
+    |> Repo.preload([:sub_topics, :parent_topics])
   end
 
   @doc """
@@ -39,7 +39,7 @@ defmodule Metapede.Collection do
   def get_topic!(id) do
     Topic
     |> Repo.get!(id)
-    |> Repo.preload([:sub_topics])
+    |> Repo.preload([:sub_topics, :parent_topics])
   end
 
   @doc """
