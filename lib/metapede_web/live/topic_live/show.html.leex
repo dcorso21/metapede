@@ -30,11 +30,11 @@
 
 <div><%= live_patch "Add Subtopic", to: Routes.topic_show_path(@socket, :search, @topic) %></div>
 
-<h1>Sub Topics</h1>
+<h2>Sub Topics</h2>
 <div>
   <%= inspect(@topic.sub_topics) %>
 </div>
-<h1>Parent Topics</h1>
+<h2>Parent Topics</h2>
 <div>
   <%= inspect(@topic.parent_topics) %>
 </div>

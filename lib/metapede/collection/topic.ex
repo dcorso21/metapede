@@ -39,8 +39,8 @@ defmodule Metapede.Collection.Topic do
   def changeset(struct, params \\ %{}) do
     struct
     |> Ecto.Changeset.cast(params, @accepted_fields)
-    |> Ecto.Changeset.cast_assoc(:parent_topics)
-    |> Ecto.Changeset.cast_assoc(:sub_topics)
+    # |> Ecto.Changeset.put_assoc(:parent_topics, params["parent_topics"])
+    # |> Ecto.Changeset.put_assoc(:sub_topics, params["sub_topics"])
     |> Ecto.Changeset.validate_required([:title, :description])
     |> Ecto.Changeset.foreign_key_constraint(:sub_topics)
     |> Ecto.Changeset.foreign_key_constraint(:parent_topics)
