@@ -1,6 +1,8 @@
 defmodule MetapedeWeb.TopicLive.Show do
   use MetapedeWeb, :live_view
   alias Metapede.Collection
+  alias Metapede.Repo
+  alias Metapede.Collection.Topic
   # alias Metapede.Collection.{Topic}
   alias MetapedeWeb.Controllers.Transforms.WikiTransforms
 
@@ -23,72 +25,31 @@ defmodule MetapedeWeb.TopicLive.Show do
     case existing_ids do
       [] ->
         IO.puts("New")
-        # add_sub_topic(new_sub_topic, socket, :new)
         test_add(new_sub_topic, socket)
 
       [_id] ->
         IO.puts("Existing")
-        add_sub_topic(new_sub_topic, socket)
+        test_add(new_sub_topic, socket)
     end
   end
 
-  defp test_add(topic, socket) do
-    result =
-      topic
-      |> Map.put("parent_topics", [socket.assigns.topic])
-      |> Collection.create_topic()
+  defp test_add(new_topic, socket) do
+    IO.puts("New Topic")
+    IO.puts(inspect(new_topic))
 
-    case result do
-      {:ok, _topic} ->
-        {:noreply, socket}
-      {:error, message} ->
-        IO.puts(inspect(message))
-        {:noreply, socket}
-    end
-  end
+    new_sub_topic =  Topic.changeset(%Topic{}, new_topic)
+    parent_topic =socket.assigns.topic
 
-  defp add_sub_topic(sub_topic, socket, :new) do
-    case Collection.create_topic(sub_topic) do
-      {:ok, topic} ->
-        IO.puts("New Topic Created:")
-        IO.puts(inspect(topic))
-        add_sub_topic(topic, socket)
+    parent_topic
+      |> Ecto.Changeset.change()
+      |> Ecto.Changeset.put_assoc(:sub_topics, [new_sub_topic | parent_topic.sub_topics])
+      |> Repo.update!()
 
-      {:error, message} ->
-        IO.puts(message)
-        {:noreply, socket}
-    end
-  end
-
-  defp add_sub_topic(sub_topic, socket) do
-    updated =
-      socket.assigns.topic
-      |> Map.update(
-        :sub_topics,
-        [],
-        fn current_sub_topics -> [sub_topic | current_sub_topics] end
-      )
-      |> Map.take([:title, :description, :thumbnail, :page_id, :sub_topics, :id])
-
-    IO.puts("Updated:")
-    IO.puts(inspect(updated))
-
-    # case Collection.update_sub_topics(updated) do
-    #   {:ok, topic} ->
-    #     {:ok, assign(socket, :topic, topic)}
-
-    #   {:error, message} ->
-    #     IO.puts(message)
-    #     {:noreply, socket}
-
-    #   what ->
-    #     IO.puts(inspect(what))
-    #     {:noreply, socket}
-    # end
-    # {:noreply, socket}
-    IO.puts(inspect(Collection.update_sub_topics(updated)))
+    # IO.puts(inspect(res))
+    # Collection.add_subtopic(res)
     {:noreply, socket}
   end
+
 
   defp page_title(:show), do: "Show Topic"
   defp page_title(:edit), do: "Edit Topic"

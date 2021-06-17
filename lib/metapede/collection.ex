@@ -60,6 +60,10 @@ defmodule Metapede.Collection do
     |> Repo.insert()
   end
 
+  def add_subtopic(topic) do
+    Repo.insert(topic)
+  end
+
   @doc """
   Updates a topic.
 
