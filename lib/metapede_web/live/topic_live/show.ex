@@ -3,7 +3,6 @@ defmodule MetapedeWeb.TopicLive.Show do
   alias Metapede.Collection
   alias Metapede.Repo
   alias Metapede.Collection.Topic
-  # alias Metapede.Collection.{Topic}
   alias MetapedeWeb.Controllers.Transforms.WikiTransforms
 
   @impl true
@@ -36,7 +35,7 @@ defmodule MetapedeWeb.TopicLive.Show do
   def handle_event("delete", %{"id" => id}, socket) do
     topic = Collection.get_topic!(id)
     {:ok, _} = Collection.delete_topic(topic)
-    {:noreply, assign(socket, :topic, Collection.get_topic!(id))}
+    {:noreply, assign(socket, :topic, Collection.get_topic!(socket.assigns.topic.id))}
   end
 
   defp test_add(new_topic, socket) do
