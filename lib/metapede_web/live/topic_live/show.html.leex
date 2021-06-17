@@ -14,9 +14,6 @@
     return_to: Routes.topic_show_path(@socket, :show, @topic) %>
 <% end %>
 
-
-
-
 <h1><%= @topic.title %></h1>
 <img src="<%= @topic.thumbnail %>" alt="<%= @topic.title %>">
 <div>
@@ -24,17 +21,23 @@
     <%= @topic.description %>
 </div>
 
-
 <span><%= live_patch "Edit", to: Routes.topic_show_path(@socket, :edit, @topic), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.topic_topics_path(@socket, :topics) %></span>
 
-<div><%= live_patch "Add Subtopic", to: Routes.topic_show_path(@socket, :search, @topic) %></div>
-
 <h2>Sub Topics</h2>
-<div>
-  <%= inspect(@topic.sub_topics) %>
+<%= if length(@topic.sub_topics) > 0 do %>
+<div class="topics_container">
+  <%= for sub_topic <- @topic.sub_topics do %>
+    <%= live_component @socket, MetapedeWeb.LiveComponents.Topic.TopicComponent, topic: sub_topic, id: sub_topic.id %>
+  <% end %>
 </div>
+<% end %>
+<div><%= live_patch "Add Subtopic", to: Routes.topic_show_path(@socket, :search, @topic) %></div>
 <h2>Parent Topics</h2>
-<div>
-  <%= inspect(@topic.parent_topics) %>
+<%= if length(@topic.parent_topics) > 0 do %>
+<div class="topics_container">
+  <%= for parent_topic <- @topic.parent_topics do %>
+    <%= live_component @socket, MetapedeWeb.LiveComponents.Topic.TopicComponent, topic: parent_topic, id: parent_topic.id %>
+  <% end %>
 </div>
+<% end %>

@@ -18,7 +18,7 @@
 <%= if length(@show_topics) > 0 do %>
 <div class="topics_container">
   <%= for topic <- @show_topics do %>
-    <%= live_component @socket, MetapedeWeb.LiveComponents.Topic.TopicComponent, topic: topic %>
+    <%= live_component @socket, MetapedeWeb.LiveComponents.Topic.TopicComponent, topic: topic, id: topic.id %>
   <% end %>
 </div>
 <% end %>

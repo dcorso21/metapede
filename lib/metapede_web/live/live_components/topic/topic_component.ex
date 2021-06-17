@@ -1,5 +1,6 @@
 defmodule MetapedeWeb.LiveComponents.Topic.TopicComponent do
   use MetapedeWeb, :live_component
+  alias Metapede.Collection
 
   def render(assigns) do
     ~L"""
@@ -9,7 +10,7 @@ defmodule MetapedeWeb.LiveComponents.Topic.TopicComponent do
         <div>
             <span><%= live_redirect "Show", to: Routes.topic_show_path(@socket, :show, @topic) %></span>
             <span><%= live_patch "Edit", to: Routes.topic_topics_path(@socket, :edit, @topic) %></span>
-            <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: @topic.id, data: [confirm: "Are you sure?"] %></span>
+            <span><%= link "Delete", to: "#", phx_click: "delete" , phx_value_id: @topic.id, data: [confirm: "Are you sure?"] %></span>
         </div>
     </div>
     """
