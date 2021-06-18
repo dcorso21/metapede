@@ -7,11 +7,15 @@ defmodule MetapedeWeb.TopicLive.Show do
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
+    topic = Collection.get_topic!(id)
+
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:topic, Collection.get_topic!(id))}
+     |> assign(:topic, topic)}
   end
+
+  # @impl true
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do

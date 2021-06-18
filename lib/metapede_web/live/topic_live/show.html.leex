@@ -41,3 +41,5 @@
   <% end %>
 </div>
 <% end %>
+
+<%= live_component @socket, MetapedeWeb.LiveComponents.WikiContent, page_id: @topic.page_id, id: @topic.title <> "_page" %>

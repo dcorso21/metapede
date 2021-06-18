@@ -2,9 +2,11 @@ defmodule Metapede.WikiFuncs do
   @base_url "https://en.wikipedia.org/w/api.php"
 
 
-  def get_pages(page_id) do
-    query = "?action=parse&prop=wikitext&pageid=#{page_id}&formatversion=2"
-    HTTPoison.get(@base_url <> query)
+  def get_page(page_id) do
+    query = "?action=parse&format=json&pageid=#{page_id}&prop=text"
+    {:ok, res} = HTTPoison.get(@base_url <> query)
+    data = Poison.decode!(res.body)
+    data["parse"]["text"]["*"]
   end
 
   def search_moderate(query) do
