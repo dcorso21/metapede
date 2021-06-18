@@ -12,7 +12,7 @@ defmodule MetapedeWeb.LiveComponents.WikiContent do
   def render(assigns) do
     ~L"""
     <div>
-    <button phx-click="loadpage" phx-target="<%= @myself %>">Load Page</button>
+        <button phx-click="loadpage" phx-target="<%= @myself %>">Load Page</button>
         <%= if @wiki_content do %>
             <%= raw(@wiki_content) %>
         <% end %>
