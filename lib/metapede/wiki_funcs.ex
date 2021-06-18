@@ -1,24 +1,10 @@
 defmodule Metapede.WikiFuncs do
   @base_url "https://en.wikipedia.org/w/api.php"
 
-  def search_light(query) do
-    headers = [
-      "Accept-Language": "en-US,en;q=0.5",
-      Connection: "keep-alive"
-    ]
 
-    options = [
-      params: [
-        action: "opensearch",
-        format: "json",
-        formatversion: 2,
-        search: convert_query_string(query),
-        namespace: 0,
-        limit: 10
-      ]
-    ]
-
-    make_wiki_request(headers, options)
+  def get_pages(page_id) do
+    query = "?action=parse&prop=wikitext&pageid=#{page_id}&formatversion=2"
+    HTTPoison.get(@base_url <> query)
   end
 
   def search_moderate(query) do
@@ -53,22 +39,5 @@ defmodule Metapede.WikiFuncs do
 
   defp make_wiki_request(headers, options) do
     HTTPoison.get(@base_url, headers, options)
-  end
-
-  defp transform_search_light(response) do
-    res = Poison.decode!(response.body)
-    names = Enum.at(res, 1)
-    urls = Enum.at(res, 3)
-    length = length(names)
-
-    transformed =
-      for ind <- 0..length do
-        %{
-          name: Enum.at(names, ind),
-          url: Enum.at(urls, ind)
-        }
-      end
-
-    transformed
   end
 end
