@@ -17,6 +17,9 @@ defmodule Metapede.Collection.Topic do
     field(:thumbnail, :string)
     field(:page_id, :integer)
 
+    has_many :events, Event
+
+
     many_to_many(
       :sub_topics,
       Topic,
