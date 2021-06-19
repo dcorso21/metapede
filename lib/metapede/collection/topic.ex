@@ -1,8 +1,9 @@
 defmodule Metapede.Collection.Topic do
   use Ecto.Schema
 
-  alias Metapede.Collection.Topic
   alias Metapede.Relations.TopicRelations
+  alias Metapede.Collection.Topic
+  alias Metapede.Timeline.{Event, TimePeriod}
 
   @accepted_fields [
     :title,
@@ -17,8 +18,9 @@ defmodule Metapede.Collection.Topic do
     field(:thumbnail, :string)
     field(:page_id, :integer)
 
-    has_many :events, Event
+    belongs_to :event, Event
 
+    belongs_to :time_period, TimePeriod
 
     many_to_many(
       :sub_topics,

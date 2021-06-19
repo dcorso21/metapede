@@ -1,7 +1,8 @@
 defmodule Metapede.Timeline.TimePeriod do
   use Ecto.Schema
   alias Metapede.Collection.Topic
-  alias Metapede.Timeline.Event
+  alias Metapede.Timeline.{Event, TimePeriod}
+  alias Metapede.Relations.{TimePeriodAndEventRelations, TimePeriodRelations}
 
   schema "time_periods" do
 
@@ -17,7 +18,7 @@ defmodule Metapede.Timeline.TimePeriod do
 
     many_to_many(
       :sub_time_periods,
-      TimePeriods,
+      TimePeriod,
       join_through: TimePeriodRelations,
       join_keys: [parent_id: :id, child_id: :id],
       on_delete: :delete_all
@@ -25,7 +26,7 @@ defmodule Metapede.Timeline.TimePeriod do
 
     many_to_many(
       :parent_time_periods,
-      TimePeriods,
+      TimePeriod,
       join_through: TimePeriodRelations,
       join_keys: [child_id: :id, parent_id: :id],
       on_delete: :delete_all

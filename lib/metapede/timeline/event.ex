@@ -1,9 +1,9 @@
 defmodule Metapede.Timeline.Event do
   use Ecto.Schema
+  alias Metapede.Collection.Topic
 
   schema "events" do
-    # it is associated with a topic
-    belongs_to :topic_info, Topic
+    has_one :topic, Topic
     field :datetime, :string
     timestamps()
   end
