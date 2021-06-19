@@ -18,9 +18,8 @@ defmodule Metapede.Collection.Topic do
     field(:thumbnail, :string)
     field(:page_id, :integer)
 
-    belongs_to :event, Event
-
-    belongs_to :time_period, TimePeriod
+    has_one :event, Event
+    has_one :time_period, TimePeriod
 
     many_to_many(
       :sub_topics,

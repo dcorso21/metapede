@@ -3,7 +3,7 @@ defmodule Metapede.Timeline.Event do
   alias Metapede.Collection.Topic
 
   schema "events" do
-    has_one :topic, Topic
+    belongs_to :topic, Topic
     field(:datetime, :string)
     timestamps()
   end
