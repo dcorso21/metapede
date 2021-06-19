@@ -3,7 +3,8 @@ defmodule Metapede.Repo.Migrations.CreateEventsTable do
 
   def change do
     create table(:events) do
-      add :topic_id, references(:topic)
+      add :topic_id, references(:topics)
+      add :datetime, :string
       timestamps()
     end
   end
