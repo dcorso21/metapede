@@ -4,7 +4,7 @@ defmodule Metapede.Timeline.Event do
 
   schema "events" do
     has_one :topic, Topic
-    field :datetime, :string
+    field(:datetime, :string)
     timestamps()
   end
 end

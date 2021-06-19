@@ -5,7 +5,6 @@ defmodule Metapede.Timeline.TimePeriod do
   alias Metapede.Relations.{TimePeriodAndEventRelations, TimePeriodRelations}
 
   schema "time_periods" do
-
     has_one :topic_info, Topic
 
     many_to_many(
@@ -20,7 +19,7 @@ defmodule Metapede.Timeline.TimePeriod do
       :sub_time_periods,
       TimePeriod,
       join_through: TimePeriodRelations,
-      join_keys: [parent_id: :id, child_id: :id],
+      join_keys: [parent_time_period_id: :id, child_time_period_id: :id],
       on_delete: :delete_all
     )
 
@@ -28,7 +27,7 @@ defmodule Metapede.Timeline.TimePeriod do
       :parent_time_periods,
       TimePeriod,
       join_through: TimePeriodRelations,
-      join_keys: [child_id: :id, parent_id: :id],
+      join_keys: [child_time_period_id: :id, parent_time_period_id: :id],
       on_delete: :delete_all
     )
 
