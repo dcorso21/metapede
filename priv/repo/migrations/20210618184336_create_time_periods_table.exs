@@ -3,6 +3,7 @@ defmodule Metapede.Repo.Migrations.CreateTimePeriodsTable do
 
   def change do
     create table(:time_periods) do
+      add :topic_id, references(:topic)
       timestamps()
     end
   end

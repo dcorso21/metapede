@@ -5,7 +5,7 @@ defmodule Metapede.Timeline.TimePeriod do
   alias Metapede.Relations.{TimePeriodAndEventRelations, TimePeriodRelations}
 
   schema "time_periods" do
-    belongs_to :topic_info, Topic
+    belongs_to :topic, Topic
 
     many_to_many(
       :events,
