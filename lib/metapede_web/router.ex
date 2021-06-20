@@ -19,6 +19,9 @@ defmodule MetapedeWeb.Router do
 
     live "/tester", TesterLive.Test, :test
 
+    live "/time_periods", TimePeriodLive.TimePeriods, :main
+    live "/time_periods/search", TimePeriodLive.TimePeriods, :search
+
     live "/topics", TopicLive.Topics, :topics
     live "/topics/new", TopicLive.Topics, :new
     live "/topics/:id/edit", TopicLive.Topics, :edit
