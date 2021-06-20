@@ -1,7 +1,7 @@
 defmodule Metapede.TimelineContext.TimePeriodContext do
   import Ecto.Query, warn: false
   alias Metapede.Repo
-  alias Metapede.Timeline.{TimePeriod, Event}
+  alias Metapede.Timeline.{TimePeriod}
 
   @preload [:topic, :events]
 
@@ -24,13 +24,48 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
   end
 
   def update_time_period(%TimePeriod{} = time_period, attrs) do
-      time_period
-      |> TimePeriod.changeset(attrs)
-      |> Repo.update()
+    time_period
+    |> TimePeriod.changeset(attrs)
+    |> Repo.update()
   end
 
-  def delete_topic(%TimePeriod{} = time_period) do
+  def delete_time_period(%TimePeriod{} = time_period) do
     Repo.delete(time_period)
   end
+end
 
+defmodule Metapede.TimelineContext.EventContext do
+
+  import Ecto.Query, warn: false
+  alias Metapede.Repo
+  alias Metapede.Timeline.{Event}
+  @preload [:topic]
+
+  def list_events() do
+    Event
+    |> Repo.all()
+    |> Repo.preload(@preload)
+  end
+
+  def get_event!(id) do
+    Event
+    |> Repo.get!(id)
+    |> Repo.preload(@preload)
+  end
+
+  def create_event(attrs \\ %{}) do
+    %Event{}
+    |> Event.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_event(%Event{} = event, attrs) do
+    event
+    |> Event.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_event(%Event{} = event) do
+    Repo.delete(event)
+  end
 end

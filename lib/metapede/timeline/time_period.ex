@@ -14,7 +14,6 @@ defmodule Metapede.Timeline.TimePeriod do
       :events,
       Event,
       join_through: TimePeriodAndEventRelations,
-      join_keys: [parent_id: :id, child_id: :id],
       on_delete: :delete_all
     )
 
