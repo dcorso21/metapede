@@ -2,25 +2,15 @@ defmodule MetapedeWeb.PageLive do
   use MetapedeWeb, :live_view
 
   def mount(_params, _session, socket) do
-    socket =
-      socket
-      |> assign(text: "Metapede")
-      |> assign(hhh: nil)
-
     {:ok, socket}
   end
 
   def render(assigns) do
     ~L"""
-    <h1> <%= @text %> </h1>
-      <p phx-click="say_hi">Hello</p>
-      <form phx-submit=""></form>
+      <h1>Welcome to Metapede</h1>
+      <div><%= live_redirect "Topics", to: Routes.topic_topics_path(@socket, :topics) %></div>
+      <div><%= live_redirect "Time Periods", to: Routes.time_period_time_periods_path(@socket, :main) %></div>
     """
   end
 
-  def handle_event("say_hi", _, socket) do
-    IO.puts("Hi There")
-    socket = assign(socket, hhh: "Hellooooo")
-    {:noreply, socket}
-  end
 end
