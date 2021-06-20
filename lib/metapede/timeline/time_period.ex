@@ -3,6 +3,7 @@ defmodule Metapede.Timeline.TimePeriod do
   alias Metapede.Collection.Topic
   alias Metapede.Timeline.{Event, TimePeriod}
   alias Metapede.Relations.{TimePeriodAndEventRelations, TimePeriodRelations}
+  @accepted_fields [:start_datetime, :end_datetime]
 
   schema "time_periods" do
     belongs_to :topic, Topic
@@ -34,5 +35,14 @@ defmodule Metapede.Timeline.TimePeriod do
     )
 
     timestamps()
+  end
+
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> Ecto.Changeset.cast(params, @accepted_fields)
+    # |> Ecto.Changeset.validate_required([:])
+    |> Ecto.Changeset.foreign_key_constraint(:events)
+    |> Ecto.Changeset.foreign_key_constraint(:parent_time_periods)
+    |> Ecto.Changeset.foreign_key_constraint(:sub_time_periods)
   end
 end
