@@ -2,7 +2,6 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
   use MetapedeWeb, :live_component
   alias Metapede.TimelineContext.TimePeriodContext
 
-
   def render(assigns) do
     ~L"""
     <div>
@@ -20,15 +19,15 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
         phx_submit: "save" %>
 
         <div>
-            <%= label f, :start_date %>
-            <%= text_input f, :start_date %>
-            <%= error_tag f, :start_date %>
+            <%= label f, :start_datetime %>
+            <%= text_input f, :start_datetime %>
+            <%= error_tag f, :start_datetime %>
         </div>
 
         <div>
-            <%= label f, :end_date %>
-            <%= text_input f, :end_date %>
-            <%= error_tag f, :end_date %>
+            <%= label f, :end_datetime %>
+            <%= text_input f, :end_datetime %>
+            <%= error_tag f, :end_datetime %>
         </div>
 
 
@@ -38,15 +37,28 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
     """
   end
 
-  def handle_event("save", new_period, socket) do
-    case TimePeriodContext.create_time_period(new_period) do
-        {:ok, saved_period} ->
-            {:noreply, socket}
+  def handle_event("save", %{"Elixir.Metapede.Timeline.TimePeriod" => new_period}, socket) do
 
-        {:error, message} ->
-            IO.puts(inspect(message))
-            {:noreply, socket}
+    case TimePeriodContext.create_time_period(new_period) do
+      {:ok, saved_period} ->
+        saved_period
+        |> Metapede.Repo.preload([:topic, :events])
+        |> Ecto.Changeset.change()
+        |> Ecto.Changeset.put_assoc(:topic, socket.assigns.new_topic)
+        |> Metapede.Repo.update!()
+
+        {:noreply,
+         socket
+         |> put_flash(:info, "New Time Period Created")
+         |> push_redirect(to: Routes.time_period_time_periods_path(socket, :main))}
+
+      {:error, message} ->
+        IO.puts(inspect(message))
+
+        {:noreply,
+         socket
+         |> put_flash(:error, "An Error Occurred")
+         |> push_redirect(to: Routes.time_period_time_periods_path(socket, :main))}
     end
   end
-
 end

@@ -33,9 +33,25 @@ defmodule MetapedeWeb.TimePeriodLive.TimePeriods do
     <% end %>
 
 
-    <h1>Hello</h1>
+    <h1>Time periods</h1>
     <div>
-    <%= inspect(@time_periods) %>
+    <%= for period <- @time_periods do %>
+        <div>
+            <strong>
+            <%= period.topic.title %>
+            </strong>
+        </div>
+        <div>
+        <em>
+        <%= period.topic.description %>
+        </em>
+        </div>
+        <div><%= period.start_datetime %> - <%= period.end_datetime %></div>
+
+    <% end %>
+    <br>
+    <br>
+    <br>
     </div>
 
     <div><%= live_patch "Add New Time Period", to: Routes.time_period_time_periods_path(@socket, :search) %></div>
