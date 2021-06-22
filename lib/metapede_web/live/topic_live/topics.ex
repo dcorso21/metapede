@@ -21,6 +21,11 @@ defmodule MetapedeWeb.TopicLive.Topics do
     {:noreply, assign(socket, :show_topics, list_topics())}
   end
 
+  def handle_event("delete_all", _params, socket) do
+    Metapede.Repo.delete_all(Topic)
+    {:noreply, assign(socket, :show_topics, list_topics())}
+  end
+
   def handle_event("send_topic", %{"data" => selected_topic}, socket) do
     data =
       Poison.decode!(selected_topic)

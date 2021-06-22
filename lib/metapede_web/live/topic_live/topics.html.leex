@@ -24,3 +24,4 @@
 <% end %>
 
 <div><%= live_patch "Search for new topic", to: Routes.topic_topics_path(@socket, :search) %></div>
+<button phx-click="delete_all">Delete All Topics</button>
