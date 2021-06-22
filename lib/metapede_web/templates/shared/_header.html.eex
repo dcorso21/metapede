@@ -1,0 +1,5 @@
+<div class="header">
+	<%= link "Metapede", to: "/", class: "page_title" %>
+	<%= link "Topics", to: "/topics", class: "page_link" %>
+	<%= link "Time Periods", to: "/time_periods", class: "page_link" %>
+</div>

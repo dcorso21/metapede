@@ -1,7 +1,13 @@
 /* This file is for your main application css. */
 // @import "./phoenix.css";
+@import "./basic/mixins";
 @import "./basic/fonts";
-@import "./basic/layout";
+@import "./basic/variables";
+@import "./basic/colors";
+
+@import "./components/layout/basic";
+@import "./components/layout/header";
+
 @import "./wiki_card";
 @import "./searchbar";
 @import "./topic_card";
