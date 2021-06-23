@@ -14,6 +14,8 @@ defmodule MetapedeWeb.Router do
     plug :accepts, ["json"]
   end
 
+
+
   scope "/", MetapedeWeb do
     pipe_through :browser
 
