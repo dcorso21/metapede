@@ -41,11 +41,12 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
             </strong>
         </div>
         <div>
-        <em>
-        <%= period.topic.description %>
-        </em>
+          <em>
+          <%= period.topic.description %>
+          </em>
         </div>
         <div><%= period.start_datetime %> - <%= period.end_datetime %></div>
+        <span><%= live_redirect "Show", to: Routes.time_period_show_path(@socket, :show, period) %></span>
         <br>
         <br>
 
