@@ -17,7 +17,7 @@ defmodule MetapedeWeb.Router do
   scope "/", MetapedeWeb do
     pipe_through :browser
 
-    live "/tester", TesterLive.Test, :test
+    get "/tester", TopicController, :index, as: :topic_controller
 
     live "/time_periods", TimePeriodLive.TimePeriods, :main
     live "/time_periods/search", TimePeriodLive.TimePeriods, :search
