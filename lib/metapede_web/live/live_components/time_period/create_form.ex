@@ -50,7 +50,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
         {:noreply,
          socket
          |> put_flash(:info, "New Time Period Created")
-         |> push_redirect(to: Routes.time_period_time_periods_path(socket, :main))}
+         |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
 
       {:error, message} ->
         IO.puts(inspect(message))
@@ -58,7 +58,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
         {:noreply,
          socket
          |> put_flash(:error, "An Error Occurred")
-         |> push_redirect(to: Routes.time_period_time_periods_path(socket, :main))}
+         |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
     end
   end
 end

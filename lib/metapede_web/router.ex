@@ -21,9 +21,9 @@ defmodule MetapedeWeb.Router do
 
     get "/tester", TopicController, :index, as: :topic_controller
 
-    live "/time_periods", TimePeriodLive.TimePeriods, :main
-    live "/time_periods/search", TimePeriodLive.TimePeriods, :search
-    live "/time_periods/:id/confirm", TimePeriodLive.TimePeriods, :confirm
+    live "/time_periods", TimePeriodLive.Index, :main
+    live "/time_periods/search", TimePeriodLive.Index, :search
+    live "/time_periods/:id/confirm", TimePeriodLive.Index, :confirm
 
     live "/topics", TopicLive.Topics, :topics
     live "/topics/new", TopicLive.Topics, :new

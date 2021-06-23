@@ -1,8 +1,8 @@
-defmodule MetapedeWeb.TimePeriodLive.TimePeriods do
+defmodule MetapedeWeb.TimePeriodLive.Index do
   use MetapedeWeb, :live_view
   alias Metapede.TimelineContext.TimePeriodContext
   alias Metapede.Collection
-  alias Metapede.Collection.Topic
+  # alias Metapede.Collection.Topic
   alias MetapedeWeb.Controllers.Transforms.WikiTransforms
 
   def mount(_params, _session, socket) do
@@ -17,14 +17,14 @@ defmodule MetapedeWeb.TimePeriodLive.TimePeriods do
     <%= if @live_action in [:search] do %>
     <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
         id: :search_form,
-        return_to: Routes.time_period_time_periods_path(@socket, :main) %>
+        return_to: Routes.time_period_index_path(@socket, :main) %>
     <% end %>
 
     <%= if @live_action in [:confirm] do %>
     <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
         id: :create_form,
         new_topic: @new_topic,
-        return_to: Routes.time_period_time_periods_path(@socket, :main) %>
+        return_to: Routes.time_period_index_path(@socket, :main) %>
     <% end %>
 
     <%= if @live_action == :confirm do %>
@@ -55,7 +55,7 @@ defmodule MetapedeWeb.TimePeriodLive.TimePeriods do
     <br>
     </div>
 
-    <div><%= live_patch "Add New Time Period", to: Routes.time_period_time_periods_path(@socket, :search) %></div>
+    <div><%= live_patch "Add New Time Period", to: Routes.time_period_index_path(@socket, :search) %></div>
     <button phx-click="delete_all">Delete All</button>
     """
   end
@@ -93,7 +93,7 @@ defmodule MetapedeWeb.TimePeriodLive.TimePeriods do
          |> put_flash(:info, "Topic created successfully")
          |> assign(:new_topic, new_topic)
          |> push_redirect(
-           to: Routes.time_period_time_periods_path(socket, :confirm, new_topic.id, [new_topic])
+           to: Routes.time_period_index_path(socket, :confirm, new_topic.id, [new_topic])
          )}
 
       {:error, %Ecto.Changeset{} = changeset} ->
