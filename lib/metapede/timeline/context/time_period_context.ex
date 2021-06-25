@@ -3,7 +3,7 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
   alias Metapede.Repo
   alias Metapede.Timeline.{TimePeriod}
 
-  @preload [:topic, :events]
+  @preload [:topic, :events, :parent_time_periods, :sub_time_periods]
 
   def list_time_periods() do
     TimePeriod

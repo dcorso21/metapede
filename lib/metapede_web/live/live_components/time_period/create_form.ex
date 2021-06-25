@@ -15,7 +15,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
         <%= f = form_for Metapede.Timeline.TimePeriod, "#",
         id: "time_period_form",
         phx_target: @myself,
-        # phx_change: "validate",
+        autocomplete: "off",
         phx_submit: "save" %>
 
         <div>

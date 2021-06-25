@@ -100,5 +100,8 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
+
+
+
   end
 end
