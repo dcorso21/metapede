@@ -27,11 +27,22 @@ defmodule MetapedeWeb.TopicLive.Topics do
   end
 
   def handle_event("new_topic", %{"topic" => selected_topic}, socket) do
-    data =
-      Poison.decode!(selected_topic)
-      |> WikiTransforms.transform_wiki_data()
+    {status, topic} = Metapede.CommonSearchFuncs.decode_and_format_topic(selected_topic)
 
-    case Collection.create_topic(data) do
+    case status do
+      :new ->
+        create_new_topic(topic, socket)
+
+      :existing ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Topic Already Exists")
+         |> push_redirect(to: Routes.topic_topics_path(socket, :topics))}
+    end
+  end
+
+  def create_new_topic(new_topic, socket) do
+    case Collection.create_topic(new_topic) do
       {:ok, _topic} ->
         {:noreply,
          socket

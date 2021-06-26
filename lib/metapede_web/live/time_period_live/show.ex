@@ -7,10 +7,10 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply, socket |> assign(time_period: tp)}
   end
 
-  def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
-    sub_time_period = CommonSearchFuncs.decode_and_format_topic(topic)
-    add_func = fn el -> [el | socket.assigns.time_period.sub_time_periods] end
-    CommonSearchFuncs.add_association(sub_time_period, socket.assigns.time_period, :sub_time_period, add_func)
+  def handle_event("new_sub_time_period", %{"topic" => _topic}, socket) do
+    # sub_time_period = CommonSearchFuncs.decode_and_format_topic(topic)
+    # add_func = fn el -> [el | socket.assigns.time_period.sub_time_periods] end
+    # CommonSearchFuncs.add_association(sub_time_period, socket.assigns.time_period, :sub_time_period, add_func)
 
     {:noreply,
      socket

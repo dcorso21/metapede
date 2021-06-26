@@ -21,7 +21,7 @@ defmodule MetapedeWeb.TopicLive.Show do
   end
 
   def handle_event("new_sub_topic", %{"topic" => topic}, socket) do
-    sub_topic = CommonSearchFuncs.decode_and_format_topic(topic)
+    {_status, sub_topic} = CommonSearchFuncs.decode_and_format_topic(topic)
     add_func = fn el -> [el | socket.assigns.topic.sub_topics] end
     CommonSearchFuncs.add_association(sub_topic, socket.assigns.topic, :sub_topics, add_func)
 

@@ -20,6 +20,6 @@ defmodule Metapede.CommonSearchFuncs do
     |> Repo.update!()
   end
 
-  defp get_topic_info(_params, [id]), do: Collection.get_topic!(id)
-  defp get_topic_info(params, []), do: Topic.changeset(%Topic{}, params)
+  defp get_topic_info(_params, [id]), do: {:existing, Collection.get_topic!(id)}
+  defp get_topic_info(params, []), do: {:new, Topic.changeset(%Topic{}, params)}
 end
