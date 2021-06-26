@@ -10,32 +10,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply, socket |> assign(time_period: tp)}
   end
 
-  def render(assigns) do
-    ~L"""
-    <div><%= live_redirect "Back", to: Routes.time_period_index_path(@socket, :main) %></div>
-    <%= if @time_period.topic.thumbnail != nil do %>
-        <img src=<%= @time_period.topic.thumbnail %>>
-    <% end %>
-    <h2>
-        <%= @time_period.topic.title %>
-    </h2>
-    <div>
-        <em>
-            <%= @time_period.topic.description %>
-        </em>
-    </div>
-    <div>
-    id:
-            <%= @time_period.id %>
-    </div>
-
-    <div>
-      <%= inspect( @time_period ) %>
-    </div>
-    <div><%= live_patch "Search for new topic", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
-    """
-  end
-
   def handle_event("send_topic", %{"data" => selected_topic}, socket) do
     sub_topic =
       Poison.decode!(selected_topic)
@@ -52,7 +26,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
      |> put_flash(:info, "Subtopic Added")
      |> push_redirect(to: Routes.topic_show_path(socket, :show, socket.assigns.topic))}
   end
-
 
   defp add_association(new_assoc, parent_object, atom_name, assoc_func) do
     parent_object
