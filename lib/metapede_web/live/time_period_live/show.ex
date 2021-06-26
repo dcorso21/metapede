@@ -7,15 +7,17 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply, socket |> assign(time_period: tp)}
   end
 
-  def handle_event("new_sub_time_period", %{"topic" => _topic}, socket) do
-    # sub_time_period = CommonSearchFuncs.decode_and_format_topic(topic)
-    # add_func = fn el -> [el | socket.assigns.time_period.sub_time_periods] end
-    # CommonSearchFuncs.add_association(sub_time_period, socket.assigns.time_period, :sub_time_period, add_func)
+  def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
+    new_topic =
+      topic
+      |> CommonSearchFuncs.decode_and_format_topic
+      |> CommonSearchFuncs.create_if_new
+      |> CommonSearchFuncs.check_for_existing_time_period
 
     {:noreply,
      socket
-     |> put_flash(:info, "topic added or pulled")
-     |> push_redirect(to: Routes.time_period_show_path(socket, :show, socket.assigns.time_period))}
+     |> put_flash(:info, "Test successful")
+     |> push_redirect(to: Routes.time_period_show_path(socket, :show, socket.assigns.time_period))
+     |> assign(new_topic: new_topic)}
   end
-
 end

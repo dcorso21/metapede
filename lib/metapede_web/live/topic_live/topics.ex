@@ -42,7 +42,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
   end
 
   def create_new_topic(new_topic, socket) do
-    case Collection.create_topic(new_topic) do
+    case Collection.create_topic_from_struct(new_topic) do
       {:ok, _topic} ->
         {:noreply,
          socket

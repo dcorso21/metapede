@@ -42,14 +42,13 @@ defmodule Metapede.Collection do
     |> Repo.preload([:sub_topics, :parent_topics])
   end
 
+  def create_topic_from_struct(topic), do: Repo.insert(topic)
 
-  def create_topic(%Topic{} = topic), do: Repo.insert(topic)
   def create_topic(topic) do
     %Topic{}
     |> Topic.changeset(topic)
     |> Repo.insert()
   end
-
 
   @doc """
   Updates a topic.
@@ -104,8 +103,10 @@ defmodule Metapede.Collection do
     Repo.all(from t in Topic, where: ilike(t.title, ^"%#{query}%"))
   end
 
-  def check_for_page_id(page_id) do
-    Repo.all(from t in Topic, where: t.page_id == ^page_id, select: t.id)
+  def check_for_page_id(topic) do
+    page_id = topic["page_id"]
+    ids = Repo.all(from t in Topic, where: t.page_id == ^page_id, select: t.id)
+    {topic, ids}
   end
 
   def update_sub_topics(topic), do: Repo.update(Topic, topic)

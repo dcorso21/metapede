@@ -2,8 +2,6 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
   use MetapedeWeb, :live_view
   alias Metapede.TimelineContext.TimePeriodContext
   alias Metapede.Collection
-  # alias Metapede.Collection.Topic
-  alias MetapedeWeb.Controllers.Transforms.WikiTransforms
 
   def mount(_params, _session, socket) do
     {:ok,
@@ -31,24 +29,40 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
   end
 
   def handle_event("new_time_period", %{"topic" => selected_topic}, socket) do
-    data =
-      Poison.decode!(selected_topic)
-      |> WikiTransforms.transform_wiki_data()
-
-    IO.puts(inspect(data))
-
-    case Collection.create_topic(data) do
-      {:ok, new_topic} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Topic created successfully")
-         |> assign(:new_topic, new_topic)
-         |> push_redirect(
-           to: Routes.time_period_index_path(socket, :confirm, new_topic.id, [new_topic])
-         )}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    selected_topic
+    |> Metapede.CommonSearchFuncs.decode_and_format_topic
+    |> Metapede.CommonSearchFuncs.create_if_new
+    |> Metapede.CommonSearchFuncs.check_for_existing_time_period
+    |> custom_redirect(socket)
   end
+
+  defp custom_redirect({:ok, new_topic}, socket) do
+    {:noreply,
+     socket
+     |> put_flash(:info, "Topic created successfully")
+     |> assign(:new_topic, new_topic)
+     |> push_redirect(
+       to: Routes.time_period_index_path(socket, :confirm, new_topic.id, [new_topic])
+     )}
+  end
+
+  defp custom_redirect({:existing, existing_topic}, socket) do
+    {:noreply,
+     socket
+     |> put_flash(:info, "Topic Found")
+     |> assign(:new_topic, existing_topic)
+     |> push_redirect(
+       to: Routes.time_period_index_path(socket, :confirm, existing_topic.id, [existing_topic])
+     )}
+  end
+
+  defp custom_redirect({:has_time_period, topic}, socket) do
+    {:noreply,
+     socket
+     |> put_flash(:error, "#{topic.title} already has a time period associated with it.")
+     |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
+  end
+
+  defp custom_redirect({:error, %Ecto.Changeset{} = changeset}, socket),
+    do: {:noreply, assign(socket, changeset: changeset)}
 end
