@@ -32,6 +32,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     <div>
       <%= inspect( @time_period ) %>
     </div>
+    <div><%= live_patch "Search for new topic", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
     """
   end
 
@@ -41,46 +42,25 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
       |> WikiTransforms.transform_wiki_data()
 
     existing_ids = Collection.check_for_page_id(sub_topic["page_id"])
+    new_topic = get_topic_info(sub_topic, existing_ids)
+    add_func = fn el -> [el | socket.assigns.time_period.sub_time_periods] end
+    result = add_association(new_topic, socket.assigns.time_period, :sub_time_periods, add_func)
+    IO.inspect(result)
 
-    case existing_ids do
-      [] ->
-        IO.puts("New")
-        params = get_topic_info(sub_topic, nil, :new)
-        test_add(params, socket)
-
-      [id] ->
-        IO.puts("Existing")
-        params = get_topic_info(nil, id, :existing)
-        test_add(params, socket)
-    end
+    {:noreply,
+     socket
+     |> put_flash(:info, "Subtopic Added")
+     |> push_redirect(to: Routes.topic_show_path(socket, :show, socket.assigns.topic))}
   end
 
-  defp test_add(new_topic, parent_object, assoc_as_atom, assoc_func, socket) do
+
+  defp add_association(new_assoc, parent_object, atom_name, assoc_func) do
     parent_object
     |> Ecto.Changeset.change()
-    |> Ecto.Changeset.put_assoc(assoc_as_atom, assoc_func.(new_topic))
+    |> Ecto.Changeset.put_assoc(atom_name, assoc_func.(new_assoc))
     |> Repo.update!()
-
-    {:noreply,
-     socket
-     |> put_flash(:info, "Subtopic Added")
-     |> push_redirect(to: Routes.topic_show_path(socket, :show, socket.assigns.topic))}
   end
 
-  defp test_add(new_topic, socket) do
-    parent_topic = socket.assigns.topic
-
-    parent_topic
-    |> Ecto.Changeset.change()
-    |> Ecto.Changeset.put_assoc(:sub_topics, [new_topic | parent_topic.sub_topics])
-    |> Repo.update!()
-
-    {:noreply,
-     socket
-     |> put_flash(:info, "Subtopic Added")
-     |> push_redirect(to: Routes.topic_show_path(socket, :show, socket.assigns.topic))}
-  end
-
-  defp get_topic_info(_params, id, :existing), do: Collection.get_topic!(id)
-  defp get_topic_info(params, _id, :new), do: Topic.changeset(%Topic{}, params)
+  defp get_topic_info(_params, [id]), do: Collection.get_topic!(id)
+  defp get_topic_info(params, []), do: Topic.changeset(%Topic{}, params)
 end

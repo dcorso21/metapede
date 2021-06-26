@@ -23,10 +23,10 @@ defmodule MetapedeWeb.Router do
 
     live "/time_periods", TimePeriodLive.Index, :main
     live "/time_periods/search", TimePeriodLive.Index, :search
-    live "/time_periods/:id", TimePeriodLive.Show, :show
     live "/time_periods/:id/confirm", TimePeriodLive.Index, :confirm
 
-
+    live "/time_periods/show/:id", TimePeriodLive.Show, :show
+    live "/time_periods/show/:id/search", TimePeriodLive.Show, :search
 
     live "/topics", TopicLive.Topics, :topics
     live "/topics/new", TopicLive.Topics, :new
