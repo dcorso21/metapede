@@ -30,7 +30,7 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
      |> assign(time_periods: TimePeriodContext.list_time_periods())}
   end
 
-  def handle_event("new_time_period", %{"data" => selected_topic}, socket) do
+  def handle_event("new_time_period", %{"topic" => selected_topic}, socket) do
     data =
       Poison.decode!(selected_topic)
       |> WikiTransforms.transform_wiki_data()
