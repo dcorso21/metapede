@@ -12,55 +12,6 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
      |> assign(new_topic: %{})}
   end
 
-  def render(assigns) do
-    ~L"""
-    <%= if @live_action in [:search] do %>
-    <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
-        id: :search_form,
-        return_to: Routes.time_period_index_path(@socket, :main) %>
-    <% end %>
-
-    <%= if @live_action in [:confirm] do %>
-    <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
-        id: :create_form,
-        new_topic: @new_topic,
-        return_to: Routes.time_period_index_path(@socket, :main) %>
-    <% end %>
-
-    <%= if @live_action == :confirm do %>
-        <h1>Confirm Please</h1>
-    <% end %>
-
-
-    <h1>Time periods</h1>
-    <div>
-    <%= for period <- @time_periods do %>
-        <div>
-            <strong>
-            <%= period.topic.title %>
-            </strong>
-        </div>
-        <div>
-          <em>
-          <%= period.topic.description %>
-          </em>
-        </div>
-        <div><%= period.start_datetime %> - <%= period.end_datetime %></div>
-        <span><%= live_redirect "Show", to: Routes.time_period_show_path(@socket, :show, period) %></span>
-        <br>
-        <br>
-
-    <% end %>
-    <br>
-    <br>
-    <br>
-    </div>
-
-    <div><%= live_patch "Add New Time Period", to: Routes.time_period_index_path(@socket, :search) %></div>
-    <button phx-click="delete_all">Delete All</button>
-    """
-  end
-
   def handle_params(%{"id" => id}, _url, socket) do
     new_topic = Collection.get_topic!(id)
 
@@ -79,7 +30,7 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
      |> assign(time_periods: TimePeriodContext.list_time_periods())}
   end
 
-  def handle_event("send_topic", %{"data" => selected_topic}, socket) do
+  def handle_event("new_time_period", %{"data" => selected_topic}, socket) do
     data =
       Poison.decode!(selected_topic)
       |> WikiTransforms.transform_wiki_data()
@@ -100,8 +51,5 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
-
-
-
   end
 end

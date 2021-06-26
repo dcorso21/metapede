@@ -1,6 +1,6 @@
-
 <%= if @live_action in [:search] do %>
   <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
+	event_name: "new_sub_time_period",
     id: :search_form,
     return_to: Routes.time_period_show_path(@socket, :show, @time_period) %>
 <% end %>

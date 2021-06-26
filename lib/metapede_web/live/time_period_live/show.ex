@@ -10,7 +10,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply, socket |> assign(time_period: tp)}
   end
 
-  def handle_event("send_topic", %{"data" => selected_topic}, socket) do
+  def handle_event("new_sub_time_period", %{"topic" => selected_topic}, socket) do
     sub_topic =
       Poison.decode!(selected_topic)
       |> WikiTransforms.transform_wiki_data()

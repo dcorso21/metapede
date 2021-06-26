@@ -10,6 +10,7 @@
 
 <%= if @live_action in [:search] do %>
   <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
+    event_name: "new_sub_topic",
     id: :search_form,
     return_to: Routes.topic_show_path(@socket, :show, @topic) %>
 <% end %>
