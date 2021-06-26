@@ -19,8 +19,8 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
     <div id="form_wrapper">
     <%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit", autocomplete: "off", phx_target: @myself], fn f -> %>
       <div id="form_elements">
-        <%= search_input f, :query %>
-        <%= submit "Search" %>
+        <%= search_input f, :query, [id: "wiki_search_input", placeholder: "Search"]%>
+
       </div>
     <% end %>
       <%= live_component @socket, MetapedeWeb.LiveComponents.SearchResultsComponent, wiki_info: @wiki_info, event_name: @event_name%>

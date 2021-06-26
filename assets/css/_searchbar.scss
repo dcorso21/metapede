@@ -1,7 +1,6 @@
 #form_wrapper {
 	position: relative;
-	// display: flex;
-	// flex-direction: row;
+	height: 300px;
 
 	#form_elements {
 		display: flex;
@@ -12,5 +11,21 @@
 		position: absolute;
 		top: 40px;
 		width: 100%;
+	}
+
+	#wiki_search_input {
+		width: 90vw;
+		border-radius: 20px;
+		height: 30px;
+		padding: 20px;
+		outline: none;
+		background-color: grey;
+		color: white;
+		font-size: 25px;
+		border: 1px solid grey;
+
+		&:focus {
+			border: 1px solid rgb(255, 255, 255);
+		}
 	}
 }

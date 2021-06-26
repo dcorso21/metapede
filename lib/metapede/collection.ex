@@ -42,27 +42,14 @@ defmodule Metapede.Collection do
     |> Repo.preload([:sub_topics, :parent_topics])
   end
 
-  @doc """
-  Creates a topic.
 
-  ## Examples
-
-      iex> create_topic(%{field: value})
-      {:ok, %Topic{}}
-
-      iex> create_topic(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_topic(attrs \\ %{}) do
+  def create_topic(%Topic{} = topic), do: Repo.insert(topic)
+  def create_topic(topic) do
     %Topic{}
-    |> Topic.changeset(attrs)
+    |> Topic.changeset(topic)
     |> Repo.insert()
   end
 
-  def add_subtopic(topic) do
-    Repo.insert(topic)
-  end
 
   @doc """
   Updates a topic.
@@ -122,5 +109,4 @@ defmodule Metapede.Collection do
   end
 
   def update_sub_topics(topic), do: Repo.update(Topic, topic)
-
 end
