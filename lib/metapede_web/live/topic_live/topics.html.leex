@@ -11,6 +11,7 @@
 
 <%= if @live_action in [:search] do %>
   <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
+    action: :new_topic,
     id: :search_form,
     return_to: Routes.topic_topics_path(@socket, :topics) %>
 <% end %>

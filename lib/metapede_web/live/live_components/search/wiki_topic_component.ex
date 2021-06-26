@@ -2,12 +2,11 @@ defmodule MetapedeWeb.LiveComponents.WikiTopicCompmonent do
   use MetapedeWeb, :live_component
 
   def render(assigns) do
-    # wiki_base_path = "https://en.wikipedia.org/wiki/"
-
     ~L"""
     <div
       phx-click="send_topic"
-      phx-value-data = "<%= Poison.encode!(@topic) %>"
+      phx-value-topic = "<%= Poison.encode!(@topic) %>"
+      phx-value-action = "action"
       id="<%= @topic["pageid"] %>"
     >
       <div class="wiki_topic">
