@@ -4,9 +4,8 @@ defmodule MetapedeWeb.LiveComponents.WikiTopicCompmonent do
   def render(assigns) do
     ~L"""
     <div
-      phx-click="send_topic"
+      phx-click="<%= @event_name %>"
       phx-value-topic = "<%= Poison.encode!(@topic) %>"
-      phx-value-action = "action"
       id="<%= @topic["pageid"] %>"
     >
       <div class="wiki_topic">

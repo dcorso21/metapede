@@ -2,11 +2,16 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   use MetapedeWeb, :live_component
   alias Metapede.Collection
 
+  # def mount(_params, _session, socket) do
+  #   socket = assign(socket, key: value)
+  #   {:ok, socket}
+  # end
 
-  def update(_assigns, socket) do
+  def update(assigns, socket) do
     {:ok,
      socket
-     |> assign(:wiki_info, [])}
+     |> assign(:wiki_info, [])
+     |> assign(:event_name, assigns.event_name)}
   end
 
   def render(assigns) do
@@ -18,7 +23,7 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
         <%= submit "Search" %>
       </div>
     <% end %>
-      <%= live_component @socket, MetapedeWeb.LiveComponents.SearchResultsComponent, wiki_info: @wiki_info%>
+      <%= live_component @socket, MetapedeWeb.LiveComponents.SearchResultsComponent, wiki_info: @wiki_info, event_name: @event_name%>
     </div>
     """
   end

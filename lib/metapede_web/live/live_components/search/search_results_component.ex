@@ -6,7 +6,7 @@ defmodule MetapedeWeb.LiveComponents.SearchResultsComponent do
     <div id="search_results">
       <%= if length(@wiki_info) > 0 do %>
         <%= for w_topic <- @wiki_info do %>
-          <%= live_component @socket, MetapedeWeb.LiveComponents.WikiTopicCompmonent, topic: w_topic%>
+          <%= live_component @socket, MetapedeWeb.LiveComponents.WikiTopicCompmonent, topic: w_topic, event_name: @event_name%>
         <% end %>
       <% end %>
     </div>

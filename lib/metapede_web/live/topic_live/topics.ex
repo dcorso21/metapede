@@ -26,7 +26,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
     {:noreply, assign(socket, :show_topics, list_topics())}
   end
 
-  def handle_event("send_topic", %{"topic" => selected_topic, "action" => :new_topic}, socket) do
+  def handle_event("new_topic", %{"topic" => selected_topic}, socket) do
     data =
       Poison.decode!(selected_topic)
       |> WikiTransforms.transform_wiki_data()
