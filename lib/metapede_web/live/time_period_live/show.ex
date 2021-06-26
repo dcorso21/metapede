@@ -10,21 +10,22 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply, socket |> assign(time_period: tp)}
   end
 
-  def handle_event("new_sub_time_period", %{"topic" => selected_topic}, socket) do
+  def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
     sub_topic =
-      Poison.decode!(selected_topic)
+      Poison.decode!(topic)
       |> WikiTransforms.transform_wiki_data()
 
     existing_ids = Collection.check_for_page_id(sub_topic["page_id"])
-    new_topic = get_topic_info(sub_topic, existing_ids)
-    add_func = fn el -> [el | socket.assigns.time_period.sub_time_periods] end
-    result = add_association(new_topic, socket.assigns.time_period, :sub_time_periods, add_func)
-    IO.inspect(result)
+    # new_topic = get_topic_info(sub_topic, existing_ids)
+    # add_func = fn el -> [el | socket.assigns.time_period.sub_time_periods] end
+    # result = add_association(new_topic, socket.assigns.time_period, :sub_time_periods, add_func)
+    # IO.inspect(result)
 
     {:noreply,
      socket
-     |> put_flash(:info, "Subtopic Added")
-     |> push_redirect(to: Routes.topic_show_path(socket, :show, socket.assigns.topic))}
+     |> put_flash(:info, "topic added or pulled")
+     |> push_redirect(to: Routes.topic_show_path(socket, :confirm, socket.assigns.time_period))
+    }
   end
 
   defp add_association(new_assoc, parent_object, atom_name, assoc_func) do

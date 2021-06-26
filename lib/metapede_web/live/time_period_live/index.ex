@@ -37,7 +37,6 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
 
     IO.puts(inspect(data))
 
-    # {:noreply, socket}
     case Collection.create_topic(data) do
       {:ok, new_topic} ->
         {:noreply,
