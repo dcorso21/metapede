@@ -6,14 +6,6 @@
 <% end %>
 
 
-<%= if @live_action == :confirm do %>
-<%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
-	id: :create_form,
-	new_topic: @new_topic,
-	return_to: Routes.time_period_show_path(@socket, :main, @time_period) %>
-<% end %>
-
-
 <div><%= live_redirect "Back", to: Routes.time_period_index_path(@socket, :main) %></div>
 <%= if @time_period.topic.thumbnail != nil do %>
 	<img src=<%= @time_period.topic.thumbnail %>>
@@ -32,6 +24,11 @@ id:
 </div>
 
 <div>
-	<%= inspect( @time_period ) %>
+	<%= inspect( @time_period.sub_time_periods ) %>
 </div>
 <div><%= live_patch "Search for new topic", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
+
+
+<%= if @new_topic do %>
+<div><%= inspect(@new_topic) %></div>
+<% end %>

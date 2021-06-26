@@ -10,6 +10,7 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
      |> assign(new_topic: %{})}
   end
 
+  # For confirming topics
   def handle_params(%{"id" => id}, _url, socket) do
     new_topic = Collection.get_topic!(id)
 

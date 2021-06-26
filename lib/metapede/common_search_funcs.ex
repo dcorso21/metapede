@@ -34,8 +34,8 @@ defmodule Metapede.CommonSearchFuncs do
       %Topic{time_period: nil} ->
         {:existing, topic}
 
-      %Topic{time_period: _found} ->
-        {:has_time_period, topic}
+      %Topic{time_period: _found} = with_period ->
+        {:has_time_period, with_period}
     end
   end
 
