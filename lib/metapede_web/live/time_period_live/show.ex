@@ -1,9 +1,6 @@
 defmodule MetapedeWeb.TimePeriodLive.Show do
   use MetapedeWeb, :live_view
-  alias Metapede.Repo
-  alias Metapede.Collection
-  alias Metapede.Collection.Topic
-  alias MetapedeWeb.Controllers.Transforms.WikiTransforms
+  alias Metapede.CommonSearchFuncs
 
   def handle_params(%{"id" => id}, _url, socket) do
     tp = Metapede.TimelineContext.TimePeriodContext.get_time_period!(id)
@@ -11,30 +8,14 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
-    sub_topic =
-      Poison.decode!(topic)
-      |> WikiTransforms.transform_wiki_data()
-
-    existing_ids = Collection.check_for_page_id(sub_topic["page_id"])
-    # new_topic = get_topic_info(sub_topic, existing_ids)
-    # add_func = fn el -> [el | socket.assigns.time_period.sub_time_periods] end
-    # result = add_association(new_topic, socket.assigns.time_period, :sub_time_periods, add_func)
-    # IO.inspect(result)
+    sub_time_period = CommonSearchFuncs.decode_and_format_topic(topic)
+    add_func = fn el -> [el | socket.assigns.time_period.sub_time_periods] end
+    CommonSearchFuncs.add_association(sub_time_period, socket.assigns.time_period, :sub_time_period, add_func)
 
     {:noreply,
      socket
      |> put_flash(:info, "topic added or pulled")
-     |> push_redirect(to: Routes.topic_show_path(socket, :confirm, socket.assigns.time_period))
-    }
+     |> push_redirect(to: Routes.time_period_show_path(socket, :show, socket.assigns.time_period))}
   end
 
-  defp add_association(new_assoc, parent_object, atom_name, assoc_func) do
-    parent_object
-    |> Ecto.Changeset.change()
-    |> Ecto.Changeset.put_assoc(atom_name, assoc_func.(new_assoc))
-    |> Repo.update!()
-  end
-
-  defp get_topic_info(_params, [id]), do: Collection.get_topic!(id)
-  defp get_topic_info(params, []), do: Topic.changeset(%Topic{}, params)
 end
