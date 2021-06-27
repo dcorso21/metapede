@@ -2,11 +2,6 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   use MetapedeWeb, :live_component
   alias Metapede.Collection
 
-  # def mount(_params, _session, socket) do
-  #   socket = assign(socket, key: value)
-  #   {:ok, socket}
-  # end
-
   def update(assigns, socket) do
     {:ok,
      socket

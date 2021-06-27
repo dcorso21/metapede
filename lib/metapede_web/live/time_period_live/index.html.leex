@@ -15,26 +15,10 @@
 
 <h1>Time periods</h1>
 <div>
-<%= for period <- @time_periods do %>
-	<div>
-		<strong>
-		<%= period.topic.title %>
-		</strong>
-	</div>
-	<div>
-		<em>
-		<%= period.topic.description %>
-		</em>
-	</div>
-	<div><%= period.start_datetime %> - <%= period.end_datetime %></div>
-	<span><%= live_redirect "Show", to: Routes.time_period_show_path(@socket, :show, period) %></span>
-	<br>
-	<br>
 
+<%= for period <- @time_periods do %>
+      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period%>
 <% end %>
-<br>
-<br>
-<br>
 </div>
 
 <div><%= live_patch "Add New Time Period", to: Routes.time_period_index_path(@socket, :search) %></div>
