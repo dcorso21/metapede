@@ -32,4 +32,5 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
   def delete_time_period(%TimePeriod{} = time_period) do
     Repo.delete(time_period)
   end
+
 end

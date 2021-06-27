@@ -1,18 +1,10 @@
 defmodule MetapedeWeb.TimePeriodLive.Show do
   use MetapedeWeb, :live_view
   alias Metapede.CommonSearchFuncs
+  alias Metapede.TimelineContext.TimePeriodContext
 
-  def handle_params(%{"id" => id}, _url, socket) do
-    tp = Metapede.TimelineContext.TimePeriodContext.get_time_period!(id)
-
-    {:noreply,
-     socket
-     |> assign(time_period: tp)
-     |> assign(new_topic: nil)}
-  end
-
-  def handle_params(%{"id" => id, "new_assoc_id" => assoc_id}, _url, socket) do
-    tp = Metapede.TimelineContext.TimePeriodContext.get_time_period!(id)
+  def handle_params(%{"id" => id, "new_assoc_id" => assoc_id} = params, _url, socket) do
+    tp = TimePeriodContext.get_time_period!(id)
     assoc_topic = Metapede.Collection.get_topic!(assoc_id)
 
     {:noreply,
@@ -21,12 +13,48 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
      |> assign(new_topic: assoc_topic)}
   end
 
+  def handle_params(%{"id" => id}, _url, socket) do
+    tp = TimePeriodContext.get_time_period!(id)
+
+    {:noreply,
+     socket
+     |> assign(time_period: tp)
+     |> assign(new_topic: nil)}
+  end
+
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
     topic
     |> CommonSearchFuncs.decode_and_format_topic()
     |> CommonSearchFuncs.create_if_new()
     |> CommonSearchFuncs.check_for_existing_time_period()
     |> custom_redirect(socket)
+  end
+
+  def handle_event("confirmed_period", %{"Elixir.Metapede.Timeline.TimePeriod" => new_period}, socket) do
+    case TimePeriodContext.create_time_period(new_period) do
+      {:ok, saved_period} ->
+        loaded = Metapede.Repo.preload(saved_period, [:topic])
+
+        Metapede.CommonSearchFuncs.add_association(
+          socket.assigns.new_topic,
+          loaded,
+          :topic,
+          fn el -> el end
+        )
+
+        {:noreply,
+         socket
+         |> put_flash(:info, "New Time Period Created")
+         |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
+
+      {:error, message} ->
+        IO.puts(inspect(message))
+
+        {:noreply,
+         socket
+         |> put_flash(:error, "An Error Occurred")
+         |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
+    end
   end
 
   def custom_redirect({:ok, new_topic}, socket) do
