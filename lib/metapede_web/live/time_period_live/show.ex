@@ -3,7 +3,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   alias Metapede.CommonSearchFuncs
   alias Metapede.TimelineContext.TimePeriodContext
 
-  def handle_params(%{"id" => id, "new_assoc_id" => assoc_id} = params, _url, socket) do
+  def handle_params(%{"id" => id, "new_assoc_id" => assoc_id}, _url, socket) do
     tp = TimePeriodContext.get_time_period!(id)
     assoc_topic = Metapede.Collection.get_topic!(assoc_id)
 
@@ -30,22 +30,27 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     |> custom_redirect(socket)
   end
 
-  def handle_event("confirmed_period", %{"Elixir.Metapede.Timeline.TimePeriod" => new_period}, socket) do
+  def handle_event(
+        "confirmed_period",
+        %{"Elixir.Metapede.Timeline.TimePeriod" => new_period},
+        socket
+      ) do
     case TimePeriodContext.create_time_period(new_period) do
       {:ok, saved_period} ->
         loaded = Metapede.Repo.preload(saved_period, [:topic])
 
-        Metapede.CommonSearchFuncs.add_association(
-          socket.assigns.new_topic,
-          loaded,
-          :topic,
-          fn el -> el end
-        )
+        resp =
+          Metapede.CommonSearchFuncs.add_association(
+            socket.assigns.new_topic,
+            loaded,
+            :topic,
+            fn el -> el end
+          )
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "New Time Period Created")
-         |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
+        IO.puts("THIS RESPONSE")
+        IO.puts(inspect(resp))
+
+        add_subtopic(resp, socket)
 
       {:error, message} ->
         IO.puts(inspect(message))
@@ -55,6 +60,22 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
          |> put_flash(:error, "An Error Occurred")
          |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
     end
+  end
+
+  def add_subtopic(sub_period, socket) do
+    par_period = socket.assigns.time_period
+
+    Metapede.CommonSearchFuncs.add_association(
+      sub_period,
+      par_period,
+      :sub_time_periods,
+      fn el -> [el | par_period.sub_time_periods] end
+    )
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "New Subtopic Added: #{sub_period.topic.title}")
+     |> push_redirect(to: Routes.time_period_show_path(socket, :show, par_period))}
   end
 
   def custom_redirect({:ok, new_topic}, socket) do

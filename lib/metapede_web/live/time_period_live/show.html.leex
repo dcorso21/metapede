@@ -34,9 +34,4 @@ id:
 <div>
 	<%= inspect( @time_period.sub_time_periods ) %>
 </div>
-<div><%= live_patch "Search for new topic", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
-
-
-<%= if @new_topic do %>
-<div><%= inspect(@new_topic) %></div>
-<% end %>
+<div><%= live_patch "Add Sub Period", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>

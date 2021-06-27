@@ -35,29 +35,4 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
     </div>
     """
   end
-
-  # def handle_event("save", %{"Elixir.Metapede.Timeline.TimePeriod" => new_period}, socket) do
-  #   case TimePeriodContext.create_time_period(new_period) do
-  #     {:ok, saved_period} ->
-  #       Metapede.CommonSearchFuncs.add_association(
-  #         socket.assigns.new_topic,
-  #         saved_period,
-  #         :topic,
-  #         fn el -> el end
-  #       )
-
-  #       {:noreply,
-  #        socket
-  #        |> put_flash(:info, "New Time Period Created")
-  #        |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
-
-  #     {:error, message} ->
-  #       IO.puts(inspect(message))
-
-  #       {:noreply,
-  #        socket
-  #        |> put_flash(:error, "An Error Occurred")
-  #        |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
-  #   end
-  # end
 end
