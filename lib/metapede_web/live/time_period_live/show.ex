@@ -4,7 +4,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def handle_params(%{"id" => id}, _url, socket) do
     tp = Metapede.TimelineContext.TimePeriodContext.get_time_period!(id)
-    # assoc_topic = Metapede.Collection.get_topic!(assoc_id)
 
     {:noreply,
      socket
@@ -31,9 +30,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def custom_redirect({:ok, new_topic}, socket) do
-    IO.puts("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-    IO.inspect(new_topic)
-
     {
       :noreply,
       socket
@@ -59,9 +55,12 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
       |> assign(:new_topic, new_topic)
       |> push_redirect(
         to:
-          Routes.time_period_show_path(socket, :confirm, socket.assigns.time_period.id, %{
-            new_assoc_id: new_topic.id
-          })
+          Routes.time_period_show_path(
+            socket,
+            :confirm,
+            socket.assigns.time_period.id,
+            new_topic.id
+          )
       )
     }
   end
