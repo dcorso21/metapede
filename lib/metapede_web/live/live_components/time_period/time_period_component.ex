@@ -10,7 +10,8 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
 
   def render(assigns) do
     ~L"""
-    <div class="period_wrapper" phx-click="show_sub_periods" phx-target="<%= @myself %>">
+    <div class="period_outer_wrapper">
+    <div class="period_inner_wrapper" phx-click="show_sub_periods" phx-target="<%= @myself %>">
         <img src="<%= @period.topic.thumbnail %>" alt="">
         <div class="info_center">
             <div class="period_title">
@@ -25,8 +26,12 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
         <%= live_redirect "Show Period", to: Routes.time_period_show_path(@socket, :show, @period)%>
         </div>
 
+        </div>
         <%= if @show_sub_periods do %>
-            <div>Hello</div>
+
+            <%= for period <- Metapede.Repo.preload(@period.sub_time_periods, [:topic, :sub_time_periods]) do %>
+                <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id%>
+            <% end %>
         <% end %>
     </div>
     """
