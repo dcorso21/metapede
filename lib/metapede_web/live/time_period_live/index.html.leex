@@ -17,7 +17,7 @@
 <div>
 
 <%= for period <- @time_periods do %>
-      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period%>
+      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id%>
 <% end %>
 </div>
 

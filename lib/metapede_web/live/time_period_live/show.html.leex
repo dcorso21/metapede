@@ -33,7 +33,7 @@ id:
 
 <h2>Sub Periods</h2>
 <%= for period <- Metapede.Repo.preload(@time_period.sub_time_periods, [:topic]) do %>
-      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period%>
+      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id%>
 <% end %>
 
 <div><%= live_patch "Add Sub Period", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
