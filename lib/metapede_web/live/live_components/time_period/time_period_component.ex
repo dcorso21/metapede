@@ -30,7 +30,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
         <%= if @show_sub_periods do %>
 
             <%= for period <- Metapede.Repo.preload(@period.sub_time_periods, [:topic, :sub_time_periods]) do %>
-                <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id%>
+                <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: "parent_#{@period.id}_sub_#{period.id}" %>
             <% end %>
         <% end %>
     </div>
