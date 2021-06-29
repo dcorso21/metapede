@@ -7,7 +7,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
     {:ok,
      socket
      |> assign(:period, assigns.period)
-     |> assign(:breadcrumbs, "hello")
+     |> assign(:breadcrumbs, assigns.breadcrumbs)
      |> assign(:patch, assigns.patch)
      |> assign(:show_sub_periods, false)}
   end
@@ -26,7 +26,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
               </div>
           </div>
           <div><%= @period.start_datetime %> - <%= @period.end_datetime %></div>
-          <div phx-click="update_breadcrumbs" phx-value-crumb = <%= {@period.title.title, @period.id} %>>
+          <div phx-click="update_breadcrumbs">
           <%= if @patch do %>
             <%= live_patch "Show Period", to: Routes.time_period_show_path(@socket, :show, @period)%>
           <% else %>
@@ -41,6 +41,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
                 <%= live_component @socket,
                     MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent,
                     period: period,
+                    breadcrumbs: [{"hello"}, 1],
                     id: "parent_#{@period.id}_sub_#{period.id}",
                     patch: @patch
                 %>

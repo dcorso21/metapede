@@ -6,7 +6,9 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(new_topic: nil)}
+     |> assign(new_topic: nil)
+     |> assign(breadcrumbs: [{"time periods", nil}])
+    }
   end
 
   def handle_params(params, _url, socket) do
@@ -54,9 +56,11 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     end
   end
 
-  def handle_event("update_breadcrumbs", crumb, socket) do
-    socket = assign(socket, key: value)
-    {:noreply, socket}
+  def handle_event("update_breadcrumbs", _, socket) do
+    tp = socket.assigns.time_period
+    IO.puts("TIME PERIOD HERE")
+    IO.inspect(tp.topic.title)
+    {:noreply, socket |> assign(breadcrumbs: [{tp.topic.title, tp.id} | socket.assigns.breadcrumbs])}
   end
 
   def add_subtopic(sub_period, socket) do
