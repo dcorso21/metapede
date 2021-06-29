@@ -1,0 +1,40 @@
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+
+	.caret {
+		font-weight: 500;
+		font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	}
+
+    .crumb {
+        padding: 5px 10px;
+        margin: 5px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.3s all;
+
+        &:first-child {
+            margin-left: 0;
+            font-weight: bold;
+            font-size: 120%;
+        }
+
+        &:focus,
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.089);
+            color: var(--link_color);
+        }
+
+        &:last-of-type {
+            &:focus,
+            &:hover {
+                background-color: rgba(255, 255, 255, 0);
+                color: var(--main_color);
+				cursor: default;
+            }
+        }
+    }
+}
