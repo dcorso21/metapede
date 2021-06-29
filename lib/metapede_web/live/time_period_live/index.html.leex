@@ -13,11 +13,21 @@
 	return_to: Routes.time_period_index_path(@socket, :main) %>
 <% end %>
 
+<div>
+<%= inspect(@breadcrumbs) %>
+</div>
+
 <h1>Time periods</h1>
 <div>
 
 <%= for period <- @time_periods do %>
-      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id, patch: false%>
+      <%= live_component @socket,
+		MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent,
+		period: period,
+		id: period.id,
+		patch: false,
+		breadcrumbs: [{"time_periods", nil}]
+	  %>
 <% end %>
 </div>
 
