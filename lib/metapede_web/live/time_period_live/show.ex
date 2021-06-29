@@ -7,7 +7,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:ok,
      socket
      |> assign(new_topic: nil)
-     |> assign(breadcrumbs: [{"time periods", nil}])
+     |> assign(breadcrumbs: [])
     }
   end
 

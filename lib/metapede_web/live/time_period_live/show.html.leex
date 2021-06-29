@@ -13,6 +13,15 @@
 	return_to: Routes.time_period_show_path(@socket, :show, @time_period) %>
 <% end %>
 
+<div>
+<%= live_component @socket,
+	MetapedeWeb.LiveComponents.BreadcrumbsComponent,
+	root: "Time Periods",
+	breadcrumbs: @breadcrumbs,
+	current_title: @time_period.topic.title
+%>
+
+</div>
 
 <%= if @time_period.topic.thumbnail != nil do %>
 	<img src=<%= @time_period.topic.thumbnail %>>
@@ -36,7 +45,3 @@ id:
 <% end %>
 
 <div><%= live_patch "Add Sub Period", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
-
-<div>
-<%= inspect(@breadcrumbs) %>
-</div>
