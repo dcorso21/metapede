@@ -14,7 +14,8 @@
 <% end %>
 
 
-<div><%= live_redirect "Back", to: Routes.time_period_index_path(@socket, :main) %></div>
+<div><%= live_patch "Back", to: Routes.time_period_index_path(@socket, :main) %></div>
+
 <%= if @time_period.topic.thumbnail != nil do %>
 	<img src=<%= @time_period.topic.thumbnail %>>
 <% end %>
@@ -32,8 +33,10 @@ id:
 </div>
 
 <h2>Sub Periods</h2>
-<%= for period <- Metapede.Repo.preload(@time_period.sub_time_periods, [:topic]) do %>
+<%= for period <- Metapede.Repo.preload(@time_period.sub_time_periods, [:topic, :events, :parent_time_periods, :sub_time_periods]) do %>
       <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id%>
 <% end %>
 
 <div><%= live_patch "Add Sub Period", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
+
+<div phx-click="test_patch">Test</div>

@@ -4,6 +4,8 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
   alias Metapede.Collection
 
   def mount(_params, _session, socket) do
+    IO.inspect(socket.assigns)
+
     {:ok,
      socket
      |> assign(time_periods: TimePeriodContext.list_time_periods())

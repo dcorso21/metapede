@@ -3,23 +3,21 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   alias Metapede.CommonSearchFuncs
   alias Metapede.TimelineContext.TimePeriodContext
 
-  def handle_params(%{"id" => id, "new_assoc_id" => assoc_id}, _url, socket) do
-    tp = TimePeriodContext.get_time_period!(id)
-    assoc_topic = Metapede.Collection.get_topic!(assoc_id)
-
-    {:noreply,
-     socket
-     |> assign(time_period: tp)
-     |> assign(new_topic: assoc_topic)}
+  def mount(_params, _session, socket) do
+    socket = assign(socket, new_topic: nil)
+    {:ok, socket}
   end
 
-  def handle_params(%{"id" => id}, _url, socket) do
+  def handle_params(%{"id" => id} = params, _url, socket) do
+    IO.puts("PARAMS")
+    IO.inspect(params)
+    IO.puts("SOCKET")
+    IO.inspect(socket.assigns)
     tp = TimePeriodContext.get_time_period!(id)
 
     {:noreply,
      socket
-     |> assign(time_period: tp)
-     |> assign(new_topic: nil)}
+     |> assign(time_period: tp)}
   end
 
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
@@ -47,9 +45,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
             fn el -> el end
           )
 
-        IO.puts("THIS RESPONSE")
-        IO.puts(inspect(resp))
-
         add_subtopic(resp, socket)
 
       {:error, message} ->
@@ -75,44 +70,31 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply,
      socket
      |> put_flash(:info, "New Subtopic Added: #{sub_period.topic.title}")
-     |> push_redirect(to: Routes.time_period_show_path(socket, :show, par_period))}
+     |> push_patch(to: Routes.time_period_show_path(socket, :show, par_period))}
   end
 
-  def custom_redirect({:ok, new_topic}, socket) do
+  def patch_for_confirm(message, new_topic, socket) do
     {
       :noreply,
       socket
-      |> put_flash(:info, "Topic created for timeline")
+      |> put_flash(:info, message)
       |> assign(:new_topic, new_topic)
-      |> push_redirect(
+      |> push_patch(
         to:
           Routes.time_period_show_path(
             socket,
             :confirm,
-            socket.assigns.time_period.id,
-            new_topic.id
+            socket.assigns.time_period.id
           )
       )
     }
   end
 
-  def custom_redirect({:existing, new_topic}, socket) do
-    {
-      :noreply,
-      socket
-      |> put_flash(:info, "Topic found")
-      |> assign(:new_topic, new_topic)
-      |> push_redirect(
-        to:
-          Routes.time_period_show_path(
-            socket,
-            :confirm,
-            socket.assigns.time_period.id,
-            new_topic.id
-          )
-      )
-    }
-  end
+  def custom_redirect({:ok, new_topic}, socket),
+    do: patch_for_confirm("Topic created for timeline", new_topic, socket)
+  def custom_redirect({:existing, new_topic}, socket),
+    do: patch_for_confirm("Topic found", new_topic, socket)
+
 
   def custom_redirect({:has_time_period, topic}, socket), do: adding(topic, socket)
 
