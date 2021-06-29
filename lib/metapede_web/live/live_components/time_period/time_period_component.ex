@@ -5,6 +5,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
     {:ok,
      socket
      |> assign(:period, assigns.period)
+     |> assign(:patch, assigns.patch)
      |> assign(:show_sub_periods, false)}
   end
 
@@ -23,14 +24,18 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
         </div>
         <div><%= @period.start_datetime %> - <%= @period.end_datetime %></div>
         <div>
-        <%= live_redirect "Show Period", to: Routes.time_period_show_path(@socket, :show, @period)%>
+        <%= if @patch do %>
+          <%= live_patch "Show Period", to: Routes.time_period_show_path(@socket, :show, @period)%>
+        <% else %>
+          <%= live_redirect "Show Period", to: Routes.time_period_show_path(@socket, :show, @period)%>
+        <% end %>
         </div>
 
         </div>
         <%= if @show_sub_periods do %>
 
             <%= for period <- Metapede.Repo.preload(@period.sub_time_periods, [:topic, :sub_time_periods]) do %>
-                <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: "parent_#{@period.id}_sub_#{period.id}" %>
+                <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: "parent_#{@period.id}_sub_#{period.id}", patch: @patch %>
             <% end %>
         <% end %>
     </div>
