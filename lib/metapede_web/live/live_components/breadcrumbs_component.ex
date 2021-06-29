@@ -6,10 +6,10 @@ defmodule MetapedeWeb.LiveComponents.BreadcrumbsComponent do
     ~L"""
     <div>
         <span>
-            <%= @root %>
+              <%= live_patch @root, to: @root_path%>
         </span>
-        <%= for crumb <- Enum.reverse(@breadcrumbs) do %>
-            <%= live_component @socket, Crumb, crumb: crumb %>
+        <%= for { crumb, index } <- Enum.with_index(Enum.reverse(@breadcrumbs)) do %>
+            <%= live_component @socket, Crumb, crumb: crumb, index: index %>
         <% end %>
         <span> > <%= @current_title %></span>
     </div>
@@ -23,7 +23,10 @@ defmodule MetapedeWeb.LiveComponents.Crumb do
   def render(assigns) do
     ~L"""
     <span> >
-    <%= live_patch elem(@crumb, 0), to: Routes.time_period_show_path(@socket, :show, elem(@crumb, 1))%>
+        <%= live_patch elem(@crumb, 0),
+        to: Routes.time_period_show_path(@socket, :show, elem(@crumb, 1)),
+        phx_click: "reset_breadcrumbs" <> Integer.to_string(@index)
+        %>
     </span>
     """
   end

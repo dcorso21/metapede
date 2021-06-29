@@ -17,6 +17,7 @@
 <%= live_component @socket,
 	MetapedeWeb.LiveComponents.BreadcrumbsComponent,
 	root: "Time Periods",
+	root_path: Routes.time_period_index_path(@socket, :main),
 	breadcrumbs: @breadcrumbs,
 	current_title: @time_period.topic.title
 %>

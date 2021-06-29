@@ -30,7 +30,7 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
      |> assign(time_periods: TimePeriodContext.list_time_periods())}
   end
 
-  def handle_event("update_breadcrumbs", _data, _socket), do: nil
+  def handle_event("update_breadcrumbs", _data, socket), do: {:noreply, socket}
 
   def handle_event("new_time_period", %{"topic" => selected_topic}, socket) do
     selected_topic

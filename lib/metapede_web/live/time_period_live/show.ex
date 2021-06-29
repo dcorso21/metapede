@@ -58,9 +58,21 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def handle_event("update_breadcrumbs", _, socket) do
     tp = socket.assigns.time_period
-    IO.puts("TIME PERIOD HERE")
-    IO.inspect(tp.topic.title)
     {:noreply, socket |> assign(breadcrumbs: [{tp.topic.title, tp.id} | socket.assigns.breadcrumbs])}
+  end
+
+  def handle_event("reset_breadcrumbs" <> index, _, socket) do
+    # IO.puts("CURRENT")
+    # IO.inspect(socket.assigns.breadcrumbs)
+    # IO.puts("RESET")
+
+    updated_breadcrumbs =
+      socket.assigns.breadcrumbs
+      |> Enum.reverse()
+      |> Enum.take(String.to_integer(index))
+      |> Enum.reverse()
+
+    {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
   end
 
   def add_subtopic(sub_period, socket) do

@@ -2,8 +2,6 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
   use MetapedeWeb, :live_component
 
   def update(assigns, socket) do
-    IO.inspect(assigns)
-
     {:ok,
      socket
      |> assign(:period, assigns.period)
