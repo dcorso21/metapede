@@ -46,7 +46,8 @@
 }
 
 .phx-modal-content {
-    background-color: black;
+    border-radius: 20px;
+    background-color: var(--modal_grey);
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;

@@ -3,21 +3,17 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   alias Metapede.CommonSearchFuncs
   alias Metapede.TimelineContext.TimePeriodContext
 
-  def mount(_params, _session, socket) do
-    socket = assign(socket, new_topic: nil)
-    {:ok, socket}
+  def mount(params, _session, socket) do
+    tp = TimePeriodContext.get_time_period!(params["id"])
+
+    {:ok,
+     socket
+     |> assign(new_topic: nil)
+     |> assign(time_period: tp)}
   end
 
-  def handle_params(%{"id" => id} = params, _url, socket) do
-    IO.puts("PARAMS")
-    IO.inspect(params)
-    IO.puts("SOCKET")
-    IO.inspect(socket.assigns)
-    tp = TimePeriodContext.get_time_period!(id)
-
-    {:noreply,
-     socket
-     |> assign(time_period: tp)}
+  def handle_params(_params, _url, socket) do
+    {:noreply, socket}
   end
 
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
@@ -92,9 +88,9 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def custom_redirect({:ok, new_topic}, socket),
     do: patch_for_confirm("Topic created for timeline", new_topic, socket)
+
   def custom_redirect({:existing, new_topic}, socket),
     do: patch_for_confirm("Topic found", new_topic, socket)
-
 
   def custom_redirect({:has_time_period, topic}, socket), do: adding(topic, socket)
 

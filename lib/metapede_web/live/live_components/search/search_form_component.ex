@@ -12,9 +12,10 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   def render(assigns) do
     ~L"""
     <div id="form_wrapper">
+    <h1>Search</h1>
     <%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit", autocomplete: "off", phx_target: @myself], fn f -> %>
       <div id="form_elements">
-        <%= search_input f, :query, [id: "wiki_search_input", placeholder: "Search"]%>
+        <%= search_input f, :query, [id: "wiki_search_input"]%>
 
       </div>
     <% end %>
