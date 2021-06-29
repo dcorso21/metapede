@@ -22,7 +22,9 @@ defmodule MetapedeWeb.LiveComponents.Crumb do
 
   def render(assigns) do
     ~L"""
-    <span> > <%= elem(@crumb, 0) %></span>
+    <span> >
+    <%= live_patch elem(@crumb, 0), to: Routes.time_period_show_path(@socket, :show, elem(@crumb, 1))%>
+    </span>
     """
   end
 end
