@@ -46,3 +46,14 @@ id:
 <% end %>
 
 <div><%= live_patch "Add Sub Period", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
+
+<div
+phx-hook="Testing"
+id="ma-test"
+data-period="<%= Poison.encode!(
+	Metapede.Repo.preload(
+		@time_period.sub_time_periods,
+		[:topic, :events, :parent_time_periods, :sub_time_periods]
+	)
+) %>"
+></div>
