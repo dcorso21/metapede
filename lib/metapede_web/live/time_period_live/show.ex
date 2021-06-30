@@ -7,8 +7,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:ok,
      socket
      |> assign(new_topic: nil)
-     |> assign(breadcrumbs: [])
-    }
+     |> assign(breadcrumbs: [])}
   end
 
   def handle_params(params, _url, socket) do
@@ -56,21 +55,20 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     end
   end
 
-  def handle_event("update_breadcrumbs", _, socket) do
+  def handle_event("update_breadcrumbs", %{"breadcrumbs" => crumbs}, socket) do
+    nc = crumbs |> Poison.decode!()
     tp = socket.assigns.time_period
-    {:noreply, socket |> assign(breadcrumbs: [{tp.topic.title, tp.id} | socket.assigns.breadcrumbs])}
+    cp = [%{"name" => tp.topic.title, "id" => tp.id}]
+    up = socket.assigns.breadcrumbs ++ cp ++ nc
+    {:noreply,
+     socket
+     |> assign(breadcrumbs: up)}
   end
 
   def handle_event("reset_breadcrumbs" <> index, _, socket) do
-    # IO.puts("CURRENT")
-    # IO.inspect(socket.assigns.breadcrumbs)
-    # IO.puts("RESET")
-
     updated_breadcrumbs =
       socket.assigns.breadcrumbs
-      |> Enum.reverse()
       |> Enum.take(String.to_integer(index))
-      |> Enum.reverse()
 
     {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
   end

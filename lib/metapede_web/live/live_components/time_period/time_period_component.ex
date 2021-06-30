@@ -2,13 +2,25 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
   use MetapedeWeb, :live_component
 
   def update(assigns, socket) do
+
+    IO.puts(
+      "UPDATE SOCKET"
+    )
+
+    IO.inspect(assigns)
+
+
     {:ok,
      socket
      |> assign(:period, assigns.period)
-     |> assign(:breadcrumbs, assigns.breadcrumbs)
+     |> assign(:trace, make_trace(assigns))
      |> assign(:patch, assigns.patch)
      |> assign(:show_sub_periods, false)}
   end
+
+  # defp make_trace(%{"trace" => trace}), do: trace
+  defp make_trace(%{trace: trace}), do: trace
+  defp make_trace(_assigns), do: []
 
   def render(assigns) do
     ~L"""
@@ -24,7 +36,10 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
               </div>
           </div>
           <div><%= @period.start_datetime %> - <%= @period.end_datetime %></div>
-          <div phx-click="update_breadcrumbs">
+          <div
+            phx-click="update_breadcrumbs"
+            phx-value-breadcrumbs="<%= Poison.encode!(@trace) %>"
+            >
           <%= if @patch do %>
             <%= live_patch "Show Period", to: Routes.time_period_show_path(@socket, :show, @period)%>
           <% else %>
@@ -39,7 +54,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
                 <%= live_component @socket,
                     MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent,
                     period: period,
-                    breadcrumbs: [{"hello"}, 1],
+                    trace: @trace ++ [%{"name" => @period.topic.title, "id" => @period.id}],
                     id: "parent_#{@period.id}_sub_#{period.id}",
                     patch: @patch
                 %>
