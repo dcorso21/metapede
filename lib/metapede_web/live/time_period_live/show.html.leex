@@ -49,8 +49,8 @@ id:
 
 <div
 phx-hook="Testing"
-id="ma-test"
-data-period="<%= Poison.encode!(
+id="sub_periods"
+data-sub_periods="<%= Poison.encode!(
 	Metapede.Repo.preload(
 		@time_period.sub_time_periods,
 		[:topic, :events, :parent_time_periods, :sub_time_periods]
