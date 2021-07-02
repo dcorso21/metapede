@@ -1,0 +1,11 @@
+.date_selector {
+	background-color: var(--muted_grey);
+	padding: 12px;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: nowrap;
+	width: max-content;
+}
