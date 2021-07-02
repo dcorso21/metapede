@@ -16,18 +16,14 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
           id: "time_period_form",
           autocomplete: "off",
           phx_submit: @event_name %>
-
-        <div>
-            <%= label f, :start_datetime %>
-            <%= text_input f, :start_datetime %>
-            <%= error_tag f, :start_datetime %>
+        <div id="dateranger" phx-hook="DateRange">
+                    <%= text_input f, :start_datetime %>
+                    <%= error_tag f, :start_datetime %>
+            <span>to</span>
+                    <%= text_input f, :end_datetime %>
+                    <%= error_tag f, :end_datetime %>
         </div>
 
-        <div>
-            <%= label f, :end_datetime %>
-            <%= text_input f, :end_datetime %>
-            <%= error_tag f, :end_datetime %>
-        </div>
 
 
         <%= submit "Save", phx_disable_with: "Saving..." %>

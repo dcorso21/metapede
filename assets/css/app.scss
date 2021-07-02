@@ -5,6 +5,8 @@
 @import "./basic/variables";
 @import "./basic/colors";
 
+@import '../node_modules/vanillajs-datepicker/sass/datepicker.scss';
+
 @import "./components/layout/basic";
 @import "./components/layout/header";
 

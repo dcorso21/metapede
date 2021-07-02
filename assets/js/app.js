@@ -18,9 +18,10 @@ import { Socket } from "phoenix";
 import topbar from "topbar";
 import { LiveSocket } from "phoenix_live_view";
 import Testing from "./hooks/test_hook";
-import SearchHook from './hooks/search_bar'
+import SearchHook from "./hooks/search_bar";
+import DateRange from "./hooks/datepicker";
 
-let hooks = { Testing, SearchHook };
+let hooks = { Testing, SearchHook, DateRange };
 
 let csrfToken = document
     .querySelector("meta[name='csrf-token']")

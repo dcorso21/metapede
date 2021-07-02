@@ -57,3 +57,7 @@ data-sub_periods="<%= Poison.encode!(
 	)
 ) %>"
 ></div>
+
+
+
+<%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent %>
