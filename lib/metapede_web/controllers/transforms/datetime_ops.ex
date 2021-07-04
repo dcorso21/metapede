@@ -9,7 +9,7 @@ defmodule MetapedeWeb.Controllers.Transforms.DatetimeOps do
     dt
   end
 
-  defp format_datetime(year, month, day), do: "#{year}-#{month}-#{day} 00:00:00"
+  defp format_datetime(year, month, day), do: "#{year}-#{month}-#{day}T00:00:00Z"
 
   defp ensure_2digits(entry), do: if(String.length(entry) == 1, do: "0#{entry}", else: entry)
 
