@@ -50,6 +50,9 @@ id:
 <div
 phx-hook="Testing"
 id="sub_periods"
+data-main_period="<%= Poison.encode!(
+	Map.drop(@time_period, [:sub_time_periods])
+) %>"
 data-sub_periods="<%= Poison.encode!(
 	Metapede.Repo.preload(
 		@time_period.sub_time_periods,

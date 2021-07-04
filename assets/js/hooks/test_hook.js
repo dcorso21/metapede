@@ -26,7 +26,8 @@ const tlFuncs = {
 
     render(el) {
         let sub_periods = JSON.parse(el.dataset.sub_periods);
-        console.log(sub_periods);
+        let main_period = JSON.parse(el.dataset.main_period);
+        console.log({sub_periods, main_period});
         sub_periods = this.transform(sub_periods);
 
         d3.select(el)
