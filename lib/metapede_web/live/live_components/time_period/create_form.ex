@@ -5,6 +5,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
   def render(assigns) do
     ~L"""
     <%= if @new_topic != nil do %>
+    <div class="confirm_box">
       <div class="left_form">
           <h1>Confirm the period Creation Please</h1>
           <div>
@@ -29,6 +30,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
       <div class="right_page">
       <%= live_component @socket, MetapedeWeb.LiveComponents.WikiContent, page_id: @new_topic.page_id, id: @new_topic.title <> "_page" %>
       </div>
+    </div>
     <% end %>
     """
   end

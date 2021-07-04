@@ -1,5 +1,16 @@
-.date_options {
+.confirm_box {
 	display: flex;
-	align-items: center;
-	justify-content: flex-start;
+	height: 85vh;
+
+	.date_options {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.right_page {
+		height: 100%;
+		overflow-y: scroll;
+	}
+
 }
