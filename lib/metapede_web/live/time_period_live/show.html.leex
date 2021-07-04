@@ -7,7 +7,7 @@
 
 <%= if @live_action == :confirm do %>
 <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
-	event_name: "confirmed_period",
+	event_name: "confirmed_period2",
 	id: :confirm_form,
 	new_topic: @new_topic,
 	return_to: Routes.time_period_show_path(@socket, :show, @time_period) %>
@@ -57,7 +57,3 @@ data-sub_periods="<%= Poison.encode!(
 	)
 ) %>"
 ></div>
-
-
-
-<%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent, title: "Start Date" %>

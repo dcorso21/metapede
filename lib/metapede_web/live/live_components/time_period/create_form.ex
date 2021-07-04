@@ -4,31 +4,32 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
 
   def render(assigns) do
     ~L"""
-    <div>
-        <h1>Confirm the period Creation Please</h1>
-        <div>
-            Title: <%= @new_topic.title %>
-        </div>
-        <div>
-            Description: <%= @new_topic.description %>
-        </div>
-        <%= f = form_for Metapede.Timeline.TimePeriod, "#",
-          id: "time_period_form",
-          autocomplete: "off",
-          phx_submit: @event_name %>
-        <div id="dateranger" phx-hook="DateRange">
-                    <%= text_input f, :start_datetime %>
-                    <%= error_tag f, :start_datetime %>
-            <span>to</span>
-                    <%= text_input f, :end_datetime %>
-                    <%= error_tag f, :end_datetime %>
-        </div>
+    <%= if @new_topic != nil do %>
+      <div class="left_form">
+          <h1>Confirm the period Creation Please</h1>
+          <div>
+              Title: <%= @new_topic.title %>
+          </div>
+          <div>
+              Description: <%= @new_topic.description %>
+          </div>
+          <%= f = form_for Metapede.Timeline.TimePeriod, "#",
+            id: "time_period_form",
+            autocomplete: "off",
+            phx_submit: @event_name %>
 
+            <div class="date_options">
+              <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent, title: "Start Date", prefix: "sdt" %>
+              <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent, title: "End Date", prefix: "edt" %>
+            </div>
 
-
-        <%= submit "Save", phx_disable_with: "Saving..." %>
-        </form>
-    </div>
+          <%= submit "Save", phx_disable_with: "Saving..." %>
+          </form>
+      </div>
+      <div class="right_page">
+      <%= live_component @socket, MetapedeWeb.LiveComponents.WikiContent, page_id: @new_topic.page_id, id: @new_topic.title <> "_page" %>
+      </div>
+    <% end %>
     """
   end
 end

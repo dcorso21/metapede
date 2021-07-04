@@ -1,11 +1,12 @@
 .date_selector {
 	background-color: var(--muted_grey);
-	padding: 12px;
+	padding: 12px 20px;
+	margin: 10px;
 	border-radius: 20px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	flex-wrap: nowrap;
 	width: max-content;
 }

@@ -13,9 +13,13 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   def handle_params(params, _url, socket) do
     tp = TimePeriodContext.get_time_period!(params["id"])
 
+    new_topic =
+      if(params["new_topic_id"], do: Metapede.Collection.get_topic!(params["new_topic_id"]), else: nil)
+
     {:noreply,
      socket
-     |> assign(time_period: tp)}
+     |> assign(time_period: tp)
+     |> assign(new_topic: new_topic)}
   end
 
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
@@ -26,11 +30,12 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     |> custom_redirect(socket)
   end
 
-  def handle_event(
-        "confirmed_period",
-        %{"Elixir.Metapede.Timeline.TimePeriod" => new_period},
-        socket
-      ) do
+  def handle_event("confirmed_period2", params, socket) do
+    new_period = %{
+      start_datetime: make_datetimes(params, "sdt"),
+      end_datetime: make_datetimes(params, "edt"),
+    }
+
     case TimePeriodContext.create_time_period(new_period) do
       {:ok, saved_period} ->
         loaded = Metapede.Repo.preload(saved_period, [:topic])
@@ -46,12 +51,14 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
         add_subtopic(resp, socket)
 
       {:error, message} ->
-        IO.puts(inspect(message))
+        IO.inspect(message)
 
         {:noreply,
          socket
          |> put_flash(:error, "An Error Occurred")
          |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
+      resp ->
+        IO.inspect(resp)
     end
   end
 
@@ -60,6 +67,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     tp = socket.assigns.time_period
     cp = [%{"name" => tp.topic.title, "id" => tp.id}]
     up = socket.assigns.breadcrumbs ++ cp ++ nc
+
     {:noreply,
      socket
      |> assign(breadcrumbs: up)}
@@ -90,6 +98,8 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def patch_for_confirm(message, new_topic, socket) do
+    IO.inspect(new_topic)
+
     {
       :noreply,
       socket
@@ -100,7 +110,8 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
           Routes.time_period_show_path(
             socket,
             :confirm,
-            socket.assigns.time_period.id
+            socket.assigns.time_period.id,
+            %{"new_topic_id" => new_topic.id}
           )
       )
     }
@@ -148,5 +159,37 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
         [el | socket.assigns.time_period.sub_time_periods]
       end
     )
+  end
+
+  def make_datetimes(params, prefix) do
+    year = params[prefix <> "_year"]
+    month = params[prefix <> "_month"] |> get_month_number
+    day = params[prefix <> "_day"] #|> ensure_2digits()
+    dt = format_datetime(year, month, day)
+    IO.puts(dt)
+    dt
+  end
+
+  def format_datetime(year, month, day), do: "#{year}-#{month}-#{day} 00:00:00"
+
+  def ensure_2digits(entry), do: if(String.length(entry) == 1, do: "0#{entry}", else: entry)
+
+  def get_month_number(month_abbrev) do
+    months = %{
+      "Jan" => "01",
+      "Feb" => "02",
+      "Mar" => "03",
+      "Apr" => "04",
+      "May" => "05",
+      "Jun" => "06",
+      "Jul" => "07",
+      "Aug" => "08",
+      "Sep" => "09",
+      "Oct" => "10",
+      "Nov" => "11",
+      "Dec" => "12"
+    }
+
+    months[month_abbrev]
   end
 end

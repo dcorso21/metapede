@@ -19,33 +19,33 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent do
 
     ~L"""
     <div class="date_selector">
-    <h4 class="title"><%= @title %></h4>
-    <div class="year">
-    <input type="text" name="year"
-           placeholder="Year" />
-    <select>
-        <option selected>C.E.</option>
-        <option>B.C.E</option>
-    </select>
-    </div>
+        <h4 class="title"><%= @title %></h4>
+        <div class="year">
+            <input type="text" name="<%= @prefix <> "_year" %>"
+                placeholder="Year" />
+            <select name="<%= @prefix <> "_era" %>">
+                <option selected>C.E.</option>
+                <option>B.C.E</option>
+            </select>
+        </div>
 
-    <div class="month">
-    <select name="month">
-      <option selected>Month (empty)<option>
-        <%= for month <- months do %>
-            <option><%= month %></option>
-        <% end %>
-    </select>
-    </div>
+        <div class="month" name="<%= @prefix <> "_month" %>">
+            <select name="<%= @prefix <> "_month" %>">
+                <option value="Jan" selected>Month (empty)<option>
+                <%= for month <- months do %>
+                    <option><%= month %></option>
+                <% end %>
+            </select>
+        </div>
 
-    <div class="day">
-    <select name="day">
-        <option selected>Day (empty)</option>
-        <%= for day <- 1..31 do %>
-            <option> <%= day %></option>
-        <% end %>
-    </select>
-    </div>
+        <div class="day" >
+            <select name="<%= @prefix <> "_day" %>">
+                <option value="01" selected>Day (empty)</option>
+                <%= for day <- 1..31 do %>
+                    <option> <%= day %></option>
+                <% end %>
+            </select>
+        </div>
     </div>
 
 

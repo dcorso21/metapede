@@ -2,6 +2,7 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
   use MetapedeWeb, :live_view
   alias Metapede.TimelineContext.TimePeriodContext
   alias Metapede.Collection
+  alias MetapedeWeb.Controllers.Transforms.DatetimeOps
 
   def mount(_params, _session, socket) do
     {:ok,
@@ -40,7 +41,12 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
     |> custom_redirect(socket)
   end
 
-  def handle_event("save_period", %{"Elixir.Metapede.Timeline.TimePeriod" => new_period}, socket) do
+  def handle_event("save_period", params, socket) do
+    new_period = %{
+      start_datetime: DatetimeOps.make_datetimes(params, "sdt"),
+      end_datetime: DatetimeOps.make_datetimes(params, "edt")
+    }
+
     case TimePeriodContext.create_time_period(new_period) do
       {:ok, saved_period} ->
         loaded = Metapede.Repo.preload(saved_period, [:topic])
@@ -87,10 +93,10 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
      |> push_redirect(to: Routes.time_period_index_path(socket, :confirm, topic.id, [topic]))}
   end
 
-  defp send_patch(:error, message, socket) do
-    {:noreply,
-     socket
-     |> put_flash(:error, message)
-     |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
-  end
+  # defp send_patch(:error, message, socket) do
+  #   {:noreply,
+  #    socket
+  #    |> put_flash(:error, message)
+  #    |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
+  # end
 end
