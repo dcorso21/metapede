@@ -9,9 +9,9 @@ defmodule MetapedeWeb.Controllers.Transforms.DatetimeOps do
     dt
   end
 
-  defp format_datetime(year, month, day), do: "#{year}-#{month}-#{day}T00:00:00Z"
+  defp format_datetime(year, month, day), do: NaiveDateTime.from_iso8601!("#{year}-#{month}-#{day}T00:00:00Z")
 
-  defp ensure_2digits(entry), do: if(String.length(entry) == 1, do: "0#{entry}", else: entry)
+  # defp ensure_2digits(entry), do: if(String.length(entry) == 1, do: "0#{entry}", else: entry)
 
   defp get_month_number(month_abbrev) do
     months = %{

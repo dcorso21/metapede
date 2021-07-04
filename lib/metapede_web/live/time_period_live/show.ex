@@ -12,6 +12,8 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def handle_params(params, _url, socket) do
     tp = TimePeriodContext.get_time_period!(params["id"])
+    IO.puts("Handle Params")
+    IO.inspect(tp)
 
     new_topic =
       if(params["new_topic_id"], do: Metapede.Collection.get_topic!(params["new_topic_id"]), else: nil)

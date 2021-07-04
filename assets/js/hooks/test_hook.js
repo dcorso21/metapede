@@ -5,7 +5,22 @@ const tlFuncs = {
     height: 30,
     delay: 30,
     transform(data) {
-        data.map((d) => console.log(moment(d.start_datetime).format()));
+        if (!data.length) return data;
+        let with_times = data.map((d) => {
+            d.start = moment(d.start_datetime, moment.ISO_8601);
+            d.end = moment(d.end_datetime, moment.ISO_8601);
+            return d;
+        });
+
+        let beginning = with_times.reduce((a, b) => {
+            return a.start < b.start ? a : b;
+        }).start;
+        let ending = with_times.reduce((a, b) => {
+            return a.end > b.end ? a : b;
+        }).end;
+
+        console.log({ beginning, ending });
+
         return data;
     },
 

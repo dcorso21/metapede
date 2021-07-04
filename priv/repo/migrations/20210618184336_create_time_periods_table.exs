@@ -4,8 +4,8 @@ defmodule Metapede.Repo.Migrations.CreateTimePeriodsTable do
   def change do
     create table(:time_periods) do
       add :topic_id, references(:topics)
-      add :start_datetime, :string
-      add :end_datetime, :string
+      add :start_datetime, :naive_datetime
+      add :end_datetime, :naive_datetime
       timestamps()
     end
   end

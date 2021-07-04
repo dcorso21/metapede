@@ -7,8 +7,8 @@ defmodule Metapede.Timeline.TimePeriod do
 
   schema "time_periods" do
     belongs_to :topic, Topic
-    field :start_datetime, :string
-    field :end_datetime, :string
+    field :start_datetime, :naive_datetime
+    field :end_datetime, :naive_datetime
 
     many_to_many(
       :events,
