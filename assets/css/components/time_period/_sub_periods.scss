@@ -1,0 +1,14 @@
+#sub_period_wrap {
+	position: relative;
+	// background-color: white;
+}
+
+
+.sub_period {
+	position: absolute;
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	// padding: 20px;
+	border-radius: 20px;
+	text-overflow: ellipsis;
+	background-color: var(--muted_grey);
+}

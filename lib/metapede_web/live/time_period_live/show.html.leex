@@ -40,16 +40,15 @@ id:
 		<%= @time_period.id %>
 </div>
 
-<h2>Sub Periods</h2>
-<%= for period <- Metapede.Repo.preload(@time_period.sub_time_periods, [:topic, :events, :parent_time_periods, :sub_time_periods]) do %>
-      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id, patch: true  %>
-<% end %>
 
+<h2>Sub Periods</h2>
 <div><%= live_patch "Add Sub Period", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
 
+<br>
+<br>
 <div
 phx-hook="Testing"
-id="sub_periods"
+id="sub_period_wrap"
 data-main_period="<%= Poison.encode!(
 	Map.drop(@time_period, [:sub_time_periods])
 ) %>"
@@ -60,3 +59,9 @@ data-sub_periods="<%= Poison.encode!(
 	)
 ) %>"
 ></div>
+
+
+
+<%= for period <- Metapede.Repo.preload(@time_period.sub_time_periods, [:topic, :events, :parent_time_periods, :sub_time_periods]) do %>
+      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id, patch: true  %>
+<% end %>
