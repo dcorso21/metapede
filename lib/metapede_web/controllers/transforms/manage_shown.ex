@@ -4,6 +4,7 @@ defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
     |> get_path_info([])
     |> List.flatten()
     |> find_by_id(0, id)
+    |> preload_element(%{sub_time_periods: periods})
     |> IO.inspect()
   end
 
@@ -27,5 +28,21 @@ defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
 
   def get_path_info(_not_loaded, _ind_path), do: []
 
-  def create_path(path, link), do: path ++ [link]
+  def preload_element({_id, []}, period) do
+    # This is to check, but I will skip for now.
+    # period.id == id
+    period |> Metapede.Repo.preload([:sub_time_periods])
+  end
+
+  def preload_element({id, path}, period) do
+    [index | rest] = path
+    picked_subperiod = Enum.at(period.sub_time_periods, index)
+    load = preload_element({id, rest}, picked_subperiod)
+
+    List.replace_at(
+      period.sub_time_periods,
+      index,
+      load
+    )
+  end
 end
