@@ -1,9 +1,10 @@
 import * as d3 from "d3";
 import moment from "moment";
 
-const tlFuncs = {
+let tlFuncs = {
     height: 60,
     delay: 30,
+    element: null,
     transform(data) {
         if (!data.length) return data;
         let with_times = data.map((d) => {
@@ -35,38 +36,36 @@ const tlFuncs = {
         });
     },
 
-    render(el) {
+    render(el, conn) {
+        this.element = el;
         let sub_periods = JSON.parse(el.dataset.sub_periods);
-        let main_period = JSON.parse(el.dataset.main_period);
-        console.log({ sub_periods, main_period });
+        // let main_period = JSON.parse(el.dataset.main_period);
         sub_periods = this.transform(sub_periods);
 
         d3.select(el)
             .style("height", sub_periods.length * this.height + "px")
             .selectAll(".sub_period")
             .data(sub_periods, (d) => d.id) // ID for tracking
-            .join(this.enterPeriods, this.updatePeriods, this.exitPeriods);
+            .join(
+                (enter) => this.enterPeriods(enter, conn),
+                (update) => this.updatePeriods(update, conn),
+                (exit) => this.exitPeriods(exit, conn)
+            );
     },
 
-    enterPeriods(enter) {
+    enterPeriods(enter, conn) {
         return enter
             .append("div")
+            .on("click", (_e, d) => Tester.handleClick.bind(conn, d)())
             .attr("class", "sub_period")
             .text((d) => d.topic.title)
             .style("width", (d) => d.width)
             .style("left", (d) => d.ml)
             .style("top", (_, i) => tlFuncs.height * i + "px")
             .style("height", () => tlFuncs.height + "px");
-        // .style("left", (d) => d.x)
-        // .style("width", (d) => d.width)
-        // .call((enter) => {
-        //     enter
-        //         // .transition(tlRenderer.standardTrans())
-        //         .style("opacity", 1);
-        // });
     },
 
-    updatePeriods(update) {
+    updatePeriods(update, conn) {
         let delayInd = -1;
         return update.call((update) => {
             update
@@ -80,7 +79,7 @@ const tlFuncs = {
         });
     },
 
-    exitPeriods(exit) {
+    exitPeriods(exit, conn) {
         let delayInd = -1;
         return exit.call((exit) => {
             exit
@@ -95,11 +94,18 @@ const tlFuncs = {
     },
 };
 
-export default {
+const Tester = {
     mounted() {
-        tlFuncs.render(this.el);
+        console.log(this);
+        tlFuncs.render(this.el, this);
     },
     updated() {
         tlFuncs.render(this.el);
     },
+    handleClick(periodData) {
+        console.log(`pushing ${periodData.topic.title} to the server`);
+        this.pushEvent("click_period", periodData);
+    },
 };
+
+export default Tester;

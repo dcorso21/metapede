@@ -7,7 +7,7 @@
 
 <%= if @live_action == :confirm do %>
 <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
-	event_name: "confirmed_period2",
+	event_name: "confirmed_period",
 	id: :confirm_form,
 	new_topic: @new_topic,
 	return_to: Routes.time_period_show_path(@socket, :show, @time_period) %>
