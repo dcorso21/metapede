@@ -62,6 +62,6 @@ data-sub_periods="<%= Poison.encode!(
 
 
 
-<%= for period <- Metapede.Repo.preload(@time_period.sub_time_periods, [:topic, :events, :parent_time_periods, :sub_time_periods]) do %>
+<%= for period <- @loaded_sub_periods do %>
       <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id, patch: true  %>
 <% end %>

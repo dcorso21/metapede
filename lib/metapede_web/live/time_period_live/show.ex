@@ -5,15 +5,19 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   alias Metapede.TimelineContext.TimePeriodContext
   alias MetapedeWeb.Controllers.Transforms.DatetimeOps
 
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
+    tp = get_time_period(params)
+
     {:ok,
      socket
      |> assign(new_topic: nil)
+     |> assign(time_period: tp)
+     |> assign(loaded_sub_periods: preload_sub_time_periods(tp))
      |> assign(breadcrumbs: [])}
   end
 
   def handle_params(params, _url, socket) do
-    tp = TimePeriodContext.get_time_period!(params["id"])
+    tp = get_time_period(params)
 
     new_topic =
       if(params["new_topic_id"],
@@ -27,8 +31,20 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
      |> assign(new_topic: new_topic)}
   end
 
+  def get_time_period(params) do
+    TimePeriodContext.get_time_period!(params["id"])
+  end
+
+  def preload_sub_time_periods(tp) do
+    Metapede.Repo.preload(tp.sub_time_periods, [
+      :topic,
+      :sub_time_periods
+    ])
+    |> Enum.map(fn period -> Map.put(period, :expand, false) end)
+  end
+
   def handle_event("click_period", period_clicked, socket) do
-    ManageShown.path_helper(period_clicked["id"], socket.assigns.time_period.sub_time_periods)
+    ManageShown.path_helper(period_clicked["id"], socket.assigns.loaded_sub_periods)
     {:noreply, socket}
   end
 

@@ -109,3 +109,6 @@ const Tester = {
 };
 
 export default Tester;
+
+
+let v = true == true ? "Yes" : "No"

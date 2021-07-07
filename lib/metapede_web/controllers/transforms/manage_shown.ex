@@ -31,7 +31,11 @@ defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
   def preload_element({_id, []}, period) do
     # This is to check, but I will skip for now.
     # period.id == id
-    period |> Metapede.Repo.preload([:sub_time_periods])
+    loaded =
+      period
+      |> Metapede.Repo.preload([:sub_time_periods])
+
+    Map.put(loaded, :expand, if(loaded.expanded, do: false, else: true))
   end
 
   def preload_element({id, path}, period) do
