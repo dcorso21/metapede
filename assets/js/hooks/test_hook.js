@@ -5,8 +5,21 @@ let tlFuncs = {
     height: 60,
     delay: 30,
     element: null,
+    flatten(data) {
+        let flattened = [];
+        data.map((d) => {
+            flattened = [...flattened, d];
+            if (d.expand && Array.isArray(d.sub_time_periods)) {
+                flattened = [...flattened, ...d.sub_time_periods];
+            }
+        });
+        return flattened;
+    },
     transform(data) {
         if (!data.length) return data;
+
+        data = tlFuncs.flatten(data);
+
         let with_times = data.map((d) => {
             d.start = moment(d.start_datetime, moment.ISO_8601);
             d.end = moment(d.end_datetime, moment.ISO_8601);
@@ -69,13 +82,14 @@ let tlFuncs = {
         let delayInd = -1;
         return update.call((update) => {
             update
-                // .transition(tlRenderer.standardTrans)
-                // .delay(() => {
-                //     delayInd++;
-                //     return delayInd * this.delay;
-                // })
+                .on("click", (_e, d) => Tester.handleClick.bind(conn, d)())
                 .style("top", (_, i) => i * this.height + "px")
                 .style("width", (d) => d.width);
+            // .transition(tlRenderer.standardTrans)
+            // .delay(() => {
+            //     delayInd++;
+            //     return delayInd * this.delay;
+            // })
         });
     },
 
@@ -95,20 +109,19 @@ let tlFuncs = {
 };
 
 const Tester = {
+    ref: undefined,
     mounted() {
-        console.log(this);
+        Tester.ref = this
         tlFuncs.render(this.el, this);
     },
     updated() {
+        Tester.ref = this
         tlFuncs.render(this.el);
     },
     handleClick(periodData) {
         console.log(`pushing ${periodData.topic.title} to the server`);
-        this.pushEvent("click_period", periodData);
+        Tester.ref.pushEvent("click_period", periodData);
     },
 };
 
 export default Tester;
-
-
-let v = true == true ? "Yes" : "No"

@@ -52,12 +52,7 @@ id="sub_period_wrap"
 data-main_period="<%= Poison.encode!(
 	Map.drop(@time_period, [:sub_time_periods])
 ) %>"
-data-sub_periods="<%= Poison.encode!(
-	Metapede.Repo.preload(
-		@time_period.sub_time_periods,
-		[:topic, :events, :parent_time_periods, :sub_time_periods]
-	)
-) %>"
+data-sub_periods="<%= Poison.encode!(@loaded_sub_periods) %>"
 ></div>
 
 

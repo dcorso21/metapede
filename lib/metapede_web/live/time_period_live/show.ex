@@ -19,6 +19,13 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   def handle_params(params, _url, socket) do
     tp = get_time_period(params)
 
+    socket =
+      if(
+        tp.id == socket.assigns.time_period.id,
+        do: socket,
+        else: socket |> assign(loaded_sub_periods: preload_sub_time_periods(tp))
+      )
+
     new_topic =
       if(params["new_topic_id"],
         do: Metapede.Collection.get_topic!(params["new_topic_id"]),
@@ -44,8 +51,10 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def handle_event("click_period", period_clicked, socket) do
-    ManageShown.path_helper(period_clicked["id"], socket.assigns.loaded_sub_periods)
-    {:noreply, socket}
+    updated = ManageShown.path_helper(period_clicked["id"], socket.assigns.loaded_sub_periods)
+    IO.puts("updated")
+    IO.inspect(updated)
+    {:noreply, socket |> assign(loaded_sub_periods: updated)}
   end
 
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do

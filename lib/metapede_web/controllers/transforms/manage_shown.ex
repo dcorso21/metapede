@@ -5,7 +5,6 @@ defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
     |> List.flatten()
     |> find_by_id(0, id)
     |> preload_element(%{sub_time_periods: periods})
-    |> IO.inspect()
   end
 
   def find_by_id(tuples, index, target_id) do
@@ -29,10 +28,13 @@ defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
   def get_path_info(_not_loaded, _ind_path), do: []
 
   def preload_element({_id, []}, period) do
-    # This is to check, but I will skip for now.
-    # period.id == id
     loaded = Metapede.Repo.preload(period, [:sub_time_periods])
+
     Map.put(loaded, :expand, if(loaded.expand, do: false, else: true))
+    |> Map.put(
+      :sub_time_periods,
+      Metapede.Repo.preload(loaded.sub_time_periods, [:sub_time_periods, :topic])
+    )
   end
 
   def preload_element({id, path}, period) do
