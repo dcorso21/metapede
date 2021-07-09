@@ -52,10 +52,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def handle_event("click_period", period_clicked, socket) do
     updated = ManageShown.path_helper(period_clicked["id"], socket.assigns.loaded_sub_periods)
-    IO.puts("Updated")
-    IO.puts(Poison.encode!(updated))
-    IO.puts("Old")
-    IO.puts(Poison.encode!(socket.assigns.loaded_sub_periods))
     {:noreply, socket |> assign(loaded_sub_periods: updated)}
   end
 
