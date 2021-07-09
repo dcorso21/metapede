@@ -40,6 +40,7 @@ IEx.configure(
   width: 80
 )
 
+alias Metapede.Repo
 alias Metapede.Timeline.{TimePeriod, Event}
 alias Metapede.Collection.{Topic}
 

@@ -1,5 +1,4 @@
 defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
-
   @syntax_colors [number: :yellow, atom: :cyan, string: :green, boolean: :magenta, nil: :magenta]
 
   def path_helper(id, periods) do
@@ -44,11 +43,14 @@ defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
 
     IO.inspect(load, syntax_colors: @syntax_colors, label: "PASS LOAD")
 
-    List.replace_at(
-      period.sub_time_periods,
-      index,
-      load
-    )
+    updated_sub_periods =
+      List.replace_at(
+        period.sub_time_periods,
+        index,
+        load
+      )
+
+    Map.put(period, :sub_time_periods, updated_sub_periods)
   end
 
   def prel_el(period) do
