@@ -13,7 +13,7 @@ let tlFuncs = {
             return []
         })
 
-        let subs = to_add.reduce((a, b) => [...a, ...b])
+        let subs = to_add.reduce((a, b) => [...a, ...b], [])
         return [...periods, ...subs]
 
         // function recur(period) {
