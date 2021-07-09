@@ -82,7 +82,6 @@ let tlFuncs = {
         let delayInd = -1;
         return update.call((update) => {
             update
-                .on("click", (_e, d) => Tester.handleClick.bind(conn, d)())
                 .style("top", (_, i) => i * this.height + "px")
                 .style("width", (d) => d.width);
             // .transition(tlRenderer.standardTrans)
