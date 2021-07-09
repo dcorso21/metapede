@@ -5,15 +5,27 @@ let tlFuncs = {
     height: 60,
     delay: 30,
     element: null,
-    flatten(data) {
-        let flattened = [];
-        data.map((d) => {
-            flattened = [...flattened, d];
-            if (d.expand && Array.isArray(d.sub_time_periods)) {
-                flattened = [...flattened, ...d.sub_time_periods];
+    flatten(periods) {
+        let to_add = periods.map(p => {
+            if (p.expand && Array.isArray(p.sub_time_periods)) {
+                return this.flatten(p.sub_time_periods)
             }
-        });
-        return flattened;
+            return []
+        })
+
+        let subs = to_add.reduce((a, b) => [...a, ...b])
+        return [...periods, ...subs]
+
+        // function recur(period) {
+        //     flat_arr = [...flat_arr, period];
+        //     if (period.expand && Array.isArray(period.sub_time_periods)) {
+        //         flat_arr = [...flat_arr, ...period.sub_time_periods];
+        //         let for_add = period.sub_time_periods.map(recur);
+        //         for_add.reduce((a, b) => [...a, ...b]);
+        //         flat_arr = [...flat_arr, ...for_add];
+        //     }
+        //     return flat_arr;
+        // }
     },
     transform(data) {
         if (!data.length) return data;
@@ -110,11 +122,11 @@ let tlFuncs = {
 const Tester = {
     ref: undefined,
     mounted() {
-        Tester.ref = this
+        Tester.ref = this;
         tlFuncs.render(this.el, this);
     },
     updated() {
-        Tester.ref = this
+        Tester.ref = this;
         tlFuncs.render(this.el);
     },
     handleClick(periodData) {
