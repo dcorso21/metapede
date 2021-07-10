@@ -8,34 +8,39 @@ function hoverCard(enter, period) {
 }
 
 function handleMouseOver(e, per) {
-    let { left, top } = e.target.getBoundingClientRect();
+    // let { left, top } = e.target.getBoundingClientRect();
     d3.select(".hoverInfo")
         .style("display", "block")
-        .style("left", Math.round(left) + 20 + "px")
-        .style("top", Math.round(top) - 120 + "px")
+        .style("left", per.ml)
+        .style("bottom", "0px")
         .call((enter) => hoverCard(enter, per));
 }
 
 function handleMouseOut(e, per) {
-    console.log(e);
-    d3.select(".hoverInfo").style("display", "none");
+    // d3.select(".hoverInfo").style("display", "none");
+     
 }
 
 function createHoverElement(parent, defPeriod) {
-    d3.select(parent)
+    const el = d3
+        .select(parent)
         .append("div")
         .style("position", "absolute")
         .style("display", "none")
         .attr("class", "hoverInfo")
         .call((enter) => {
-            enter.append("img")
-            enter.append("div").attr("class", "title")
-            enter.append("div").attr("class", "desc")
-        })
+            enter.append("img");
+            enter.append("div").attr("class", "title");
+            enter.append("div").attr("class", "desc");
+        });
+
+    el.on("mouseover", (e) => {
+        d3.select(el).style("display", "block")
+    });
 }
 
 let tlFuncs = {
-    height: 60,
+    height: 30,
     delay: 30,
     element: null,
     flatten(periods) {
@@ -67,8 +72,6 @@ let tlFuncs = {
         let ending = with_times.reduce((a, b) => {
             return a.end > b.end ? a : b;
         }).end;
-
-        console.log({ beginning, ending });
 
         let denom = moment(ending).diff(beginning);
 
