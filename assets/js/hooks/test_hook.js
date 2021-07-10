@@ -1,31 +1,53 @@
 import * as d3 from "d3";
 import moment from "moment";
 
+function hoverCard(enter, period) {
+    enter.select("img").attr("src", period.topic.thumbnail);
+    enter.select(".title").text(period.topic.title);
+    enter.select(".desc").text(period.topic.description);
+}
+
+function handleMouseOver(e, per) {
+    let { left, top } = e.target.getBoundingClientRect();
+    d3.select(".hoverInfo")
+        .style("display", "block")
+        .style("left", Math.round(left) + 20 + "px")
+        .style("top", Math.round(top) - 120 + "px")
+        .call((enter) => hoverCard(enter, per));
+}
+
+function handleMouseOut(e, per) {
+    console.log(e);
+    d3.select(".hoverInfo").style("display", "none");
+}
+
+function createHoverElement(parent, defPeriod) {
+    d3.select(parent)
+        .append("div")
+        .style("position", "absolute")
+        .style("display", "none")
+        .attr("class", "hoverInfo")
+        .call((enter) => {
+            enter.append("img")
+            enter.append("div").attr("class", "title")
+            enter.append("div").attr("class", "desc")
+        })
+}
+
 let tlFuncs = {
     height: 60,
     delay: 30,
     element: null,
     flatten(periods) {
-        let to_add = periods.map(p => {
+        let to_add = periods.map((p) => {
             if (p.expand && Array.isArray(p.sub_time_periods)) {
-                return this.flatten(p.sub_time_periods)
+                return this.flatten(p.sub_time_periods);
             }
-            return []
-        })
+            return [];
+        });
 
-        let subs = to_add.reduce((a, b) => [...a, ...b], [])
-        return [...periods, ...subs]
-
-        // function recur(period) {
-        //     flat_arr = [...flat_arr, period];
-        //     if (period.expand && Array.isArray(period.sub_time_periods)) {
-        //         flat_arr = [...flat_arr, ...period.sub_time_periods];
-        //         let for_add = period.sub_time_periods.map(recur);
-        //         for_add.reduce((a, b) => [...a, ...b]);
-        //         flat_arr = [...flat_arr, ...for_add];
-        //     }
-        //     return flat_arr;
-        // }
+        let subs = to_add.reduce((a, b) => [...a, ...b], []);
+        return [...periods, ...subs];
     },
     transform(data) {
         if (!data.length) return data;
@@ -67,6 +89,9 @@ let tlFuncs = {
         // let main_period = JSON.parse(el.dataset.main_period);
         sub_periods = this.transform(sub_periods);
 
+        // Init with first period
+        createHoverElement(el, sub_periods[0]);
+
         d3.select(el)
             .style("height", sub_periods.length * this.height + "px")
             .selectAll(".sub_period")
@@ -82,6 +107,8 @@ let tlFuncs = {
         return enter
             .append("div")
             .on("click", (_e, d) => Tester.handleClick.bind(conn, d)())
+            .on("mouseover", (e, d) => handleMouseOver(e, d))
+            .on("mouseout", (e, d) => handleMouseOut(e, d))
             .attr("class", "sub_period")
             .text((d) => d.topic.title)
             .style("width", (d) => d.width)
