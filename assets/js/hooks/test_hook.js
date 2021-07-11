@@ -1,43 +1,60 @@
 import * as d3 from "d3";
 import moment from "moment";
 
+
+let hovering = false;
+
 function hoverCard(enter, period) {
     enter.select("img").attr("src", period.topic.thumbnail);
     enter.select(".title").text(period.topic.title);
     enter.select(".desc").text(period.topic.description);
 }
 
-function handleMouseOver(e, per) {
-    // let { left, top } = e.target.getBoundingClientRect();
-    console.log(e);
-    d3.select(".hoverInfo")
-        .style("display", "block")
-        .style("left", per.ml)
-        // .style("top", e.clientX +"px")
-        .call((enter) => hoverCard(enter, per));
-}
-
-function handleMouseOut(e, per) {
-    d3.select(".hoverInfo").style("display", "none");
-}
-
-function createHoverElement(parent, defPeriod) {
+function createHoverElement() {
     const el = d3
-        .select(parent)
+        .select("body")
         .append("div")
         .style("position", "absolute")
-        .style("display", "none")
+        .style("display", "block")
         .attr("class", "hoverInfo")
         .call((enter) => {
             enter.append("img");
             enter.append("div").attr("class", "title");
             enter.append("div").attr("class", "desc");
         });
-
-    // el.on("mouseover", (e) => {
-    //     d3.select(el).style("display", "block")
-    // });
 }
+
+
+function handleMouseOver(e, per) {
+    d3.select(".hoverInfo")
+        .style("display", "block")
+        .call((enter) => hoverCard(enter, per));
+    hovering = true;
+
+}
+
+let green = true
+
+function handleMouseMove(e, per) {
+    if (!green) return;
+    green = false;
+    console.log("updating position");
+
+    d3.select(".hoverInfo")
+        .style("left", e.pageX + "px")
+        .style("top", e.pageY + "px");
+
+    setTimeout(() => {
+        green = true
+    }, 50)
+}
+
+
+function handleMouseOut(e, per) {
+    hovering = false;
+    d3.select(".hoverInfo").style("display", "none");
+}
+
 
 let tlFuncs = {
     height: 30,
@@ -93,7 +110,7 @@ let tlFuncs = {
         sub_periods = this.transform(sub_periods);
 
         // Init with first period
-        createHoverElement(el, sub_periods[0]);
+        createHoverElement();
 
         d3.select(el)
             .style("height", sub_periods.length * this.height + "px")
@@ -112,6 +129,7 @@ let tlFuncs = {
             .on("click", (_e, d) => Tester.handleClick.bind(conn, d)())
             .on("mouseover", (e, d) => handleMouseOver(e, d))
             .on("mouseout", (e, d) => handleMouseOut(e, d))
+            .on("mousemove", (e) => handleMouseMove(e))
             .attr("class", "sub_period")
             .text((d) => d.topic.title)
             .style("width", (d) => d.width)
