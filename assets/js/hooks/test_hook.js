@@ -9,16 +9,16 @@ function hoverCard(enter, period) {
 
 function handleMouseOver(e, per) {
     // let { left, top } = e.target.getBoundingClientRect();
+    console.log(e);
     d3.select(".hoverInfo")
         .style("display", "block")
         .style("left", per.ml)
-        .style("bottom", "0px")
+        // .style("top", e.clientX +"px")
         .call((enter) => hoverCard(enter, per));
 }
 
 function handleMouseOut(e, per) {
-    // d3.select(".hoverInfo").style("display", "none");
-     
+    d3.select(".hoverInfo").style("display", "none");
 }
 
 function createHoverElement(parent, defPeriod) {
@@ -34,9 +34,9 @@ function createHoverElement(parent, defPeriod) {
             enter.append("div").attr("class", "desc");
         });
 
-    el.on("mouseover", (e) => {
-        d3.select(el).style("display", "block")
-    });
+    // el.on("mouseover", (e) => {
+    //     d3.select(el).style("display", "block")
+    // });
 }
 
 let tlFuncs = {
@@ -160,7 +160,6 @@ const Tester = {
         tlFuncs.render(this.el);
     },
     handleClick(periodData) {
-        console.log(`pushing ${periodData.topic.title} to the server`);
         Tester.ref.pushEvent("click_period", periodData);
     },
 };
