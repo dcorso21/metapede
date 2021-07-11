@@ -4,11 +4,12 @@
     height: 60px;
     box-shadow: 2px 2px 4px rgba(70, 70, 70, 0.295);
     transition: all 0.05s ease-out;
-    background-color: white;
+    color: var(--main_color);
+    background-color: var(--modal_grey);
     padding: 5px 5px;
 
     &:hover, &:focus {
-        background-color: rgb(245, 254, 255);
+        background-color: rgb(34, 35, 41);
         transform: translate(1px, -1px);
         // box-shadow: 4px 4px 6px rgba(51, 121, 168, 0.151);
     }

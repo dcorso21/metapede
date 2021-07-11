@@ -12,6 +12,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
      socket
      |> assign(new_topic: nil)
      |> assign(time_period: tp)
+     |> assign(refresh_sub_periods: false)
      |> assign(loaded_sub_periods: preload_sub_time_periods(tp))
      |> assign(breadcrumbs: [])}
   end
@@ -21,7 +22,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
     socket =
       if(
-        tp.id == socket.assigns.time_period.id,
+        tp.id == socket.assigns.time_period.id && !socket.assigns.refresh_sub_periods,
         do: socket,
         else: socket |> assign(loaded_sub_periods: preload_sub_time_periods(tp))
       )
@@ -127,6 +128,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
     {:noreply,
      socket
+     |> assign(refresh_sub_periods: true)
      |> put_flash(:info, "New Subtopic Added: #{sub_period.topic.title}")
      |> push_patch(to: Routes.time_period_show_path(socket, :show, par_period))}
   end
