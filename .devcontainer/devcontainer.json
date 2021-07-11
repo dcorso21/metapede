@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.187.0/containers/elixir-phoenix-postgres
 {
-	"name": "Elixir, Phoenix, Node.js & PostgresSQL (Community)",
+	"name": "Metapede Remote",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "elixir",
 	"workspaceFolder": "/workspace",
