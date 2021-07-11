@@ -59,4 +59,3 @@ RUN su ${USERNAME} -c "mix local.hex --force \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
 # [Optional] Uncomment this line to install additional package.
-

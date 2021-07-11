@@ -19,4 +19,4 @@ mix deps.get
 
 # #  this creates the DB, runs the migrations
 echo "Making DB"
-mix ecto.reset
+mix ecto.setup
