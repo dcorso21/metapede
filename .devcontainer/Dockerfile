@@ -59,19 +59,4 @@ RUN su ${USERNAME} -c "mix local.hex --force \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
 # [Optional] Uncomment this line to install additional package.
-# Allow access to root folder
-RUN  sudo chown -R $USER ../metapede
-
-# npm install from assets folder
-RUN ./assets sudo npm install
-
-# install inotify tools
-RUN sudo apt update
-RUN sudo apt-get install inotify-tools -f
-
-# setup first build 
-RUN mix phx
-
-#  this creates the DB, runs the migrations
-RUN mix ecto.reset
 
