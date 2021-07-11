@@ -58,16 +58,17 @@ RUN su ${USERNAME} -c "mix local.hex --force \
 #     && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
-# [Optional] Uncomment this line to install additional package.
 # Allow access to root folder
-RUN  sudo chown -R $USER ../metapede
+# RUN  sudo chown -R $USER ../metapede
 
-# npm install from assets folder
+# Install packages
+RUN mix deps.get
 RUN ./assets sudo npm install
 
 # install inotify tools
 RUN sudo apt update
 RUN sudo apt-get install inotify-tools -f
+
 
 # setup first build 
 RUN mix phx
