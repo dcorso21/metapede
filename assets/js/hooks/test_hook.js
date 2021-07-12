@@ -1,6 +1,6 @@
 import * as d3 from "d3";
-import { transition } from "d3";
 import moment from "moment";
+// import { transition } from "d3";
 
 
 function getTrans() {

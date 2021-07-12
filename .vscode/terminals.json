@@ -1,0 +1,22 @@
+{
+  "autorun": false,
+  "terminals": [
+    {
+      "name": "Server",
+      "description": "Runs server for Phoenix",
+      "focus": true,
+      "command": "mix phx.server"
+    },
+    {
+      "name": "REPL",
+      "description": "Runs iex terminal",
+      "focus": true,
+      "command": "iex -S mix"
+    },
+    {
+      "name": "Zsh",
+      "description": "Testing Terminal",
+      "command": "echo hello"
+    }
+  ]
+}
