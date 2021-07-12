@@ -10,13 +10,9 @@ function updateHoverInfo(period) {
 }
 
 function createHoverElement() {
-    const el = d3
-        .select("body")
+    d3.select("body")
         .append("div")
-        // .on("mouseout", () => {
-        //     hovering = false;
-        //     d3.select(".hoverInfo").style("opacity", "none");
-        // })
+        .on("mouseout", handleMouseOut)
         .style("position", "absolute")
         .style("opacity", "1")
         .attr("class", "hoverInfo")
@@ -33,7 +29,6 @@ function handleMouseOver(e, per) {
     updateHoverInfo(per)
     let { x, y, width } = e.target.getBoundingClientRect()
     const hoverBox = d3.select(".hoverInfo").node().getBoundingClientRect()
-    console.log({ hoverBox });
     const left = x + (width / 2) - (hoverBox.width / 2)
     const top = y - hoverBox.height;
 
@@ -45,8 +40,10 @@ function handleMouseOver(e, per) {
 
 
 function handleMouseOut(e, per) {
-    if (e.toElement.id == "hoverInfo") return;
-    d3.select(".hoverInfo").style("opacity", "0");
+    const he = d3.select("#hoverInfo")
+    const check = he.node().contains(e.toElement) || he.node() == e.toElement
+    if (check) return;
+    he.style("opacity", "0");
 }
 
 
@@ -54,6 +51,7 @@ let tlFuncs = {
     height: 30,
     delay: 30,
     element: null,
+
     flatten(periods) {
         let to_add = periods.map((p) => {
             if (p.expand && Array.isArray(p.sub_time_periods)) {
@@ -65,6 +63,7 @@ let tlFuncs = {
         let subs = to_add.reduce((a, b) => [...a, ...b], []);
         return [...periods, ...subs];
     },
+
     transform(data) {
         if (!data.length) return data;
 
