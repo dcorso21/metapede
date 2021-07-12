@@ -30,7 +30,8 @@ function handleMouseOver(e, per) {
     let { x, y, width } = e.target.getBoundingClientRect()
     const hoverBox = d3.select(".hoverInfo").node().getBoundingClientRect()
     const left = x + (width / 2) - (hoverBox.width / 2)
-    const top = y - hoverBox.height;
+
+    const top = y - hoverBox.height + window.scrollY;
 
     d3.select(".hoverInfo")
         .style("left", left + "px")
