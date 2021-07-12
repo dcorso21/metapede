@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { transition } from "d3";
 import moment from "moment";
 
 
@@ -161,12 +162,12 @@ let tlFuncs = {
         return update.call((update) => {
             update
                 .style("top", (_, i) => i * this.height + "px")
-                .style("width", (d) => d.width);
-            // .transition(tlRenderer.standardTrans)
-            // .delay(() => {
-            //     delayInd++;
-            //     return delayInd * this.delay;
-            // })
+                .style("width", (d) => d.width)
+                .call(select => {
+                    select
+                        .style("width", (d) => d.width)
+                        .style("height", () => tlFuncs.height + "px")
+                })
         });
     },
 
@@ -174,10 +175,15 @@ let tlFuncs = {
         let delayInd = -1;
         return exit.call((exit) => {
             exit
-                // .delay(() => {
-                //     delayInd++;
-                //     return delayInd * tlRenderer.delay;
-                // })
+                .transition()
+                .duration(30)
+                .ease(d3.easeBackInOut)
+                .style("color", "rgba(255, 255, 255, 0)")
+                .transition()
+                .duration(150)
+                .ease(d3.easeBackInOut)
+                .style("width", "0px")
+                .style("height", "0px")
                 .style("opacity", "0")
                 .remove();
         });
