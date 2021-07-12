@@ -2,25 +2,23 @@ import * as d3 from "d3";
 import moment from "moment";
 
 
-let hovering = false;
-
-
-function hoverCard(enter, period) {
-    enter.select("img").attr("src", period.topic.thumbnail);
-    enter.select(".title").text(period.topic.title);
-    enter.select(".desc").text(period.topic.description);
+function updateHoverInfo(period) {
+    let h = d3.select("#hoverInfo")
+    h.select("img").attr("src", period.topic.thumbnail);
+    h.select(".title").text(period.topic.title);
+    h.select(".desc").text(period.topic.description);
 }
 
 function createHoverElement() {
     const el = d3
         .select("body")
         .append("div")
-        .on("mouseout", () => {
-            hovering = false;
-            d3.select(".hoverInfo").style("display", "none");
-        })
+        // .on("mouseout", () => {
+        //     hovering = false;
+        //     d3.select(".hoverInfo").style("opacity", "none");
+        // })
         .style("position", "absolute")
-        .style("display", "block")
+        .style("opacity", "1")
         .attr("class", "hoverInfo")
         .attr("id", "hoverInfo")
         .call((enter) => {
@@ -32,24 +30,23 @@ function createHoverElement() {
 
 
 function handleMouseOver(e, per) {
+    updateHoverInfo(per)
     let { x, y, width } = e.target.getBoundingClientRect()
     const hoverBox = d3.select(".hoverInfo").node().getBoundingClientRect()
+    console.log({ hoverBox });
     const left = x + (width / 2) - (hoverBox.width / 2)
     const top = y - hoverBox.height;
-    hovering = true;
 
     d3.select(".hoverInfo")
-        .style("display", "block")
-        .call((enter) => hoverCard(enter, per))
         .style("left", left + "px")
-        .style("top", top + "px");
+        .style("top", top + "px")
+        .style("opacity", "1")
 }
 
 
 function handleMouseOut(e, per) {
     if (e.toElement.id == "hoverInfo") return;
-    hovering = false;
-    d3.select(".hoverInfo").style("display", "none");
+    d3.select(".hoverInfo").style("opacity", "0");
 }
 
 
@@ -103,11 +100,8 @@ let tlFuncs = {
     render(el, conn) {
         this.element = el;
         let sub_periods = JSON.parse(el.dataset.sub_periods);
-        // let main_period = JSON.parse(el.dataset.main_period);
         sub_periods = this.transform(sub_periods);
 
-        // Init with first period
-        createHoverElement();
 
         d3.select(el)
             .style("height", sub_periods.length * this.height + "px")
@@ -166,6 +160,7 @@ let tlFuncs = {
 const Tester = {
     ref: undefined,
     mounted() {
+        createHoverElement();
         Tester.ref = this;
         tlFuncs.render(this.el, this);
     },
