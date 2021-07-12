@@ -4,6 +4,7 @@ import moment from "moment";
 
 let hovering = false;
 
+
 function hoverCard(enter, period) {
     enter.select("img").attr("src", period.topic.thumbnail);
     enter.select(".title").text(period.topic.title);
@@ -14,9 +15,14 @@ function createHoverElement() {
     const el = d3
         .select("body")
         .append("div")
+        .on("mouseout", () => {
+            hovering = false;
+            d3.select(".hoverInfo").style("display", "none");
+        })
         .style("position", "absolute")
         .style("display", "block")
         .attr("class", "hoverInfo")
+        .attr("id", "hoverInfo")
         .call((enter) => {
             enter.append("img");
             enter.append("div").attr("class", "title");
@@ -26,31 +32,22 @@ function createHoverElement() {
 
 
 function handleMouseOver(e, per) {
-    d3.select(".hoverInfo")
-        .style("display", "block")
-        .call((enter) => hoverCard(enter, per));
+    let { x, y, width } = e.target.getBoundingClientRect()
+    const hoverBox = d3.select(".hoverInfo").node().getBoundingClientRect()
+    const left = x + (width / 2) - (hoverBox.width / 2)
+    const top = y - hoverBox.height;
     hovering = true;
 
-}
-
-let green = true
-
-function handleMouseMove(e, per) {
-    if (!green) return;
-    green = false;
-    console.log("updating position");
-
     d3.select(".hoverInfo")
-        .style("left", e.pageX + "px")
-        .style("top", e.pageY + "px");
-
-    setTimeout(() => {
-        green = true
-    }, 50)
+        .style("display", "block")
+        .call((enter) => hoverCard(enter, per))
+        .style("left", left + "px")
+        .style("top", top + "px");
 }
 
 
 function handleMouseOut(e, per) {
+    if (e.toElement.id == "hoverInfo") return;
     hovering = false;
     d3.select(".hoverInfo").style("display", "none");
 }
@@ -129,7 +126,6 @@ let tlFuncs = {
             .on("click", (_e, d) => Tester.handleClick.bind(conn, d)())
             .on("mouseover", (e, d) => handleMouseOver(e, d))
             .on("mouseout", (e, d) => handleMouseOut(e, d))
-            .on("mousemove", (e) => handleMouseMove(e))
             .attr("class", "sub_period")
             .text((d) => d.topic.title)
             .style("width", (d) => d.width)
