@@ -2,6 +2,13 @@ import * as d3 from "d3";
 import moment from "moment";
 
 
+function getTrans() {
+    return d3.transition()
+        .duration(150)
+        .ease(d3.easeBackInOut);
+}
+
+
 function updateHoverInfo(period) {
     let h = d3.select("#hoverInfo")
     h.select("img").attr("src", period.topic.thumbnail);
@@ -14,7 +21,7 @@ function createHoverElement() {
         .append("div")
         .on("mouseout", handleMouseOut)
         .style("position", "absolute")
-        .style("opacity", "1")
+        .style("transform", "translateY(5px)")
         .attr("class", "hoverInfo")
         .attr("id", "hoverInfo")
         .call((enter) => {
@@ -36,6 +43,9 @@ function handleMouseOver(e, per) {
     d3.select(".hoverInfo")
         .style("left", left + "px")
         .style("top", top + "px")
+        .transition()
+        .duration(200)
+        .style("transform", "translateY(0px)")
         .style("opacity", "1")
 }
 
@@ -44,7 +54,11 @@ function handleMouseOut(e, per) {
     const he = d3.select("#hoverInfo")
     const check = he.node().contains(e.toElement) || he.node() == e.toElement
     if (check) return;
-    he.style("opacity", "0");
+    he.transition()
+        .duration(600)
+        .style("opacity", "0")
+        .style("transform", "translateY(5px)")
+    // .style("pointer-events", "none")
 }
 
 
@@ -121,11 +135,25 @@ let tlFuncs = {
             .on("mouseover", (e, d) => handleMouseOver(e, d))
             .on("mouseout", (e, d) => handleMouseOut(e, d))
             .attr("class", "sub_period")
-            .text((d) => d.topic.title)
-            .style("width", (d) => d.width)
             .style("left", (d) => d.ml)
             .style("top", (_, i) => tlFuncs.height * i + "px")
-            .style("height", () => tlFuncs.height + "px");
+            .style("height", () => "0px")
+            .style("width", (d) => "0px")
+            .text((d) => d.topic.title)
+            .style("color", "rgba(255, 255, 255, 0.0)")
+            .call(select => {
+                select
+                    .transition()
+                    .duration(150)
+                    .ease(d3.easeElasticIn)
+                    .delay((_d, i) => 50 * i)
+                    .style("width", (d) => d.width)
+                    .style("height", () => tlFuncs.height + "px")
+                    .transition()
+                    .duration(150)
+                    .ease(d3.easeElasticIn)
+                    .style("color", "inherit")
+            })
     },
 
     updatePeriods(update, conn) {
@@ -146,7 +174,6 @@ let tlFuncs = {
         let delayInd = -1;
         return exit.call((exit) => {
             exit
-                // .transition(tlRenderer.standardTrans)
                 // .delay(() => {
                 //     delayInd++;
                 //     return delayInd * tlRenderer.delay;
