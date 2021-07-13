@@ -119,7 +119,12 @@ let tlFuncs = {
 
 
         d3.select(el)
-            .style("height", sub_periods.length * this.height + "px")
+            .call(select => {
+                select
+                    .transition()
+                    .duration(200)
+                    .style("height", sub_periods.length * this.height + "px")
+            })
             .selectAll(".sub_period")
             .data(sub_periods, (d) => d.id) // ID for tracking
             .join(
