@@ -56,6 +56,12 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply, socket |> assign(loaded_sub_periods: updated.sub_time_periods)}
   end
 
+  def handle_event("redirect_to_sub_period", id, socket) do
+    {:noreply,
+     socket
+     |> push_redirect(to: Routes.time_period_show_path(socket, :show, id))}
+  end
+
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
     topic
     |> CommonSearchFuncs.decode_and_format_topic()

@@ -13,7 +13,10 @@ function getTrans() {
 function updateHoverInfo(period) {
     let h = d3.select("#hoverInfo")
     h.select("img").attr("src", period.topic.thumbnail);
-    h.select(".title").text(period.topic.title);
+    h.select(".title").text(period.topic.title).on("click", () => {
+        d3.select(".hoverInfo").style("opacity", "0")
+        Tester.handleClickName(period.id)
+    });
     h.select(".desc").text(period.topic.description);
 }
 
@@ -137,7 +140,7 @@ let tlFuncs = {
     enterPeriods(enter, conn) {
         return enter
             .append("div")
-            .on("click", (_e, d) => Tester.handleClick.bind(conn, d)())
+            .on("click", (_e, d) => Tester.handleClickPeriod.bind(conn, d)())
             .on("mouseover", (e, d) => handleMouseOver(e, d))
             .on("mouseout", (e, d) => handleMouseOut(e, d))
             .attr("class", "sub_period")
@@ -206,8 +209,11 @@ const Tester = {
         Tester.ref = this;
         tlFuncs.render(this.el);
     },
-    handleClick(periodData) {
+    handleClickPeriod(periodData) {
         Tester.ref.pushEvent("click_period", periodData);
+    },
+    handleClickName(id) {
+        Tester.ref.pushEvent("redirect_to_sub_period", id);
     },
 };
 

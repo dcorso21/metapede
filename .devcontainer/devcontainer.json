@@ -25,7 +25,8 @@
 		"jakebecker.elixir-ls",
 		"mtxr.sqltools",
 		"mtxr.sqltools-driver-pg",
-		"fabiospampinato.vscode-terminals"
+		"fabiospampinato.vscode-terminals",
+		"coenraads.bracket-pair-colorizer-2"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
