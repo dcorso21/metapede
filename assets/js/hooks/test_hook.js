@@ -29,7 +29,6 @@ function createHoverElement() {
 
 function clickOutHandler(e) {
     let context = d3.select("#periodContext");
-    console.log({ context: context.node() });
     if (!context.node()) {
         document.removeEventListener("click", clickOutHandler, true)
         return;
