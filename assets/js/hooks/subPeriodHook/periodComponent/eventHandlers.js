@@ -1,5 +1,5 @@
 // @ts-check
-import { getConn } from "../subPeriodHook";
+import { getSubPeriodsConn } from "../subPeriodHook";
 import periodContextMenu from "./contextMenu/contextMenu";
 import periodHoverElementEventHandlers from "./hoverInfo/eventHandlers";
 
@@ -13,7 +13,7 @@ export default function addAllPeriodEventListeners(selection) {
 }
 
 function handleClick(_e, period) {
-	getConn().pushEvent("click_period", period);
+	getSubPeriodsConn().pushEvent("click_period", period);
 }
 
 function handleContextMenu(e, period) {

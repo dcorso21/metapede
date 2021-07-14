@@ -12,7 +12,7 @@ import { setHeightTransition } from "./transitions";
 let subPeriodsConn;
 
 
-export function getConn() {
+export function getSubPeriodsConn() {
 	return subPeriodsConn
 }
 
