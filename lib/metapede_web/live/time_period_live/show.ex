@@ -57,9 +57,12 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def handle_event("redirect_to_sub_period", id, socket) do
+    crumb = convert_current_to_crumb(socket)
+
     {:noreply,
      socket
-     |> push_redirect(to: Routes.time_period_show_path(socket, :show, id))}
+     |> assign(breadcrumbs: socket.assigns.breadcrumbs ++ crumb)
+     |> push_patch(to: Routes.time_period_show_path(socket, :show, id))}
   end
 
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
@@ -105,8 +108,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def handle_event("update_breadcrumbs", %{"breadcrumbs" => crumbs}, socket) do
     nc = crumbs |> Poison.decode!()
-    tp = socket.assigns.time_period
-    cp = [%{"name" => tp.topic.title, "id" => tp.id}]
+    cp = convert_current_to_crumb(socket)
     up = socket.assigns.breadcrumbs ++ cp ++ nc
 
     {:noreply,
@@ -201,5 +203,10 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
         [el | socket.assigns.time_period.sub_time_periods]
       end
     )
+  end
+
+  defp convert_current_to_crumb(socket) do
+    tp = socket.assigns.time_period
+    [%{"name" => tp.topic.title, "id" => tp.id}]
   end
 end

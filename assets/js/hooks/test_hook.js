@@ -1,21 +1,12 @@
 import * as d3 from "d3";
 import moment from "moment";
-// import { transition } from "d3";
-
-
-function getTrans() {
-    return d3.transition()
-        .duration(150)
-        .ease(d3.easeBackInOut);
-}
-
 
 function updateHoverInfo(period) {
     let h = d3.select("#hoverInfo")
     h.select("img").attr("src", period.topic.thumbnail);
     h.select(".title").text(period.topic.title).on("click", () => {
         d3.select(".hoverInfo").style("opacity", "0")
-        Tester.handleClickName(period.id)
+        Tester.handleClickName(period)
     });
     h.select(".desc").text(period.topic.description);
 }
@@ -212,8 +203,8 @@ const Tester = {
     handleClickPeriod(periodData) {
         Tester.ref.pushEvent("click_period", periodData);
     },
-    handleClickName(id) {
-        Tester.ref.pushEvent("redirect_to_sub_period", id);
+    handleClickName(tp) {
+        Tester.ref.pushEvent("redirect_to_sub_period", tp.id);
     },
 };
 
