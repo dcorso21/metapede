@@ -1,21 +1,16 @@
 // @ts-check
 
-import * as d3 from "d3";
+// import * as d3 from "d3";
 import HoverInfoElement from "./hoverInfo";
 import { hoverInfoFadeIn, hoverInfoFadeOut } from "./transitions";
-// import { fadeIn, fadeOut } from "./transitions";
 
 // @ts-ignore
 const conn = global.subPeriodsConn
 
 
 
-export function getHoverElement() {
-	return d3.select("#hoverInfo");
-}
-
-export function handleMouseOver(e, per) {
-	const hoverInfo = getHoverElement()
+function handleMouseOver(e, per) {
+	const hoverInfo = HoverInfoElement.selectEl()
 	HoverInfoElement.updateInfo(hoverInfo, per)
 	let { x, y, width } = e.target.getBoundingClientRect()
 	// @ts-ignore
@@ -31,8 +26,8 @@ export function handleMouseOver(e, per) {
 
 
 // @ts-ignore
-export function handleMouseOut(e, per) {
-	const hoverInfo = getHoverElement()
+function handleMouseOut(e, per) {
+	const hoverInfo = HoverInfoElement.selectEl()
 	// @ts-ignore
 	const elementIsInside = hoverInfo.node().contains(e.toElement)
 	const isHoverInfo = hoverInfo.node() == e.toElement
@@ -41,8 +36,13 @@ export function handleMouseOut(e, per) {
 }
 
 
-export function handleClick(period) {
-	getHoverElement().style("opacity", "0")
+function handleClick(period) {
+	HoverInfoElement.selectEl().style("opacity", "0")
 	conn.pushEvent("redirect_to_sub_period", period.id);
 }
 
+const periodHoverElementEventHandlers = {
+	handleClick, handleMouseOut, handleMouseOver
+}
+
+export default periodHoverElementEventHandlers;

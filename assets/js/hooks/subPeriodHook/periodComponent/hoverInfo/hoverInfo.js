@@ -1,15 +1,15 @@
-import { handleMouseOut, handleClick } from "./eventHandlers";
+// @ts-check
+import periodHoverElementEventHandlers from "./eventHandlers";
+import * as d3 from "d3";
 
-
-export function selectEl() {
+function selectEl() {
 	return d3.select("#hoverInfo");
 }
-
 
 function createBlank() {
 	d3.select("body")
 		.append("div")
-		.on("mouseout", handleMouseOut)
+		.on("mouseout", periodHoverElementEventHandlers.handleMouseOut)
 		.style("position", "absolute")
 		.style("transform", "translateY(5px)")
 		.attr("class", "hoverInfo")
@@ -23,9 +23,11 @@ function createBlank() {
 
 function updateInfo(selection, period) {
 	selection.select("img").attr("src", period.topic.thumbnail);
-	selection.select(".title").text(period.topic.title).on("click", () => handleClick(period));
+	selection
+		.select(".title").text(period.topic.title)
+		.on("click", () => periodHoverElementEventHandlers.handleClick(period));
 	selection.select(".desc").text(period.topic.description);
 }
 
-const HoverInfoElement = { createBlank, updateInfo }
+const HoverInfoElement = { createBlank, updateInfo, selectEl }
 export default HoverInfoElement;
