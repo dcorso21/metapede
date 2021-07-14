@@ -8,8 +8,13 @@ import { setHeightTransition } from "./transitions";
 // import moment from "moment";
 
 
-// @ts-ignore
-global.subPeriodsConn; 
+
+let subPeriodsConn;
+
+
+export function getConn() {
+	return subPeriodsConn
+}
 
 function renderSubPeriods(conn) {
 	const phxElement = conn.el;
@@ -31,28 +36,18 @@ function renderSubPeriods(conn) {
 
 function mounted() {
 	HoverInfo.createBlank()
-	// @ts-ignore
-	global.subPeriodsConn = this;
+	subPeriodsConn = this;
 	renderSubPeriods(this);
 }
 
 function updated() {
-	// @ts-ignore
-	global.subPeriodsConn = this;
+	subPeriodsConn = this;
 	renderSubPeriods(this);
 }
-
-// @ts-ignore
-// function handleClickName(tp) {
-// 	// @ts-ignore
-// 	global.subPeriodsConn.pushEvent("redirect_to_sub_period", tp.id);
-// }
-
 
 const subPeriodHook = {
 	mounted,
 	updated
 }
-
 
 export default subPeriodHook;

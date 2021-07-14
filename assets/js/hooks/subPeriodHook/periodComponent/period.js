@@ -1,3 +1,4 @@
+// @ts-check
 import * as d3 from "d3";
 import periodTransitions from "./transitions";
 import addAllPeriodEventListeners from "./eventHandlers";
@@ -10,7 +11,7 @@ export const periodHeight = 30;
 export function enterPeriod(enter) {
 	return enter
 		.append("div")
-		.call(selection => addAllPeriodEventListeners(selection, period))
+		.call(selection => addAllPeriodEventListeners(selection))
 		.attr("class", "sub_period")
 		.style("left", (d) => d.ml)
 		.style("top", (_, i) => periodHeight * i + "px")
