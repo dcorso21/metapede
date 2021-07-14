@@ -27,6 +27,47 @@ function createHoverElement() {
 }
 
 
+function clickOutHandler(e) {
+    let context = d3.select("#periodContext");
+    console.log({ context: context.node() });
+    if (!context.node()) {
+        document.removeEventListener("click", clickOutHandler, true)
+        return;
+    }
+    if (!context.node().contains(e.target)) {
+        context.remove();
+    }
+}
+
+function enableClickout() {
+    document.addEventListener("click", clickOutHandler, true)
+}
+
+function makeContextMenu(e, period) {
+    d3.select("#periodContext")
+        .remove()
+
+    enableClickout()
+    let clickY = e.clientY + window.scrollY;
+    let options = [
+        "Unlink Period",
+        "Delete Period"
+    ]
+
+    d3.select("body")
+        .append("div")
+        .attr("id", "periodContext")
+        .style("left", e.clientX + "px")
+        .style("top", clickY + "px")
+        .call(select => {
+            options.map(o => {
+                select.append("div")
+                    .attr("class", "option")
+                    .text(o)
+            })
+        })
+}
+
 function handleMouseOver(e, per) {
     updateHoverInfo(per)
     let { x, y, width } = e.target.getBoundingClientRect()
@@ -53,9 +94,7 @@ function handleMouseOut(e, per) {
         .duration(600)
         .style("opacity", "0")
         .style("transform", "translateY(5px)")
-    // .style("pointer-events", "none")
 }
-
 
 let tlFuncs = {
     height: 30,
@@ -134,6 +173,12 @@ let tlFuncs = {
             .on("click", (_e, d) => Tester.handleClickPeriod.bind(conn, d)())
             .on("mouseover", (e, d) => handleMouseOver(e, d))
             .on("mouseout", (e, d) => handleMouseOut(e, d))
+            .on("contextmenu", (e, d) => {
+                e.preventDefault();
+                makeContextMenu(e, d)
+                // let o = confirm('success!');
+                // console.log({ conf: o });
+            })
             .attr("class", "sub_period")
             .style("left", (d) => d.ml)
             .style("top", (_, i) => tlFuncs.height * i + "px")
