@@ -1,3 +1,6 @@
+
+// @ts-check
+
 // We need to import the CSS so that webpack will load it.
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
@@ -18,16 +21,17 @@ import { Socket } from "phoenix";
 import topbar from "topbar";
 import { LiveSocket } from "phoenix_live_view";
 import Testing from "./hooks/test_hook";
-import SearchHook from "./hooks/search_bar";
-import DateRange from "./hooks/datepicker";
 
-let hooks = { Testing, SearchHook, DateRange };
+import Hooks from "./hooks/allHooks"; 
+
+// let hooks = { Testing };
 
 let csrfToken = document
     .querySelector("meta[name='csrf-token']")
     .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
-    hooks,
+    hooks: Hooks,
+    // hooks,
     params: { _csrf_token: csrfToken },
 });
 
