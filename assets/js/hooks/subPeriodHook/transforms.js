@@ -57,6 +57,6 @@ function transform(periods) {
 function countSubPeriods(period) {
 	const stps = period.sub_time_periods;
 	const loaded = Array.isArray(stps)
-	if (loaded && period.expand) return stps.length;
-	return 0;
+	if (loaded && period.expand) return stps.length + 1;
+	return 1;
 }
