@@ -6,7 +6,7 @@ import moment from "moment";
 function flatten(periods) {
 	let to_add = periods.map((p) => {
 		if (p.expand && Array.isArray(p.sub_time_periods)) {
-			return this.flatten(p.sub_time_periods);
+			return flatten(p.sub_time_periods);
 		}
 		return [];
 	});
