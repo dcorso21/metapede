@@ -28,24 +28,12 @@ export function updatePeriod(update) {
 		update
 			.style("top", (_, i) => i * periodHeight + "px")
 			.style("width", (d) => d.width)
+			.style("left", (d) => d.ml)
 			.call(periodTransitions.updateTransition)
 	});
 }
 
 export function exitPeriod(exit) {
 	// let delayInd = -1;
-	return exit.call((exit) => {
-		exit
-			.transition()
-			.duration(30)
-			.ease(d3.easeBackInOut)
-			.style("color", "rgba(255, 255, 255, 0)")
-			.transition()
-			.duration(150)
-			.ease(d3.easeBackInOut)
-			.style("width", "0px")
-			.style("height", "0px")
-			.style("opacity", "0")
-			.remove();
-	})
+	return exit.call(periodTransitions.exitTransition)
 }
