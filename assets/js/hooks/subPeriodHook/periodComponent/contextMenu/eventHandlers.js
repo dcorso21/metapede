@@ -1,10 +1,11 @@
+import periodContextMenu from "./contextMenu";
 
 function enableEventHandlers(_selection) {
     enableClickout()
 }
 
 function clickOutHandler(e) {
-    let context = d3.select("#periodContext");
+    let context = periodContextMenu.selectEl();
     if (!context.node()) {
         document.removeEventListener("click", clickOutHandler, true)
         return;

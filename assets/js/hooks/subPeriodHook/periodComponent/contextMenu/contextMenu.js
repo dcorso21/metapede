@@ -33,7 +33,7 @@ function create(e, _period) {
 }
 
 const periodContextMenu = {
-	create
+	create, selectEl
 }
 
 export default periodContextMenu
