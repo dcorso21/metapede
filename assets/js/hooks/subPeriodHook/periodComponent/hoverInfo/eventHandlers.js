@@ -35,7 +35,7 @@ function isHoverElement(e) {
 	// @ts-ignore
 	const elementIsInside = hoverInfo.node().contains(e.toElement);
 	const isHoverInfo = hoverInfo.node() == e.toElement;
-	console.log({ elementIsInside, isHoverInfo, toEl: e.toElement });
+	// console.log({ elementIsInside, isHoverInfo, toEl: e.toElement });
 	return elementIsInside || isHoverInfo;
 }
 
