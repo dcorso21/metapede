@@ -3,11 +3,12 @@ import * as d3 from "d3";
 import { periodHeight } from "./period";
 
 function enterTransition(selection) {
+	let dlyInd = 0;
 	selection
 		.transition()
 		.duration(150)
 		.ease(d3.easeElasticIn)
-		.delay((_d, i) => 50 * i)
+		.delay(() => 50 * dlyInd++)
 		.style("width", (d) => d.width)
 		.style("height", () => periodHeight + "px")
 		.transition()
