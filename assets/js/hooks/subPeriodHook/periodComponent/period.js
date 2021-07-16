@@ -37,28 +37,6 @@ export function updatePeriod(update) {
 	});
 }
 
-// function createExpandEl(period, _index) {
-// 	if (period.expand && period.sub_time_periods > 1) {
-// 		d3.select(`#sub_per_exp_${period.id}`)
-// 			.remove();
-
-// 		d3.select(`#sub_per_${period.id}`)
-// 			.append("div")
-// 			.attr("id", `sub_per_exp_${period.id}`)
-// 			.attr("class", "per_expansion")
-// 			.style("height", periodHeight * period.sub_time_periods + "px")
-// 		// .style("position", "absolute")
-// 		// .style("top", "0px")
-// 		// .style("left", "0px")
-// 		// .style("width", "100%")
-// 		// .style("background-color", "white")
-
-// 	} else {
-// 		d3.select(`#sub_per_exp_${period.id}`)
-// 			.remove();
-// 	}
-// }
-
 export function exitPeriod(exit) {
 	// let delayInd = -1;
 	return exit.call(periodTransitions.exitTransition)
