@@ -2,9 +2,13 @@
 import * as d3 from "d3";
 import periodTransitions from "./transitions";
 import addAllPeriodEventListeners from "./eventHandlers";
+import expandComponent from "./expandElement/expandElement";
 
 export const periodHeight = 30;
 
+export function selectEl(periodId) {
+	return d3.select(`#sub_per_${periodId}`)
+}
 
 export function enterPeriod(enter) {
 	return enter
@@ -28,34 +32,40 @@ export function updatePeriod(update) {
 			.style("top", (_, i) => i * periodHeight + "px")
 			.style("width", (d) => d.width)
 			.style("left", (d) => d.ml)
-			.each(createExpandEl)
+			.each(expandComponent.update)
 			.call(periodTransitions.updateTransition)
 	});
 }
 
-function createExpandEl(period, _index) {
-	if (period.expand && period.sub_time_periods > 1) {
-		d3.select(`#sub_per_exp_${period.id}`)
-			.remove();
+// function createExpandEl(period, _index) {
+// 	if (period.expand && period.sub_time_periods > 1) {
+// 		d3.select(`#sub_per_exp_${period.id}`)
+// 			.remove();
 
-		d3.select(`#sub_per_${period.id}`)
-			.append("div")
-			.attr("id", `sub_per_exp_${period.id}`)
-			.attr("class", "per_expansion")
-			.style("height", periodHeight * period.sub_time_periods + "px")
-			// .style("position", "absolute")
-			// .style("top", "0px")
-			// .style("left", "0px")
-			// .style("width", "100%")
-			// .style("background-color", "white")
+// 		d3.select(`#sub_per_${period.id}`)
+// 			.append("div")
+// 			.attr("id", `sub_per_exp_${period.id}`)
+// 			.attr("class", "per_expansion")
+// 			.style("height", periodHeight * period.sub_time_periods + "px")
+// 		// .style("position", "absolute")
+// 		// .style("top", "0px")
+// 		// .style("left", "0px")
+// 		// .style("width", "100%")
+// 		// .style("background-color", "white")
 
-	} else {
-		d3.select(`#sub_per_exp_${period.id}`)
-			.remove();
-	}
-}
+// 	} else {
+// 		d3.select(`#sub_per_exp_${period.id}`)
+// 			.remove();
+// 	}
+// }
 
 export function exitPeriod(exit) {
 	// let delayInd = -1;
 	return exit.call(periodTransitions.exitTransition)
 }
+
+const periodComponent = {
+	enterPeriod, updatePeriod, exitPeriod, selectEl
+}
+
+export default periodComponent;
