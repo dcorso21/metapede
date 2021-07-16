@@ -3,9 +3,7 @@ import * as d3 from "d3";
 import periodTransitions from "./transitions";
 import addAllPeriodEventListeners from "./eventHandlers";
 
-
 export const periodHeight = 30;
-// import moment from "moment";
 
 
 export function enterPeriod(enter) {
