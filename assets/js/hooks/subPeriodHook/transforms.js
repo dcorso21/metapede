@@ -59,6 +59,6 @@ function countSubPeriods(periods, depth, index) {
 	const rest = depthArr.slice(index + 1)
 	const next = rest.findIndex(el => el <= depth)
 	// console.log({ depthArr, rest, next });
-	if (next < 0) return rest.length;
+	if (next < 0) return rest.length + 1;
 	return next + 1;
 }
