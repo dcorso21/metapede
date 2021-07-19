@@ -1,3 +1,4 @@
+<%# Search Modal %>
 <%= if @live_action == :search do %>
   <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
 	event_name: "new_sub_time_period",
@@ -5,6 +6,7 @@
     return_to: Routes.time_period_show_path(@socket, :show, @time_period) %>
 <% end %>
 
+<%# Create Form Modal %>
 <%= if @live_action == :confirm do %>
 <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
 	event_name: "confirmed_period",
@@ -13,52 +15,61 @@
 	return_to: Routes.time_period_show_path(@socket, :show, @time_period) %>
 <% end %>
 
-<div>
-<%= live_component @socket,
-	MetapedeWeb.LiveComponents.BreadcrumbsComponent,
-	root: "Time Periods",
-	root_path: Routes.time_period_index_path(@socket, :main),
-	breadcrumbs: @breadcrumbs,
-	current_title: @time_period.topic.title
-%>
+<div id="main_sect">
+	<div id="left_group">
+	<div>
+	<%= live_component @socket,
+		MetapedeWeb.LiveComponents.BreadcrumbsComponent,
+		root: "Time Periods",
+		root_path: Routes.time_period_index_path(@socket, :main),
+		breadcrumbs: @breadcrumbs,
+		current_title: @time_period.topic.title
+	%>
+	</div>
 
+
+	<%# Main Timeline Info %>
+	<%= if @time_period.topic.thumbnail != nil do %>
+		<img src=<%= @time_period.topic.thumbnail %>>
+	<% end %>
+	<h2>
+		<%= @time_period.topic.title %>
+	</h2>
+	<div>
+		<em>
+			<%= @time_period.topic.description %>
+		</em>
+	</div>
+
+	<h2>Sub Periods</h2>
+	<div>
+		<%= live_patch "Add Sub Period",
+			to: Routes.time_period_show_path(
+				@socket,
+				:search,
+				@time_period
+			)
+		%>
+	</div>
+
+	<br>
+	<br>
+
+	<%# Period Hook %>
+	<div
+		phx-hook="subPeriodHook"
+		id="sub_period_wrap"
+		phx-update="ignore"
+		data-main_period="<%= Poison.encode!(
+			Map.drop(@time_period, [:sub_time_periods])
+		) %>"
+		data-sub_periods="<%= Poison.encode!(@loaded_sub_periods) %>"
+	></div>
+
+	<%# Listing of Sub Periods %>
+	<%= for period <- @loaded_sub_periods do %>
+		<%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id, patch: true  %>
+	<% end %>
+	</div>
+	<%= live_component @socket, MetapedeWeb.LiveComponents.ExpandInfo %>
 </div>
-
-<%= if @time_period.topic.thumbnail != nil do %>
-	<img src=<%= @time_period.topic.thumbnail %>>
-<% end %>
-<h2>
-	<%= @time_period.topic.title %>
-</h2>
-<div>
-	<em>
-		<%= @time_period.topic.description %>
-	</em>
-</div>
-<div>
-id:
-		<%= @time_period.id %>
-</div>
-
-
-<h2>Sub Periods</h2>
-<div><%= live_patch "Add Sub Period", to: Routes.time_period_show_path(@socket, :search, @time_period) %></div>
-
-<br>
-<br>
-<div
-	phx-hook="subPeriodHook"
-	<%# phx-hook="" %>
-	id="sub_period_wrap"
-	phx-update="ignore"
-	data-main_period="<%= Poison.encode!(
-		Map.drop(@time_period, [:sub_time_periods])
-	) %>"
-	data-sub_periods="<%= Poison.encode!(@loaded_sub_periods) %>"
-></div>
-
-
-
-<%= for period <- @loaded_sub_periods do %>
-      <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id, patch: true  %>
-<% end %>
