@@ -4,9 +4,21 @@ const base_url = "https://en.wikipedia.org/w/api.php";
 
 
 function getPageText(page_id) {
-	const query = base_url + `?action=parse&format=json&pageid=${page_id}&prop=text`
-	console.log({ query });
-	return fetch(query, {mode: "no-cors"}).then(res => res)
+	var myHeaders = new Headers();
+	myHeaders.append("Cookie", "GeoIP=US:FL:Ocala:29.00:-82.19:v4; WMF-Last-Access-Global=20-Jul-2021; WMF-Last-Access=20-Jul-2021");
+
+	const baseURL = "https://en.wikipedia.org/w/api.php?origin=*&format=json&";
+    const queryParams = "action=parse&prop=text&pageid=";
+
+	var requestOptions = {
+		method: 'GET',
+		headers: myHeaders,
+		redirect: 'follow'
+	};
+
+	return fetch(baseURL+queryParams+page_id, requestOptions)
+        .then((res) => res.json())
+        .then(res => res.parse.text["*"]);
 }
 
 async function renderRightInfo(conn) {
