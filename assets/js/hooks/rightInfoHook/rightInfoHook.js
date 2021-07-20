@@ -24,8 +24,9 @@ async function renderRightInfo(conn) {
 
 	d3.select(phxElement)
 		.html(text)
+		.transition()
+		.duration(1500)
 		.style("width", open == "true" ? "35vw" : "0vw")
-		.style("overflow", "hidden")
 }
 
 function mounted() {
