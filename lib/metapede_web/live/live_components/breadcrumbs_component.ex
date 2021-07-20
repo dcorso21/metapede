@@ -6,18 +6,18 @@ defmodule MetapedeWeb.LiveComponents.BreadcrumbsComponent do
     ~L"""
     <div class="breadcrumbs">
         <div class="crumb">
-        <span>
-        <%= live_patch @root, to: @root_path%>
-        </span>
-        </div>
-        <div class="caret">></div>
-        <%= for { crumb, index } <- Enum.with_index(@breadcrumbs) do %>
-            <%= live_component @socket, Crumb, crumb: crumb, index: index %>
-        <% end %>
-        <div class="crumb">
-        <span>
-        <%= @current_title %>
-        </span>
+          <span>
+            <%= live_patch @root, to: @root_path%>
+          </span>
+          </div>
+            <div class="caret">></div>
+            <%= for { crumb, index } <- Enum.with_index(@breadcrumbs) do %>
+                <%= live_component @socket, Crumb, crumb: crumb, index: index %>
+            <% end %>
+            <div class="crumb">
+            <span>
+              <%= @current_title %>
+            </span>
         </div>
     </div>
     """

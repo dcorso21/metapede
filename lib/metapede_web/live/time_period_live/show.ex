@@ -126,7 +126,11 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def handle_event("print", _, socket) do
     IO.inspect(socket.assigns.right_info_pid)
-    send(socket.assigns.right_info_pid, {:print, "Hi there!"})
+    IO.puts("alive?")
+
+    socket.assigns.right_info_pid
+    |> send_update(MetapedeWeb.LiveComponents.ExpandInfo, info: "UPDATED!", id: "right_expand_info")
+
     {:noreply, socket}
   end
 
