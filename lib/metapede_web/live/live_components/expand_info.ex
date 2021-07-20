@@ -12,19 +12,21 @@ defmodule MetapedeWeb.LiveComponents.ExpandInfo do
   def update(assigns, socket) do
     socket =
       socket
-        |> assign(:open, if(assigns.toggle, do: !socket.assigns.open, else: socket.assigns.open))
-        |> assign(:info, assigns.info)
+      |> assign(:open, if(assigns.toggle, do: !socket.assigns.open, else: socket.assigns.open))
+      |> assign(:page_id, assigns.page_id)
+
     {:ok, socket}
   end
 
-
   def render(assigns) do
     ~L"""
-    <%= if @open do %>
-      <div>
-        <%= @info %>
-      </div>
-    <% end %>
+    <div
+    phx-hook="rightInfoHook"
+    id="right_info_wrap"
+    phx-update="ignore"
+    data-page_id="<%= @page_id %>"
+    >
+    </div>
     """
   end
 end

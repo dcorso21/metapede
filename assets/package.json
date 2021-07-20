@@ -13,6 +13,7 @@
         "phoenix": "file:../deps/phoenix",
         "phoenix_html": "file:../deps/phoenix_html",
         "phoenix_live_view": "file:../deps/phoenix_live_view",
+        "regenerator-runtime": "^0.13.7",
         "topbar": "^0.1.4",
         "vanillajs-datepicker": "^1.1.4"
     },
