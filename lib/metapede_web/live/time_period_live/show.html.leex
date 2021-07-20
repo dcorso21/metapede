@@ -27,7 +27,6 @@
 			current_title: @time_period.topic.title
 		%>
 
-
 		<%# Main Timeline Info %>
 		<%=live_component @socket,
 			MetapedeWeb.LiveComponents.TitleInfo,
@@ -70,6 +69,7 @@
 	<%= live_component @socket,
 		MetapedeWeb.LiveComponents.ExpandInfo,
 		id: "right_expand_info",
+		toggle: false,
 		info: "hi, NOT updated!"
 	%>
 </div>

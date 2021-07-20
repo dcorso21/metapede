@@ -47,8 +47,7 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
     end
   end
 
-  def handle_event("submit", params, socket) do
-    IO.puts(inspect(params))
+  def handle_event("submit", _params, socket) do
     {:noreply, socket}
   end
 end

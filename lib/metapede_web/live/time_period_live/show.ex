@@ -125,11 +125,8 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def handle_event("print", _, socket) do
-    IO.inspect(socket.assigns.right_info_pid)
-    IO.puts("alive?")
-
     socket.assigns.right_info_pid
-    |> send_update(MetapedeWeb.LiveComponents.ExpandInfo, info: "UPDATED!", id: "right_expand_info")
+    |> send_update(MetapedeWeb.LiveComponents.ExpandInfo, info: "UPDATED!", id: "right_expand_info", toggle: true)
 
     {:noreply, socket}
   end
@@ -186,7 +183,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def adding(topic, socket) do
     topic.time_period
-    |> block_self_reference(socket)
+    |> block_self_reference(socket.assigns.time_period.id)
     |> add_to_subtopics(socket)
 
     {
@@ -199,11 +196,11 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     }
   end
 
-  def block_self_reference(time_period, socket) do
-    if time_period.id == socket.assigns.time_period.id do
+  def block_self_reference(new_period, current_id) do
+    if new_period.id == current_id do
       {:self, nil}
     else
-      {:not_self, time_period}
+      {:not_self, new_period}
     end
   end
 
