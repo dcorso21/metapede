@@ -124,6 +124,17 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
   end
 
+  def handle_event("print", _, socket) do
+    IO.inspect(socket.assigns.right_info_pid)
+    send(socket.assigns.right_info_pid, {:print, "Hi there!"})
+    {:noreply, socket}
+  end
+
+  def handle_info({:right_info_pid, pid}, socket) do
+    IO.puts("Saving now!!!")
+    {:noreply, socket |> assign(right_info_pid: pid)}
+  end
+
   def add_subtopic(sub_period, socket) do
     par_period = socket.assigns.time_period
 

@@ -15,7 +15,9 @@
 	return_to: Routes.time_period_show_path(@socket, :show, @time_period) %>
 <% end %>
 
+<button phx-click="print">Click Me</button>
 <div id="main_sect">
+
 	<div id="left_group">
 	<div>
 	<%= live_component @socket,
@@ -29,16 +31,18 @@
 
 
 	<%# Main Timeline Info %>
-	<%= if @time_period.topic.thumbnail != nil do %>
-		<img src=<%= @time_period.topic.thumbnail %>>
-	<% end %>
-	<h2>
-		<%= @time_period.topic.title %>
-	</h2>
-	<div>
-		<em>
-			<%= @time_period.topic.description %>
-		</em>
+	<div class="timeline_info">
+		<%= if @time_period.topic.thumbnail != nil do %>
+			<img src= <%= @time_period.topic.thumbnail %> >
+		<% end %>
+		<div class="name_and_desc">
+			<h2 class="name">
+				<%= @time_period.topic.title %>
+			</h2>
+			<div class="desc">
+				<%= @time_period.topic.description %>
+			</div>
+		</div>
 	</div>
 
 	<h2>Sub Periods</h2>
@@ -71,5 +75,8 @@
 		<%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent, period: period, id: period.id, patch: true  %>
 	<% end %>
 	</div>
-	<%= live_component @socket, MetapedeWeb.LiveComponents.ExpandInfo %>
+	<%= live_component @socket,
+		MetapedeWeb.LiveComponents.ExpandInfo,
+		id: "right_expand_info"
+	%>
 </div>
