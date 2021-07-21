@@ -1,9 +1,15 @@
 #right_info_wrap {
-	background-color: rgba(43, 43, 43, 0.507);
+}
+
+.floating_info {
+	background-color: rgb(31, 31, 31);
 	padding: 30px;
 	border-radius: 20px;
-	height: 80vh;
+	height: 100vh;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	box-sizing: border-box;
+	position: fixed;
+	top: 0;
+	right: 0px;
 }

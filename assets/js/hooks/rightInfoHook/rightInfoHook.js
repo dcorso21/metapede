@@ -15,6 +15,40 @@ function getPageText(page_id) {
 		.then(res => res.parse.text["*"]);
 }
 
+
+function addFloating(open, text) {
+	if (open == "true") {
+		removeFloating();
+
+		d3.select(".container")
+			.append("div")
+			.attr("class", "floating_info")
+			.style("width", "35%")
+			.style("transform", "translateY(5px)")
+			.style("opacity", "0")
+			.html(text)
+	}
+}
+
+function showFloating(open) {
+	if (open == "true") {
+		d3.select(".floating_info")
+			.transition()
+			.duration(500)
+			.style("transform", "translateY(0px)")
+			.style("opacity", "1")
+	}
+}
+
+function removeFloating() {
+	d3.selectAll(".floating_info")
+		.transition()
+		.duration(500)
+		.style("transform", "translateY(5px)")
+		.style("opacity", "0")
+		.on("end", select => select.remove())
+}
+
 async function renderRightInfo(conn) {
 	rightInfoConn = conn;
 	const phxElement = conn.el;
@@ -22,11 +56,19 @@ async function renderRightInfo(conn) {
 	const open = phxElement.dataset.open;
 	const text = await getPageText(page_id);
 
+	if (open != "true") {
+		removeFloating();
+	}
+
+	addFloating(open, text);
+
+
 	d3.select(phxElement)
-		.html(text)
 		.transition()
-		.duration(1500)
-		.style("width", open == "true" ? "35vw" : "0vw")
+		.duration(200)
+		.ease(d3.easeBackIn)
+		.style("width", open == "true" ? "40%" : "0vw")
+		.on("end", () => showFloating(open))
 }
 
 function mounted() {

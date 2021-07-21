@@ -31,5 +31,7 @@ a {
 }
 
 .container {
-    @include sect_marg;
+    // @include sect_marg;
+    position: relative;
+    width: 100%;
 }
