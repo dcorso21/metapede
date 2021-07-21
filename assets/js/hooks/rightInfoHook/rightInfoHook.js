@@ -16,17 +16,21 @@ function getPageText(page_id) {
 }
 
 
-function addFloating(open, text) {
+function addFloating(open, page_id) {
 	if (open == "true") {
 		removeFloating();
 
 		d3.select(".container")
 			.append("div")
 			.attr("class", "floating_info")
-			.style("width", "35%")
+			.style("width", "40%")
 			.style("transform", "translateY(5px)")
 			.style("opacity", "0")
-			.html(text)
+			.html("<div>Loading...</div>")
+			.call(async selection => {
+				const html = await getPageText(page_id)
+				selection.html(html)
+			})
 	}
 }
 
@@ -49,25 +53,24 @@ function removeFloating() {
 		.on("end", select => select.remove())
 }
 
-async function renderRightInfo(conn) {
+function renderRightInfo(conn) {
 	rightInfoConn = conn;
 	const phxElement = conn.el;
 	const page_id = phxElement.dataset.page_id;
 	const open = phxElement.dataset.open;
-	const text = await getPageText(page_id);
 
 	if (open != "true") {
 		removeFloating();
 	}
 
-	addFloating(open, text);
+	addFloating(open, page_id);
 
 
-	d3.select(phxElement)
+	d3.select("#left_info")
 		.transition()
 		.duration(200)
-		.ease(d3.easeBackIn)
-		.style("width", open == "true" ? "40%" : "0vw")
+		.ease(d3.easeCircle)
+		.style("width", open == "true" ? "60%" : "100%")
 		.on("end", () => showFloating(open))
 }
 

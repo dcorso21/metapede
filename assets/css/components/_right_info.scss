@@ -1,10 +1,11 @@
 #right_info_wrap {
+	width: 0%;
 }
 
 .floating_info {
 	background-color: rgb(31, 31, 31);
+	border: 2px solid rgba(185, 185, 26, 0.384);
 	padding: 30px;
-	border-radius: 20px;
 	height: 100vh;
 	overflow-y: scroll;
 	overflow-x: hidden;

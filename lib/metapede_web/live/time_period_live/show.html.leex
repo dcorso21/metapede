@@ -15,10 +15,9 @@
 		return_to: Routes.time_period_show_path(@socket, :show, @time_period) %>
 <% end %>
 
-<button phx-click="print">Click Me</button>
 <div id="main_sect">
 
-	<div id="left_group">
+	<div id="left_info">
 		<%= live_component @socket,
 			MetapedeWeb.LiveComponents.BreadcrumbsComponent,
 			root: "Time Periods",
@@ -32,6 +31,8 @@
 			MetapedeWeb.LiveComponents.TitleInfo,
 			time_period: @time_period
 		%>
+
+		<button phx-click="print">Toggle Info Panel</button>
 
 		<h2>Sub Periods</h2>
 		<%= live_patch "Add Sub Period",
