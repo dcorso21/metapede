@@ -35,13 +35,14 @@ function exitTransition(selection) {
 		.duration(30)
 		.ease(d3.easeBackInOut)
 		.style("color", "rgba(255, 255, 255, 0)")
+		.style("border-color", "transparent")
+		.style("opacity", ".25")
 		.transition()
-		.duration(150)
-		.ease(d3.easeBackInOut)
+		.duration(700)
+		.ease(d3.easeBackOut)
 		.style("width", "0px")
 		.style("height", "0px")
 		.style("opacity", "0")
-		.style("border-color", "transparent")
 		.remove();
 }
 

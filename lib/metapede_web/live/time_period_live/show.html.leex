@@ -56,16 +56,6 @@
 			) %>"
 			data-sub_periods="<%= Poison.encode!(@loaded_sub_periods) %>"
 		></div>
-
-		<%# Listing of Sub Periods %>
-		<%= for period <- @loaded_sub_periods do %>
-			<%= live_component @socket,
-				MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent,
-				period: period,
-				id: period.id,
-				patch: true
-			%>
-		<% end %>
 	</div>
 	<%= live_component @socket,
 		MetapedeWeb.LiveComponents.ExpandInfo,
