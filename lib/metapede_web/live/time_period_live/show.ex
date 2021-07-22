@@ -44,11 +44,10 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def preload_sub_time_periods(tp) do
-    Metapede.Repo.preload(tp.sub_time_periods, [
-      :topic,
-      :sub_time_periods
-    ])
+    tp.sub_time_periods
+    |> Metapede.Repo.preload([:topic, :sub_time_periods])
     |> Enum.map(fn period -> Map.put(period, :expand, false) end)
+    |> Enum.map(fn period -> Map.put(period, :has_sub_periods, length(period.sub_time_periods) > 0) end)
   end
 
   def handle_event("click_period", period_clicked, socket) do

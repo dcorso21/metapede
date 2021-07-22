@@ -23,6 +23,14 @@ export function enterPeriod(enter) {
 		.text((d) => d.topic.title)
 		.style("color", "rgba(255, 255, 255, 0.0)")
 		.call(periodTransitions.enterTransition)
+		.each(d => {
+			console.log(d);
+			if (d.has_sub_periods) {
+				selectEl(d.id)
+					.append("div")
+					.attr("class", "drop_caret fas fa-chevron-right")
+			}
+		})
 }
 
 export function updatePeriod(update) {

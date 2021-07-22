@@ -1,6 +1,7 @@
 // @ts-check
 import { getSubPeriodsConn } from "../subPeriodHook";
 import periodContextMenu from "./contextMenu/contextMenu";
+import expandCaretComponent from "./expandCaret/expandCaret";
 import periodHoverElementEventHandlers from "./hoverInfo/eventHandlers";
 
 
@@ -13,6 +14,7 @@ export default function addAllPeriodEventListeners(selection) {
 }
 
 function handleClick(_e, period) {
+	expandCaretComponent.toggleTransition(period)
 	getSubPeriodsConn().pushEvent("click_period", period);
 }
 
