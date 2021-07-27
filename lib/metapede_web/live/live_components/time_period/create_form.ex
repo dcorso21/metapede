@@ -14,7 +14,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.CreateForm do
           <div>
               Description: <%= @new_topic.description %>
           </div>
-          <%= f = form_for Metapede.Timeline.TimePeriod, "#",
+          <%= form_for Metapede.Timeline.TimePeriod, "#",
             id: "time_period_form",
             autocomplete: "off",
             phx_submit: @event_name %>

@@ -32,7 +32,6 @@
 			time_period: @time_period
 		%>
 
-		<button phx-click="print">Toggle Info Panel</button>
 
 		<h2>Sub Periods</h2>
 		<%= live_patch "Add Sub Period",
@@ -47,20 +46,23 @@
 		<br>
 
 		<%# Period Hook %>
-		<div
-			phx-hook="subPeriodHook"
-			id="sub_period_wrap"
-			phx-update="ignore"
-			data-main_period="<%= Poison.encode!(
-				Map.drop(@time_period, [:sub_time_periods])
-			) %>"
-			data-sub_periods="<%= Poison.encode!(@loaded_sub_periods) %>"
-		></div>
+		<%= live_component @socket,
+			MetapedeWeb.LiveComponents.SubPeriodsHook,
+			id: "sup_period_wrap",
+			time_period: @time_period,
+			loaded_sub_periods: @loaded_sub_periods
+		%>
 	</div>
+
+
+
+	<button phx-click="print">Toggle Info Panel</button>
 	<%= live_component @socket,
 		MetapedeWeb.LiveComponents.ExpandInfo,
 		id: "right_expand_info",
 		toggle: false,
 		page_id: @time_period.topic.page_id
 	%>
+
+
 </div>
