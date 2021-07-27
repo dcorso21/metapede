@@ -1,5 +1,7 @@
 export function hoverInfoFadeIn(select) {
-	select.transition()
+	select
+		.style("z-index", "15")
+		.transition()
 		.duration(200)
 		.style("transform", "translateY(0px)")
 		.style("opacity", "1")
@@ -10,4 +12,5 @@ export function hoverInfoFadeOut(select) {
 		.duration(600)
 		.style("opacity", "0")
 		.style("transform", "translateY(5px)")
+		.style("z-index", "-10")
 }

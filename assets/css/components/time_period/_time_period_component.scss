@@ -38,3 +38,38 @@
         }
     }
 }
+
+.timeline_info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.048);
+
+    img {
+        border-radius: 20px;
+    }
+
+    .name_and_desc {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        margin-left: 40px;
+
+        .name {
+            font-size: 200%;
+            width: 100%;
+        }
+        
+        .desc {
+            font-size: 20px;
+            font-style: italic;
+        }
+    }
+}

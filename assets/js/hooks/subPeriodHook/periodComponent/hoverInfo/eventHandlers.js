@@ -23,12 +23,20 @@ function handleMouseOver(e, per) {
 
 
 function handleMouseOut(e, per) {
+	if (isHoverElement(e)) return;
+	HoverInfoElement
+		.selectEl()
+		.call(hoverInfoFadeOut)
+}
+
+
+function isHoverElement(e) {
 	const hoverInfo = HoverInfoElement.selectEl()
 	// @ts-ignore
-	const elementIsInside = hoverInfo.node().contains(e.toElement)
-	const isHoverInfo = hoverInfo.node() == e.toElement
-	if (elementIsInside || isHoverInfo) return;
-	hoverInfo.call(hoverInfoFadeOut)
+	const elementIsInside = hoverInfo.node().contains(e.toElement);
+	const isHoverInfo = hoverInfo.node() == e.toElement;
+	// console.log({ elementIsInside, isHoverInfo, toEl: e.toElement });
+	return elementIsInside || isHoverInfo;
 }
 
 

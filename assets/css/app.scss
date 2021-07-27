@@ -9,14 +9,18 @@
 
 @import "./components/layout/basic";
 @import "./components/layout/header";
+@import "./components/layout/show_page";
 
 @import "./wiki_card";
 @import "./searchbar";
 @import "./topic_card";
 @import "./components/context_menus";
+@import "./components/right_info";
+@import "./components/left_info";
 @import "./components/time_period/time_period_component";
 @import "./components/time_period/date_selector";
 @import "./components/time_period/sub_periods";
+@import "./components/time_period/sub_periods/expansion_element";
 @import "./components/time_period/hover_period";
 @import "./components/breadcrumbs/breadcrumbs";
 @import "./components/modals/confirm_form";

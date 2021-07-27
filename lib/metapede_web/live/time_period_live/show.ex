@@ -44,11 +44,10 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def preload_sub_time_periods(tp) do
-    Metapede.Repo.preload(tp.sub_time_periods, [
-      :topic,
-      :sub_time_periods
-    ])
+    tp.sub_time_periods
+    |> Metapede.Repo.preload([:topic, :sub_time_periods])
     |> Enum.map(fn period -> Map.put(period, :expand, false) end)
+    |> Enum.map(fn period -> Map.put(period, :has_sub_periods, length(period.sub_time_periods) > 0) end)
   end
 
   def handle_event("click_period", period_clicked, socket) do
@@ -124,6 +123,22 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
   end
 
+  def handle_event("print", _, socket) do
+    socket.assigns.right_info_pid
+    |> send_update(MetapedeWeb.LiveComponents.ExpandInfo,
+      page_id: socket.assigns.time_period.topic.page_id,
+      id: "right_expand_info",
+      toggle: true
+    )
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:right_info_pid, pid}, socket) do
+    IO.puts("Saving now!!!")
+    {:noreply, socket |> assign(right_info_pid: pid)}
+  end
+
   def add_subtopic(sub_period, socket) do
     par_period = socket.assigns.time_period
 
@@ -171,7 +186,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def adding(topic, socket) do
     topic.time_period
-    |> block_self_reference(socket)
+    |> block_self_reference(socket.assigns.time_period.id)
     |> add_to_subtopics(socket)
 
     {
@@ -184,11 +199,11 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     }
   end
 
-  def block_self_reference(time_period, socket) do
-    if time_period.id == socket.assigns.time_period.id do
+  def block_self_reference(new_period, current_id) do
+    if new_period.id == current_id do
       {:self, nil}
     else
-      {:not_self, time_period}
+      {:not_self, new_period}
     end
   end
 

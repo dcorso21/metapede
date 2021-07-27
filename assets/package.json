@@ -13,11 +13,13 @@
         "phoenix": "file:../deps/phoenix",
         "phoenix_html": "file:../deps/phoenix_html",
         "phoenix_live_view": "file:../deps/phoenix_live_view",
+        "regenerator-runtime": "^0.13.7",
         "topbar": "^0.1.4",
         "vanillajs-datepicker": "^1.1.4"
     },
     "devDependencies": {
         "@babel/core": "^7.0.0",
+        "@babel/plugin-transform-runtime": "^7.14.5",
         "@babel/preset-env": "^7.0.0",
         "@types/node": "^16.3.2",
         "babel-loader": "^8.0.0",
