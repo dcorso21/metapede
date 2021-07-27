@@ -1,5 +1,7 @@
 <div id="main_sect">
 	<div id="left_info">
+
+		<%# Breadcrumbs %>
 		<%= live_component @socket,
 			MetapedeWeb.LiveComponents.BreadcrumbsComponent,
 			root: "Time Periods",
@@ -9,7 +11,7 @@
 		%>
 
 		<%# Main Timeline Info %>
-		<%=live_component @socket,
+		<%= live_component @socket,
 			MetapedeWeb.LiveComponents.TitleInfo,
 			time_period: @time_period
 		%>
@@ -20,8 +22,7 @@
 		%>
 	</div>
 
-
-
+	<%# Info Panel %>
 	<button phx-click="print">Toggle Info Panel</button>
 	<%= live_component @socket,
 		MetapedeWeb.LiveComponents.ExpandInfo,
@@ -29,6 +30,4 @@
 		toggle: false,
 		page_id: @time_period.topic.page_id
 	%>
-
-
 </div>
