@@ -65,7 +65,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     {:noreply,
      socket
      |> assign(breadcrumbs: socket.assigns.breadcrumbs ++ crumb)
-     |> push_patch(to: Routes.time_period_show_path(socket, :show, id))}
+     |> push_patch(to: Routes.time_period_show_path(socket, :main, id))}
   end
 
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
@@ -157,7 +157,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
      socket
      |> assign(refresh_sub_periods: true)
      |> put_flash(:info, "New Subtopic Added: #{sub_period.topic.title}")
-     |> push_patch(to: Routes.time_period_show_path(socket, :show, par_period))}
+     |> push_patch(to: Routes.time_period_show_path(socket, :main, par_period))}
   end
 
   def patch_for_confirm(message, new_topic, socket) do
@@ -172,7 +172,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
         to:
           Routes.time_period_show_path(
             socket,
-            :confirm,
+            :confirm_sub_period,
             socket.assigns.time_period.id,
             %{"new_topic_id" => new_topic.id}
           )
@@ -198,7 +198,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
       socket
       |> put_flash(:info, "Sub Time Period Added: #{topic.title}")
       |> push_redirect(
-        to: Routes.time_period_show_path(socket, :show, socket.assigns.time_period)
+        to: Routes.time_period_show_path(socket, :main, socket.assigns.time_period)
       )
     }
   end

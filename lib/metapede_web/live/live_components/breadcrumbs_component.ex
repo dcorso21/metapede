@@ -32,7 +32,7 @@ defmodule MetapedeWeb.LiveComponents.Crumb do
     <div class="crumb">
     <span>
     <%= live_patch @crumb["name"],
-      to: Routes.time_period_show_path(@socket, :show, @crumb["id"]),
+      to: Routes.time_period_show_path(@socket, :main, @crumb["id"]),
       phx_click: "reset_breadcrumbs" <> Integer.to_string(@index)
     %>
     </span>

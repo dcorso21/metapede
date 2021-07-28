@@ -14,4 +14,9 @@ defmodule MetapedeWeb.LiveComponents.SubPeriodsHook do
         ></div>
     """
   end
+
+  def handle_event("click_period", period_clicked, socket) do
+    updated = ManageShown.path_helper(period_clicked["id"], socket.assigns.loaded_sub_periods)
+    {:noreply, socket |> assign(loaded_sub_periods: updated.sub_time_periods)}
+  end
 end

@@ -6,16 +6,20 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent do
 
     <h2>Sub Periods</h2>
 
-    <%# Forms (Modals) %>
+    <%# Forms (Modals)
     <%= live_component @socket,
-        MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms
+        MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms,
+        sub_period_form: @sub_period_form,
+        form_type: @form_type,
+        time_period: @time_period
+    %>
     %>
 
     <%# Add Sub Period Button %>
     <%= live_patch "Add Sub Period",
         to: Routes.time_period_show_path(
         @socket,
-        :search,
+        :search_sub_period,
         @time_period
         )
     %>

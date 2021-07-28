@@ -24,9 +24,9 @@ defmodule MetapedeWeb.Router do
     live "/time_periods/search", TimePeriodLive.Index, :search
     live "/time_periods/:id/confirm/", TimePeriodLive.Index, :confirm
 
-    live "/time_periods/show/:id", TimePeriodLive.Show, :show
-    live "/time_periods/show/:id/search", TimePeriodLive.Show, :search
-    live "/time_periods/show/:id/confirm", TimePeriodLive.Show, :confirm
+    live "/time_periods/show/:id", TimePeriodLive.Show, :main
+    live "/time_periods/show/:id/search", TimePeriodLive.Show, :search_sub_period
+    live "/time_periods/show/:id/confirm", TimePeriodLive.Show, :confirm_sub_period
 
     live "/topics", TopicLive.Topics, :topics
     live "/topics/new", TopicLive.Topics, :new
