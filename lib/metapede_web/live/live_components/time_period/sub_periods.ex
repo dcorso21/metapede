@@ -8,7 +8,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent do
     <%# Forms (Modals) %>
     <%= live_component @socket,
         MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms,
-        id: :forms,
+        id: "sub_period_forms",
         live_action: @live_action,
         time_period: @time_period
     %>

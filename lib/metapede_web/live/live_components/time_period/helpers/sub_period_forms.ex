@@ -8,24 +8,26 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
   def render(assigns) do
     ~L"""
     <%# Search Modal %>
-    <%= if @live_action == :search_sub_period do %>
-      <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
-        id: :search_form,
-        target: @myself,
-        event_name: "click_search_topic",
-        return_to: Routes.time_period_show_path(@socket, :main, @time_period)
-      %>
-    <% end %>
+    <div id="sub_period_forms">
+      <%= if @live_action == :search_sub_period do %>
+        <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
+          id: :search_form,
+          target: "#sub_period_forms",
+          event_name: "click_search_topic",
+          return_to: Routes.time_period_show_path(@socket, :main, @time_period)
+        %>
+      <% end %>
 
-    <%# Create Form Modal %>
-    <%= if @live_action == :confirm_sub_period do %>
-      <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
-        event_name: "confirmed_period",
-        id: :confirm_form,
-        new_topic: @new_topic,
-        return_to: Routes.time_period_show_path(@socket, :main, @time_period)
-      %>
-    <% end %>
+      <%# Create Form Modal %>
+      <%= if @live_action == :confirm_sub_period do %>
+        <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
+          event_name: "confirmed_period",
+          id: :confirm_form,
+          new_topic: @new_topic,
+          return_to: Routes.time_period_show_path(@socket, :main, @time_period)
+        %>
+      <% end %>
+    </div>
     """
   end
 

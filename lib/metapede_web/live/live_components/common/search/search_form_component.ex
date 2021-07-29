@@ -3,6 +3,11 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   alias Metapede.Collection
 
   def update(assigns, socket) do
+
+    IO.puts("TARGET:")
+    IO.inspect(assigns)
+
+
     {:ok,
      socket
      |> assign(:wiki_info, [])
@@ -16,7 +21,15 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
       <h1>Search</h1>
 
       <%# Input Form %>
-      <%= form_for :my_form, "#", [phx_change: "change", phx_submit: "submit", autocomplete: "off", phx_target: @myself], fn f -> %>
+      <%= form_for :my_form,
+        "#",
+        [
+          phx_change: "change",
+          phx_submit: "submit",
+          autocomplete: "off",
+          phx_target: @myself
+        ],
+        fn f -> %>
         <div id="form_elements">
           <%= search_input f, :query, [id: "wiki_search_input"]%>
         </div>
