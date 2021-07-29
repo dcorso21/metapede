@@ -1,7 +1,7 @@
 // @ts-check
 
 // import * as d3 from "d3";
-import { getSubPeriodsConn } from "../../subPeriodHook";
+import { getSubPeriodsConn, subPeriodsHookTarget } from "../../subPeriodHook";
 import HoverInfoElement from "./hoverInfo";
 import { hoverInfoFadeIn, hoverInfoFadeOut } from "./transitions";
 
@@ -42,7 +42,7 @@ function isHoverElement(e) {
 
 function handleClick(period) {
 	HoverInfoElement.selectEl().style("opacity", "0")
-	getSubPeriodsConn().pushEvent("redirect_to_sub_period", period.id);
+	getSubPeriodsConn().pushEventTo(subPeriodsHookTarget, "redirect_to_sub_period", period.id);
 }
 
 const periodHoverElementEventHandlers = {

@@ -11,13 +11,18 @@ defmodule MetapedeWeb.LiveComponents.ExpandInfo do
      |> assign(open: false)}
   end
 
-
   def render(assigns) do
     ~L"""
+    <%# Toggle Button %>
     <button
       phx-click="toggle_visible"
       phx-target=<%= @myself %>
-      >Toggle Info Panel</button>
+      >
+      Toggle Info Panel
+    </button>
+
+
+    <%# Info Hook %>
     <div
       phx-hook="rightInfoHook"
       id="right_info_wrap"
@@ -33,5 +38,4 @@ defmodule MetapedeWeb.LiveComponents.ExpandInfo do
   def handle_event("toggle_visible", _, socket) do
     {:noreply, socket |> assign(open: !socket.assigns.open)}
   end
-
 end

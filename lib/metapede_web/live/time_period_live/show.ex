@@ -13,7 +13,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
      |> assign(new_topic: nil)
      |> assign(time_period: tp)
      |> assign(refresh_sub_periods: false)
-     |> assign(loaded_sub_periods: preload_sub_time_periods(tp))
+    #  |> assign(loaded_sub_periods: preload_sub_time_periods(tp))
      |> assign(breadcrumbs: [])}
   end
 
@@ -23,13 +23,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def handle_params(params, _url, socket) do
     tp = get_time_period(params)
-
-    socket =
-      if(
-        tp.id == socket.assigns.time_period.id && !socket.assigns.refresh_sub_periods,
-        do: socket,
-        else: socket |> assign(loaded_sub_periods: preload_sub_time_periods(tp))
-      )
 
     new_topic =
       if(params["new_topic_id"],
@@ -45,18 +38,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def get_time_period(params) do
     TimePeriodContext.get_time_period!(params["id"])
-  end
-
-  def preload_sub_time_periods(tp) do
-    tp.sub_time_periods
-    |> Metapede.Repo.preload([:topic, :sub_time_periods])
-    |> Enum.map(fn period -> Map.put(period, :expand, false) end)
-    |> Enum.map(fn period -> Map.put(period, :has_sub_periods, length(period.sub_time_periods) > 0) end)
-  end
-
-  def handle_event("click_period", period_clicked, socket) do
-    updated = ManageShown.path_helper(period_clicked["id"], socket.assigns.loaded_sub_periods)
-    {:noreply, socket |> assign(loaded_sub_periods: updated.sub_time_periods)}
   end
 
   def handle_event("redirect_to_sub_period", id, socket) do
@@ -127,16 +108,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   #   {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
   # end
 
-  def handle_event("print", _, socket) do
-    socket.assigns.right_info_pid
-    |> send_update(MetapedeWeb.LiveComponents.ExpandInfo,
-      page_id: socket.assigns.time_period.topic.page_id,
-      id: "right_expand_info",
-      toggle: true
-    )
-
-    {:noreply, socket}
-  end
 
   def handle_info({:right_info_pid, pid}, socket) do
     IO.puts("Saving now!!!")

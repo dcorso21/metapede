@@ -3,7 +3,6 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent do
 
   def render(assigns) do
     ~L"""
-
     <h2>Sub Periods</h2>
 
     <%# Forms (Modals)
@@ -13,7 +12,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent do
         form_type: @form_type,
         time_period: @time_period
     %>
-    %>
+
 
     <%# Add Sub Period Button %>
     <%= live_patch "Add Sub Period",
@@ -27,9 +26,8 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent do
     <%# Period Hook %>
     <%= live_component @socket,
         MetapedeWeb.LiveComponents.SubPeriodsHook,
-        id: "sup_period_wrap",
-        time_period: @time_period,
-        loaded_sub_periods: @loaded_sub_periods
+        id: :sub_period_wrap,
+        time_period: @time_period
     %>
     """
   end

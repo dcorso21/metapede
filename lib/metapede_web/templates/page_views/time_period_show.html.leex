@@ -1,6 +1,5 @@
 <div id="main_sect">
 	<div id="left_info">
-
 		<%# Breadcrumbs %>
 		<%= live_component @socket,
 			MetapedeWeb.LiveComponents.BreadcrumbsComponent,
@@ -20,8 +19,7 @@
 		<%# Sub Time Periods %>
 		<%= live_component @socket,
 			MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent,
-			time_period: @time_period,
-			loaded_sub_periods: @loaded_sub_periods
+			time_period: @time_period
 		%>
 	</div>
 
