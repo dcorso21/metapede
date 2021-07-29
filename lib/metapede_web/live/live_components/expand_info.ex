@@ -37,4 +37,15 @@ defmodule MetapedeWeb.LiveComponents.ExpandInfo do
     </div>
     """
   end
+
+  # def handle_event("print", _, socket) do
+  #   socket.assigns.right_info_pid
+  #   |> send_update(MetapedeWeb.LiveComponents.ExpandInfo,
+  #     page_id: socket.assigns.time_period.topic.page_id,
+  #     id: "right_expand_info",
+  #     toggle: true
+  #   )
+
+  #   {:noreply, socket}
+  # end
 end

@@ -6,7 +6,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :show_topics, list_topics())}
+    {:ok, socket |> assign(show_topics: list_topics())}
   end
 
   @impl true
