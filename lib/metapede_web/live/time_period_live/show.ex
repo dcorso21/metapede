@@ -1,6 +1,5 @@
 defmodule MetapedeWeb.TimePeriodLive.Show do
   use MetapedeWeb, :live_view
-  alias MetapedeWeb.Controllers.Transforms.ManageShown
   alias Metapede.CommonSearchFuncs
   alias Metapede.TimelineContext.TimePeriodContext
   alias MetapedeWeb.Controllers.Transforms.DatetimeOps
@@ -38,15 +37,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
   def get_time_period(params) do
     TimePeriodContext.get_time_period!(params["id"])
-  end
-
-  def handle_event("redirect_to_sub_period", id, socket) do
-    crumb = convert_current_to_crumb(socket)
-
-    {:noreply,
-     socket
-     |> assign(breadcrumbs: socket.assigns.breadcrumbs ++ crumb)
-     |> push_patch(to: Routes.time_period_show_path(socket, :main, id))}
   end
 
   def handle_event("new_sub_time_period", %{"topic" => topic}, socket) do
@@ -89,25 +79,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
         IO.inspect(resp)
     end
   end
-
-  # def handle_event("update_breadcrumbs", %{"breadcrumbs" => crumbs}, socket) do
-  #   nc = crumbs |> Poison.decode!()
-  #   cp = convert_current_to_crumb(socket)
-  #   up = socket.assigns.breadcrumbs ++ cp ++ nc
-
-  #   {:noreply,
-  #    socket
-  #    |> assign(breadcrumbs: up)}
-  # end
-
-  # def handle_event("reset_breadcrumbs" <> index, _, socket) do
-  #   updated_breadcrumbs =
-  #     socket.assigns.breadcrumbs
-  #     |> Enum.take(String.to_integer(index))
-
-  #   {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
-  # end
-
 
   def handle_info({:right_info_pid, pid}, socket) do
     IO.puts("Saving now!!!")
@@ -195,8 +166,4 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     )
   end
 
-  defp convert_current_to_crumb(socket) do
-    tp = socket.assigns.time_period
-    [%{"name" => tp.topic.title, "id" => tp.id}]
-  end
 end
