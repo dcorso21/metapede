@@ -20,7 +20,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
 
       <%# Create Form Modal %>
       <%= if @live_action == :confirm_sub_period do %>
-        <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
+        <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm,
           event_name: "confirmed_period",
           id: :confirm_form,
           new_topic: @new_topic,
@@ -80,45 +80,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
   def custom_redirect({:existing, new_topic}, socket),
     do: patch_for_confirm("Topic found", new_topic, socket)
 
-  def adding(topic, socket) do
-    topic.time_period
-    |> block_self_reference(socket.assigns.time_period.id)
-    |> add_to_subtopics(socket)
-
-    {
-      :noreply,
-      socket
-      |> put_flash(:info, "Sub Time Period Added: #{topic.title}")
-      |> push_redirect(
-        to: Routes.time_period_show_path(socket, :main, socket.assigns.time_period)
-      )
-    }
-  end
-
-  def block_self_reference(new_period, current_id) do
-    if new_period.id == current_id do
-      {:self, nil}
-    else
-      {:not_self, new_period}
-    end
-  end
-
-  def add_to_subtopics({:self, _time_period}, _socket), do: nil
-
-  def add_to_subtopics({:not_self, time_period}, socket) do
-    CommonSearchFuncs.add_association(
-      time_period,
-      socket.assigns.time_period,
-      :sub_time_periods,
-      fn el ->
-        [el | socket.assigns.time_period.sub_time_periods]
-      end
-    )
-  end
-
   def patch_for_confirm(message, new_topic, socket) do
-    IO.inspect(new_topic)
-
     {
       :noreply,
       socket
@@ -134,22 +96,5 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
           )
       )
     }
-  end
-
-  def add_subtopic(sub_period, socket) do
-    par_period = socket.assigns.time_period
-
-    Metapede.CommonSearchFuncs.add_association(
-      sub_period,
-      par_period,
-      :sub_time_periods,
-      fn el -> [el | par_period.sub_time_periods] end
-    )
-
-    {:noreply,
-     socket
-     |> assign(refresh_sub_periods: true)
-     |> put_flash(:info, "New Subtopic Added: #{sub_period.topic.title}")
-     |> push_patch(to: Routes.time_period_show_path(socket, :main, par_period))}
   end
 end
