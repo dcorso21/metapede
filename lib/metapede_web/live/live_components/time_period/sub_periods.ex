@@ -5,11 +5,11 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent do
     ~L"""
     <h2>Sub Periods</h2>
 
-    <%# Forms (Modals)
+    <%# Forms (Modals) %>
     <%= live_component @socket,
         MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms,
-        sub_period_form: @sub_period_form,
-        form_type: @form_type,
+        id: :forms,
+        live_action: @live_action,
         time_period: @time_period
     %>
 

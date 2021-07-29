@@ -16,7 +16,7 @@ defmodule MetapedeWeb.LiveComponents.BreadcrumbsComponent do
         <%# Caret %>
         <div class="caret">></div>
 
-        <%# Middle Crumb %>
+        <%# Middle Crumbs %>
         <%= for { crumb, index } <- Enum.with_index(@breadcrumbs) do %>
             <%= live_component @socket,
               Crumb,

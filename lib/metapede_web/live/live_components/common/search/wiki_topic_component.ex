@@ -5,6 +5,7 @@ defmodule MetapedeWeb.LiveComponents.WikiTopicCompmonent do
     ~L"""
     <div
       phx-click="<%= @event_name %>"
+      phx-target="<%= @target %>"
       phx-value-topic = "<%= Poison.encode!(@topic) %>"
       id="<%= @topic["pageid"] %>"
     >

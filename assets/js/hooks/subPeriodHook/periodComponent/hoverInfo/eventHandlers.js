@@ -42,7 +42,7 @@ function isHoverElement(e) {
 
 function handleClick(period) {
 	HoverInfoElement.selectEl().style("opacity", "0")
-	getSubPeriodsConn().sendEvent("click_sub_period_title", period.id);
+	getSubPeriodsConn().sendEvent("click_period_title", period.id);
 }
 
 const periodHoverElementEventHandlers = {

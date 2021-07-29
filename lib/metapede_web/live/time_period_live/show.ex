@@ -12,7 +12,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
      |> assign(new_topic: nil)
      |> assign(time_period: tp)
      |> assign(refresh_sub_periods: false)
-    #  |> assign(loaded_sub_periods: preload_sub_time_periods(tp))
      |> assign(breadcrumbs: [])}
   end
 

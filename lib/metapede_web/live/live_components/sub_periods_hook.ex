@@ -29,7 +29,7 @@ defmodule MetapedeWeb.LiveComponents.SubPeriodsHook do
     {:noreply, socket |> assign(loaded_sub_periods: updated.sub_time_periods)}
   end
 
-  def handle_event("click_sub_period_title", clicked_period_id, socket) do
+  def handle_event("click_period_title", clicked_period_id, socket) do
     {:noreply,
      socket
      |> push_patch(to: Routes.time_period_show_path(socket, :main, clicked_period_id))}

@@ -19,7 +19,8 @@
 		<%# Sub Time Periods %>
 		<%= live_component @socket,
 			MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent,
-			time_period: @time_period
+			time_period: @time_period,
+			live_action: @live_action
 		%>
 	</div>
 

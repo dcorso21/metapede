@@ -9,6 +9,7 @@ defmodule MetapedeWeb.LiveComponents.SearchResultsComponent do
           <%= live_component @socket,
             MetapedeWeb.LiveComponents.WikiTopicCompmonent,
             topic: w_topic,
+            target: @target,
             event_name: @event_name
           %>
         <% end %>
