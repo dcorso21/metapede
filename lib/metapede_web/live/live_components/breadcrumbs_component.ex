@@ -12,7 +12,12 @@ defmodule MetapedeWeb.LiveComponents.BreadcrumbsComponent do
           </div>
             <div class="caret">></div>
             <%= for { crumb, index } <- Enum.with_index(@breadcrumbs) do %>
-                <%= live_component @socket, Crumb, crumb: crumb, index: index %>
+                <%= live_component @socket,
+                  Crumb,
+                  crumb: crumb,
+                  index: index,
+                  target: @myself
+                %>
             <% end %>
             <div class="crumb">
             <span>
@@ -23,13 +28,15 @@ defmodule MetapedeWeb.LiveComponents.BreadcrumbsComponent do
     """
   end
 
-  def handle_event("reset_breadcrumbs" <> index, _, socket) do
+  def handle_event("clicked_breadcrumb_" <> index, _, socket) do
     updated_breadcrumbs =
       socket.assigns.breadcrumbs
       |> Enum.take(String.to_integer(index))
+
+    IO.puts("Socket Inspect")
+    IO.inspect(socket)
 
     {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
   end
 
 end
-

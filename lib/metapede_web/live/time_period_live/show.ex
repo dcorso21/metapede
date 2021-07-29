@@ -109,23 +109,23 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     end
   end
 
-  def handle_event("update_breadcrumbs", %{"breadcrumbs" => crumbs}, socket) do
-    nc = crumbs |> Poison.decode!()
-    cp = convert_current_to_crumb(socket)
-    up = socket.assigns.breadcrumbs ++ cp ++ nc
+  # def handle_event("update_breadcrumbs", %{"breadcrumbs" => crumbs}, socket) do
+  #   nc = crumbs |> Poison.decode!()
+  #   cp = convert_current_to_crumb(socket)
+  #   up = socket.assigns.breadcrumbs ++ cp ++ nc
 
-    {:noreply,
-     socket
-     |> assign(breadcrumbs: up)}
-  end
+  #   {:noreply,
+  #    socket
+  #    |> assign(breadcrumbs: up)}
+  # end
 
-  def handle_event("reset_breadcrumbs" <> index, _, socket) do
-    updated_breadcrumbs =
-      socket.assigns.breadcrumbs
-      |> Enum.take(String.to_integer(index))
+  # def handle_event("reset_breadcrumbs" <> index, _, socket) do
+  #   updated_breadcrumbs =
+  #     socket.assigns.breadcrumbs
+  #     |> Enum.take(String.to_integer(index))
 
-    {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
-  end
+  #   {:noreply, socket |> assign(breadcrumbs: updated_breadcrumbs)}
+  # end
 
   def handle_event("print", _, socket) do
     socket.assigns.right_info_pid
