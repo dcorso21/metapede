@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-let rightInfoConn;
+let rightWikiPanelConn;
 
 function getPageText(page_id) {
 	const baseURL = "https://en.wikipedia.org/w/api.php?origin=*&format=json&";
@@ -54,7 +54,7 @@ function removeFloating() {
 }
 
 function renderRightInfo(conn) {
-	rightInfoConn = conn;
+	rightWikiPanelConn = conn;
 	const phxElement = conn.el;
 	const page_id = phxElement.dataset.page_id;
 	const open = phxElement.dataset.open;
@@ -82,9 +82,9 @@ function updated() {
 	renderRightInfo(this);
 }
 
-const rightInfoHook = {
+const rightWikiPanelHook = {
 	mounted,
 	updated
 }
 
-export default rightInfoHook;
+export default rightWikiPanelHook;

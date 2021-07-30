@@ -2,7 +2,7 @@
 	<div id="left_info">
 		<%# Breadcrumbs %>
 		<%= live_component @socket,
-			MetapedeWeb.LiveComponents.BreadcrumbsComponent,
+			MetapedeWeb.LiveComponents.Breadcrumbs,
 			id: :breadcrumbs,
 			root: "Time Periods",
 			root_path: Routes.time_period_index_path(@socket, :main),
@@ -27,7 +27,7 @@
 
 	<%# Info Panel %>
 	<%= live_component @socket,
-		MetapedeWeb.LiveComponents.ExpandInfo,
+		MetapedeWeb.LiveComponents.Common.RightWikiPanel,
 		id: "right_expand_info",
 		toggle: false,
 		page_id: @time_period.topic.page_id

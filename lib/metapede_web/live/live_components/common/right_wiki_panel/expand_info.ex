@@ -1,4 +1,4 @@
-defmodule MetapedeWeb.LiveComponents.ExpandInfo do
+defmodule MetapedeWeb.LiveComponents.Common.RightWikiPanel do
   use MetapedeWeb, :live_component
 
   def mount(socket) do
@@ -24,7 +24,7 @@ defmodule MetapedeWeb.LiveComponents.ExpandInfo do
 
     <%# Info Hook %>
     <div
-      phx-hook="rightInfoHook"
+      phx-hook="rightWikiPanelHook"
       id="right_info_wrap"
       phx-update="ignore"
       data-page_id="<%= @page_id %>"

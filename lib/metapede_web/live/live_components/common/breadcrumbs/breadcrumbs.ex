@@ -1,4 +1,4 @@
-defmodule MetapedeWeb.LiveComponents.BreadcrumbsComponent do
+defmodule MetapedeWeb.LiveComponents.Breadcrumbs do
   use MetapedeWeb, :live_component
   alias MetapedeWeb.LiveComponents.Crumb
 

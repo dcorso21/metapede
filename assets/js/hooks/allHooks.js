@@ -1,10 +1,10 @@
 // @ts-check
-import rightInfoHook from "./rightInfoHook/rightInfoHook";
+import rightWikiPanelHook from "./rightWikiPanelHook/rightWikiPanelHook";
 import subPeriodHook from "./subPeriodHook/subPeriodHook";
 
 
 const Hooks = {
-    rightInfoHook,
+    rightWikiPanelHook,
     subPeriodHook
 }
 
