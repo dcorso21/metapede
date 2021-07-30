@@ -39,7 +39,7 @@ defmodule Metapede.WikiFuncs do
     URI.encode(query)
   end
 
-  defp make_wiki_request(headers, options) do
-    HTTPoison.get(@base_url, headers, options)
-  end
+  # defp make_wiki_request(headers, options) do
+  #   HTTPoison.get(@base_url, headers, options)
+  # end
 end

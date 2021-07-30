@@ -2,7 +2,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
   use MetapedeWeb, :live_view
   alias Metapede.Collection
   alias Metapede.Collection.Topic
-  alias MetapedeWeb.Controllers.Transforms.WikiTransforms
+  # alias MetapedeWeb.Controllers.Transforms.WikiTransforms
 
   @impl true
   def mount(_params, _session, socket) do
