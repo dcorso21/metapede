@@ -6,23 +6,11 @@ defmodule MetapedeWeb.LiveComponents.Common.RightWikiPanel do
       send(socket.root_pid, {:right_info_pid, self()})
     end
 
-    {:ok,
-     socket
-     |> assign(open: false)}
+    {:ok, socket |> assign(open: false)}
   end
 
   def render(assigns) do
     ~L"""
-    <%# Toggle Button %>
-    <button
-      phx-click="toggle_visible"
-      phx-target=<%= @myself %>
-      >
-      Toggle Info Panel
-    </button>
-
-
-    <%# Info Hook %>
     <div
       phx-hook="rightWikiPanelHook"
       id="right_info_wrap"
@@ -31,7 +19,6 @@ defmodule MetapedeWeb.LiveComponents.Common.RightWikiPanel do
       data-open="<%= @open %>"
     >
     </div>
-
     """
   end
 

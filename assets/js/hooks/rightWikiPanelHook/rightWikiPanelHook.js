@@ -1,13 +1,15 @@
+// @ts-check
+
 import * as d3 from "d3";
+import toggleButton from "./toggleButton/toggleButton";
 let rightWikiPanelConn;
 
 function getPageText(page_id) {
 	const baseURL = "https://en.wikipedia.org/w/api.php?origin=*&format=json&";
 	const queryParams = "action=parse&prop=text&pageid=";
 
-	var requestOptions = {
+	const requestOptions = {
 		method: 'GET',
-		redirect: 'follow'
 	};
 
 	return fetch(baseURL + queryParams + page_id, requestOptions)
@@ -76,6 +78,7 @@ function renderRightInfo(conn) {
 
 function mounted() {
 	renderRightInfo(this);
+	toggleButton.create();
 }
 
 function updated() {

@@ -1,0 +1,17 @@
+#main_sect {
+	display: flex;
+}
+
+.container {
+    position: relative;
+    margin: 0 5%;
+
+    #left_info {
+        width: 100%;
+        height: 200vh;
+    }
+
+    #right_info_wrap {
+        width: 0%;
+    }
+}
