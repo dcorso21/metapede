@@ -10,6 +10,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodComponent do
         MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms,
         id: "sub_period_forms",
         live_action: @live_action,
+        new_topic: @new_topic,
         time_period: @time_period
     %>
 

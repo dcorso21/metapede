@@ -3,6 +3,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
   alias Metapede.CommonSearchFuncs
   alias Metapede.TimelineContext.TimePeriodContext
   alias MetapedeWeb.Controllers.Transforms.DatetimeOps
+  alias MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm
   # Form types: :confirm, :search, :none
 
   def render(assigns) do
@@ -24,6 +25,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
           event_name: "confirmed_period",
           id: :confirm_form,
           new_topic: @new_topic,
+          time_period: @time_period,
           return_to: Routes.time_period_show_path(@socket, :main, @time_period)
         %>
       <% end %>
@@ -39,40 +41,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
     |> custom_redirect(socket)
   end
 
-  def handle_event("confirmed_period", params, socket) do
-    new_period = %{
-      start_datetime: DatetimeOps.make_datetimes(params, "sdt"),
-      end_datetime: DatetimeOps.make_datetimes(params, "edt")
-    }
-
-    case TimePeriodContext.create_time_period(new_period) do
-      {:ok, saved_period} ->
-        loaded = Metapede.Repo.preload(saved_period, [:topic])
-
-        resp =
-          Metapede.CommonSearchFuncs.add_association(
-            socket.assigns.new_topic,
-            loaded,
-            :topic,
-            fn el -> el end
-          )
-
-        add_subtopic(resp, socket)
-
-      {:error, message} ->
-        IO.inspect(message)
-
-        {:noreply,
-         socket
-         |> put_flash(:error, "An Error Occurred")
-         |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
-
-      resp ->
-        IO.inspect(resp)
-    end
-  end
-
-  def custom_redirect({:has_time_period, topic}, socket), do: adding(topic, socket)
+  def custom_redirect({:has_time_period, topic}, socket), do: ConfirmForm.adding(topic, socket)
 
   def custom_redirect({:ok, new_topic}, socket),
     do: patch_for_confirm("Topic created for timeline", new_topic, socket)

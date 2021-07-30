@@ -1,7 +1,8 @@
 defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
   use MetapedeWeb, :live_component
   alias Metapede.CommonSearchFuncs
-  # alias Metapede.TimelineContext.TimePeriodContext
+  alias Metapede.TimelineContext.TimePeriodContext
+  alias MetapedeWeb.Controllers.Transforms.DatetimeOps
 
   def render(assigns) do
     ~L"""
@@ -18,22 +19,72 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
           <%= form_for Metapede.Timeline.TimePeriod, "#",
             id: "time_period_form",
             autocomplete: "off",
-            phx_submit: @event_name %>
+            phx_target: @myself,
+            phx_submit: "submit_confirmed" %>
 
             <div class="date_options">
-              <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent, title: "Start Date", prefix: "sdt" %>
-              <%= live_component @socket, MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent, title: "End Date", prefix: "edt" %>
+              <%= live_component @socket,
+                MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent,
+                title: "Start Date",
+                prefix: "sdt"
+              %>
+
+              <%= live_component @socket,
+                MetapedeWeb.LiveComponents.TimePeriod.DateSelectorComponent,
+                title: "End Date",
+                prefix: "edt"
+              %>
+
             </div>
 
           <%= submit "Save", phx_disable_with: "Saving..." %>
           </form>
       </div>
+
       <div class="right_page">
-      <%= live_component @socket, MetapedeWeb.LiveComponents.WikiContent, page_id: @new_topic.page_id, id: @new_topic.title <> "_page" %>
+        <%= live_component @socket,
+          MetapedeWeb.LiveComponents.WikiContent,
+          page_id: @new_topic.page_id,
+          id: @new_topic.title <> "_page"
+        %>
       </div>
+
     </div>
     <% end %>
     """
+  end
+
+  def handle_event("submit_confirmed", params, socket) do
+    new_period = %{
+      start_datetime: DatetimeOps.make_datetimes(params, "sdt"),
+      end_datetime: DatetimeOps.make_datetimes(params, "edt")
+    }
+
+    case TimePeriodContext.create_time_period(new_period) do
+      {:ok, saved_period} ->
+        loaded = Metapede.Repo.preload(saved_period, [:topic])
+
+        resp =
+          Metapede.CommonSearchFuncs.add_association(
+            socket.assigns.new_topic,
+            loaded,
+            :topic,
+            fn el -> el end
+          )
+
+        add_subtopic(resp, socket)
+
+      {:error, message} ->
+        IO.inspect(message)
+
+        {:noreply,
+         socket
+         |> put_flash(:error, "An Error Occurred")
+         |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
+
+      resp ->
+        IO.inspect(resp)
+    end
   end
 
   def adding(topic, socket) do

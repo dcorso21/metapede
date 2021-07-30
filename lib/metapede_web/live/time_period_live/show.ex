@@ -2,7 +2,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   use MetapedeWeb, :live_view
   alias Metapede.TimelineContext.TimePeriodContext
   # alias Metapede.CommonSearchFuncs
-  # alias MetapedeWeb.Controllers.Transforms.DatetimeOps
 
   def mount(params, _session, socket) do
     tp = get_time_period(params)
