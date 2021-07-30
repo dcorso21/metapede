@@ -33,9 +33,9 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.TimePeriodComponent do
             phx-value-breadcrumbs="<%= Poison.encode!(@trace) %>"
             >
           <%= if @patch do %>
-            <%= live_patch "Show Period", to: Routes.time_period_show_path(@socket, :show, @period)%>
+            <%= live_patch "Show Period", to: Routes.time_period_show_path(@socket, :main, @period)%>
           <% else %>
-            <%= live_redirect "Show Period", to: Routes.time_period_show_path(@socket, :show, @period)%>
+            <%= live_redirect "Show Period", to: Routes.time_period_show_path(@socket, :main, @period)%>
           <% end %>
           </div>
 

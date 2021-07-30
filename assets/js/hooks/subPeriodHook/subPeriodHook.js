@@ -5,14 +5,16 @@ import HoverInfo from "./periodComponent/hoverInfo/hoverInfo";
 import { enterPeriod, updatePeriod, exitPeriod, periodHeight } from "./periodComponent/period";
 import subPeriodTransforms from "./transforms";
 import { setHeightTransition } from "./transitions";
-// import moment from "moment";
 
 
 
 let subPeriodsConn;
 
+const target = "#sub_period_wrap"
 
 export function getSubPeriodsConn() {
+	subPeriodsConn.sendEvent = (event, payload) =>
+		subPeriodsConn.pushEventTo(target, event, payload);
 	return subPeriodsConn
 }
 

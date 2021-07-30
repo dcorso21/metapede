@@ -7,8 +7,9 @@ defmodule MetapedeWeb.LiveComponents.SearchResultsComponent do
       <%= if length(@wiki_info) > 0 do %>
         <%= for w_topic <- @wiki_info do %>
           <%= live_component @socket,
-            MetapedeWeb.LiveComponents.WikiTopicCompmonent,
+            MetapedeWeb.LiveComponents.WikiTopicComponent,
             topic: w_topic,
+            target: @target,
             event_name: @event_name
           %>
         <% end %>
