@@ -19,6 +19,7 @@ function initAllElements() {
 }
 
 function initState(conn) {
+	console.log(conn.el.dataset);
 	window.sessionStorage.setItem("open", "false");
 	window.sessionStorage.setItem("selectedPageId", conn.el.dataset.page_id);
 }

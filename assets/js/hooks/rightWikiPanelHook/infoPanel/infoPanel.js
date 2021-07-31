@@ -17,10 +17,10 @@ function create(page_id) {
         .style("transform", "translateY(5px)")
         .style("opacity", "0")
         .html("<div>Loading...</div>")
-        .call(async selection => {
-            const html = await getPageText(page_id)
-            selection.html(html)
-        })
+        // .call(async selection => {
+        //     const html = await getPageText(page_id)
+        //     selection.html(html)
+        // })
 }
 
 function toggleVisibility() {
@@ -39,7 +39,7 @@ function toggleVisibility() {
 
 function show() {
     selectEl()
-        .call(setText)
+        .call(setHTML)
         .call(infoPanelTransitions.fadeIn)
 }
 
@@ -48,7 +48,7 @@ function hide() {
         .call(infoPanelTransitions.fadeOut)
 }
 
-async function setText() {
+async function setHTML() {
     selectedPageId = window.sessionStorage.getItem("selectedPageId")
 
     if (!pageInfo || currentPageId != selectedPageId) {
@@ -57,7 +57,7 @@ async function setText() {
     }
 
     selectEl()
-        .text(pageInfo)
+        .html(pageInfo)
 }
 
 async function getPageText(pageId) {
@@ -68,10 +68,26 @@ async function getPageText(pageId) {
         method: 'GET',
     };
 
+    console.log({pageId});
+
     const res = await fetch(baseURL + queryParams + pageId, requestOptions);
+    console.log({res});
     const data = await res.json();
+    console.log({data});
     return data.parse.text["*"];
 }
+// function getPageText(page_id) {
+//     const baseURL = "https://en.wikipedia.org/w/api.php?origin=*&format=json&";
+//     const queryParams = "action=parse&prop=text&pageid=";
+
+//     const requestOptions = {
+//         method: 'GET',
+//     };
+
+//     return fetch(baseURL + queryParams + page_id, requestOptions)
+//         .then((res) => res.json())
+//         .then(res => res.parse.text["*"]);
+// }
 
 const infoPanel = {
     selectEl, create, toggleVisibility
