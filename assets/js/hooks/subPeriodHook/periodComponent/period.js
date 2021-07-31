@@ -24,7 +24,6 @@ export function enterPeriod(enter) {
 		.style("color", "rgba(255, 255, 255, 0.0)")
 		.call(periodTransitions.enterTransition)
 		.each(d => {
-			console.log(d);
 			if (d.has_sub_periods) {
 				selectEl(d.id)
 					.append("div")

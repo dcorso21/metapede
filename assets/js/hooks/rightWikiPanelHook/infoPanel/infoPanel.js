@@ -2,7 +2,6 @@
 import * as d3 from "d3";
 import infoPanelTransitions from "./transitions";
 
-
 let currentPageId, selectedPageId, pageInfo;
 
 function selectEl() {
@@ -29,7 +28,7 @@ function toggleVisibility() {
         .transition()
         .duration(200)
         .ease(d3.easeCircle)
-        .style("width", open == "true" ? "60%" : "100%")
+        .style("width", updated == "true" ? "60%" : "100%")
         .on("end", callback)
 }
 
@@ -47,13 +46,16 @@ function hide() {
 async function setHTML() {
     selectedPageId = window.sessionStorage.getItem("selectedPageId")
 
+    console.log({
+        selectedPageId, pageInfo, currentPageId
+    });
+
     if (!pageInfo || currentPageId != selectedPageId) {
         pageInfo = await getPageHTML(selectedPageId);
         currentPageId = selectedPageId;
+        selectEl()
+            .html(pageInfo)
     }
-
-    selectEl()
-        .html(pageInfo)
 }
 
 async function getPageHTML(pageId) {
@@ -64,12 +66,9 @@ async function getPageHTML(pageId) {
         method: 'GET',
     };
 
-    console.log({pageId});
 
     const res = await fetch(baseURL + queryParams + pageId, requestOptions);
-    console.log({res});
     const data = await res.json();
-    console.log({data});
     return data.parse.text["*"];
 }
 
