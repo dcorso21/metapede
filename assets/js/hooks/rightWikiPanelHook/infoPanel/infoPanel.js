@@ -19,17 +19,27 @@ function create() {
 }
 
 function toggleVisibility() {
-    const open = window.localStorage.getItem("rightWikiPanelOpen");
-    const updated = open == "true" ? "false" : "true";
-    const callback = updated == "true" ? show : hide;
-    window.localStorage.setItem("rightWikiPanelOpen", updated);
+    const wasOpen = window.localStorage.getItem("rightWikiPanelOpen");
+    const updatedVal = wasOpen == "true" ? "false" : "true";
+    const isOpen = updatedVal == "true";
+    console.log({isOpen});
+    window.localStorage.setItem("rightWikiPanelOpen", updatedVal);
 
     d3.select("#left_info")
+        .call(() => {
+            if (!isOpen) {
+                hide();
+            }
+        })
         .transition()
         .duration(200)
         .ease(d3.easeCircle)
-        .style("width", updated == "true" ? "60%" : "100%")
-        .on("end", callback)
+        .style("width", isOpen ? "60%" : "100%")
+        .on("end", () => {
+            if (isOpen) {
+                show();
+            }
+        })
 }
 
 function show() {

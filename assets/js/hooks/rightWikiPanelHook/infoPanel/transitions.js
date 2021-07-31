@@ -5,6 +5,7 @@ function fadeIn(selection) {
         .transition()
         .duration(duration)
         .style("opacity", 1)
+        .style("z-index", 10)
 }
 
 function fadeOut(selection) {
@@ -12,6 +13,7 @@ function fadeOut(selection) {
         .transition()
         .duration(duration)
         .style("opacity", 0)
+        .style("z-index", -10)
 }
 
 
