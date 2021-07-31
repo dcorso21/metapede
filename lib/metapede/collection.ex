@@ -108,6 +108,4 @@ defmodule Metapede.Collection do
     ids = Repo.all(from t in Topic, where: t.page_id == ^page_id, select: t.id)
     {topic, ids}
   end
-
-  def update_sub_topics(topic), do: Repo.update(Topic, topic)
 end

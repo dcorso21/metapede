@@ -1,8 +1,6 @@
 defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
   use MetapedeWeb, :live_component
   alias Metapede.CommonSearchFuncs
-  alias Metapede.TimelineContext.TimePeriodContext
-  alias MetapedeWeb.Controllers.Transforms.DatetimeOps
   alias MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm
   # Form types: :confirm, :search, :none
 

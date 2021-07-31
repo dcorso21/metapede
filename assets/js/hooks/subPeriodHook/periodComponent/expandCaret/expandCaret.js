@@ -20,7 +20,6 @@ function toggleTransition(period) {
 }
 
 function createEach(period) {
-	console.log(period);
 	if (period.has_sub_periods) {
 		periodComponent.selectEl(period.id)
 			.append("div")

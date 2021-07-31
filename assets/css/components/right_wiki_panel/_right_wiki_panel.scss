@@ -1,16 +1,16 @@
-#right_info_wrap {
-	width: 0%;
+#right_panel_wrap {
 }
 
-.floating_info {
-	background-color: rgb(31, 31, 31);
+#infoPanel {
+    right: 0px;
+    top: 0px;
+	position: fixed;
+    background-color: rgb(31, 31, 31);
 	border: 2px solid rgba(185, 185, 26, 0.384);
 	padding: 30px;
 	height: 100vh;
+    z-index: -10;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	box-sizing: border-box;
-	position: fixed;
-	top: 0;
-	right: 0px;
 }

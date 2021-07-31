@@ -15,7 +15,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def render(assigns) do
-    Phoenix.View.render(MetapedeWeb.PageViews, "time_period_show.html", assigns)
+    Phoenix.View.render(MetapedeWeb.Pages, "time_period_show.html", assigns)
   end
 
   def handle_params(params, _url, socket) do
