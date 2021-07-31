@@ -9,7 +9,7 @@ function selectEl() {
     return d3.select("#infoPanel")
 }
 
-function create(page_id) {
+function create() {
     d3.select(".container")
         .append("div")
         .attr("id", "infoPanel")
@@ -17,10 +17,6 @@ function create(page_id) {
         .style("transform", "translateY(5px)")
         .style("opacity", "0")
         .html("<div>Loading...</div>")
-        // .call(async selection => {
-        //     const html = await getPageText(page_id)
-        //     selection.html(html)
-        // })
 }
 
 function toggleVisibility() {
@@ -52,7 +48,7 @@ async function setHTML() {
     selectedPageId = window.sessionStorage.getItem("selectedPageId")
 
     if (!pageInfo || currentPageId != selectedPageId) {
-        pageInfo = await getPageText(selectedPageId);
+        pageInfo = await getPageHTML(selectedPageId);
         currentPageId = selectedPageId;
     }
 
@@ -60,7 +56,7 @@ async function setHTML() {
         .html(pageInfo)
 }
 
-async function getPageText(pageId) {
+async function getPageHTML(pageId) {
     const baseURL = "https://en.wikipedia.org/w/api.php?origin=*&format=json&";
     const queryParams = "action=parse&prop=text&pageid=";
 
@@ -76,18 +72,6 @@ async function getPageText(pageId) {
     console.log({data});
     return data.parse.text["*"];
 }
-// function getPageText(page_id) {
-//     const baseURL = "https://en.wikipedia.org/w/api.php?origin=*&format=json&";
-//     const queryParams = "action=parse&prop=text&pageid=";
-
-//     const requestOptions = {
-//         method: 'GET',
-//     };
-
-//     return fetch(baseURL + queryParams + page_id, requestOptions)
-//         .then((res) => res.json())
-//         .then(res => res.parse.text["*"]);
-// }
 
 const infoPanel = {
     selectEl, create, toggleVisibility
