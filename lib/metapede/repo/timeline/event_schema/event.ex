@@ -1,4 +1,4 @@
-defmodule Metapede.Timeline.Event do
+defmodule Metapede.Timeline.EventSchema.Event do
   use Ecto.Schema
   alias Metapede.TopicSchema.Topic
   alias Metapede.Timeline.TimePeriodSchema.TimePeriod
@@ -22,7 +22,6 @@ defmodule Metapede.Timeline.Event do
   def changeset(struct, params \\ %{}) do
     struct
     |> Ecto.Changeset.cast(params, @accepted_fields)
-    # |> Ecto.Changeset.validate_required([:])
     |> Ecto.Changeset.foreign_key_constraint(:events)
     |> Ecto.Changeset.foreign_key_constraint(:parent_time_periods)
   end

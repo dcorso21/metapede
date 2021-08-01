@@ -18,7 +18,6 @@ defmodule Metapede.TimelineContext.TimelineContextHelpers do
   def create_time_period(topic_info, time_period_info) do
     topic_info
     |> TopicContext.create_or_pull_topic()
-    |> TopicContext.check_if_has_time_period()
     |> associate_time_period(time_period_info)
   end
 
