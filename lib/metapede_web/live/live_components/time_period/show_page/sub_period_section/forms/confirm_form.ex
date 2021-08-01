@@ -65,7 +65,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
       TimePeriodContext.create_new_with_topic(new_period, socket.assigns.new_topic)
 
     if socket.assigns.parent_time_period != "nil" do
-      add_subtopic(time_period, socket)
+      TimePeriodContext.add_sub_period(time_period, socket.assigns.parent_time_period)
     end
 
     {:noreply,
@@ -110,14 +110,14 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
     )
   end
 
-  def add_subtopic(sub_period, socket) do
-    par_period = socket.assigns.parent_time_period
+  # def add_subtopic(sub_period, socket) do
+  #   par_period = socket.assigns.parent_time_period
 
-    Metapede.CommonSearchFuncs.add_association(
-      sub_period,
-      par_period,
-      :sub_time_periods,
-      fn el -> [el | par_period.sub_time_periods] end
-    )
-  end
+  #   Metapede.Utils.add_association(
+  #     sub_period,
+  #     par_period,
+  #     :sub_time_periods,
+  #     fn el -> [el | par_period.sub_time_periods] end
+  #   )
+  # end
 end

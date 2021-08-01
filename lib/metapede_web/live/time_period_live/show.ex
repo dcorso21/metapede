@@ -19,18 +19,21 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def handle_params(params, _url, socket) do
+    IO.puts("SOCKET")
+    IO.inspect(params)
+
     tp = get_time_period(params)
 
     new_topic =
-      if(params["new_topic_id"],
-        do: Metapede.TopicSchema.TopicContext.get_topic!(params["new_topic_id"]),
+      if(params["new_topic"],
+        do: params["new_topic"],
         else: nil
       )
 
     {:noreply,
      socket
-     |> assign(time_period: tp)
-     |> assign(new_topic: new_topic)}
+     |> assign(new_topic: new_topic)
+     |> assign(time_period: tp)}
   end
 
   def get_time_period(params) do
@@ -41,5 +44,4 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
     IO.puts("Saving now!!!")
     {:noreply, socket |> assign(right_info_pid: pid)}
   end
-
 end

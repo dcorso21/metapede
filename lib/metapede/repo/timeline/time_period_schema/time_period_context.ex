@@ -65,4 +65,15 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
       fn el -> el end
     )
   end
+
+
+  def add_sub_period(sub_period, parent_time_period) do
+    Utils.add_association(
+      sub_period,
+      parent_time_period,
+      :sub_time_periods,
+      fn el -> [el | parent_time_period.sub_time_periods] end
+    )
+  end
+
 end
