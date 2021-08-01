@@ -46,6 +46,7 @@ defmodule Metapede.WikiConnect do
 
     Poison.decode!(res.body)
     |> transform_search_results()
+    |> IO.inspect()
   end
 
   defp transform_search_results(res) do
@@ -53,7 +54,6 @@ defmodule Metapede.WikiConnect do
     pages = res["query"]["pages"]
     #  convert to an array, (empty if no results)
     page_list = if pages == nil, do: [], else: Map.to_list(pages)
-    #  The array will have tuples, but we only need the second value
     trans = for {_page_num, info} <- page_list, do: info
     #  Sort by index and return
     Enum.sort(trans, &(&1["index"] < &2["index"]))
