@@ -1,5 +1,4 @@
 defmodule Metapede.CommonSearchFuncs do
-  alias MetapedeWeb.Controllers.Transforms.WikiTransforms
   alias Metapede.TopicSchema.Topic
   alias Metapede.TopicSchema.TopicContext
   alias Metapede.Repo
