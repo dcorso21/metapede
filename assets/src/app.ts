@@ -18,6 +18,7 @@ import "../styles/app.scss";
 
 import "phoenix_html";
 import { Socket } from "phoenix";
+// @ts-ignore
 import topbar from "topbar";
 import { LiveSocket } from "phoenix_live_view";
 
@@ -25,6 +26,7 @@ import Hooks from "./hooks/allHooks";
 
 // let hooks = { Testing };
 
+// @ts-ignore
 let csrfToken = document
     .querySelector("meta[name='csrf-token']")
     .getAttribute("content");
@@ -46,4 +48,5 @@ liveSocket.connect();
 // >> liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
+// @ts-ignore
 window.liveSocket = liveSocket;
