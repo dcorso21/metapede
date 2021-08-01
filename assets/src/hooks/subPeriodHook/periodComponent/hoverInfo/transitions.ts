@@ -1,5 +1,9 @@
-export function hoverInfoFadeIn(select) {
-	select
+import { TimePeriod } from "../../types"
+
+export function hoverInfoFadeIn(
+    selection: d3.Selection<HTMLElement, TimePeriod, HTMLElement, any>,
+) {
+	selection
 		.style("z-index", "15")
 		.transition()
 		.duration(200)
@@ -7,8 +11,10 @@ export function hoverInfoFadeIn(select) {
 		.style("opacity", "1")
 }
 
-export function hoverInfoFadeOut(select) {
-	select.transition()
+export function hoverInfoFadeOut(
+    selection: d3.Selection<HTMLElement, TimePeriod, HTMLElement, any>,
+) {
+	selection.transition()
 		.duration(600)
 		.style("opacity", "0")
 		.style("transform", "translateY(5px)")

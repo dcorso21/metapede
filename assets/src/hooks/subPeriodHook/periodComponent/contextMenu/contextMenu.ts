@@ -1,12 +1,13 @@
 // @ts-check
 import * as d3 from "d3";
+import { TimePeriod } from "../../types";
 import periodContextMenuEventHandlers from "./eventHandlers";
 
 function selectEl() {
     return d3.select("#periodContext")
 }
 
-function create(e, _period) {
+function create(e:MouseEvent, _period:TimePeriod) {
     // remove any previous menu
     selectEl().remove()
 

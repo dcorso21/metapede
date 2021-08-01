@@ -1,4 +1,3 @@
-// @ts-check
 import rightWikiPanelHook from "./rightWikiPanelHook/rightWikiPanelHook";
 import subPeriodHook from "./subPeriodHook/subPeriodHook";
 

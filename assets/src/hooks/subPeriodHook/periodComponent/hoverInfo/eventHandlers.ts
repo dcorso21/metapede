@@ -1,14 +1,13 @@
-// @ts-check
-
-// import * as d3 from "d3";
 import { getSubPeriodsConn } from "../../subPeriodHook";
+import { TimePeriod } from "../../types";
 import HoverInfoElement from "./hoverInfo";
 import { hoverInfoFadeIn, hoverInfoFadeOut } from "./transitions";
 
 
-function handleMouseOver(e, per) {
+function handleMouseOver(e:Event, per:TimePeriod) {
 	const hoverInfo = HoverInfoElement.selectEl()
 	HoverInfoElement.updateInfo(hoverInfo, per)
+	// @ts-ignore
 	let { x, y, width } = e.target.getBoundingClientRect()
 	// @ts-ignore
 	const hoverBox = hoverInfo.node().getBoundingClientRect()
@@ -22,7 +21,7 @@ function handleMouseOver(e, per) {
 }
 
 
-function handleMouseOut(e, per) {
+function handleMouseOut(e:Event, per:TimePeriod) {
 	if (isHoverElement(e)) return;
 	HoverInfoElement
 		.selectEl()
@@ -30,16 +29,16 @@ function handleMouseOut(e, per) {
 }
 
 
-function isHoverElement(e) {
+function isHoverElement(e:Event) {
 	const hoverInfo = HoverInfoElement.selectEl()
 	// @ts-ignore
-	const elementIsInside = hoverInfo.node().contains(e.toElement);
-	const isHoverInfo = hoverInfo.node() == e.toElement;
+	const elementIsInside = hoverInfo.node().contains(e.target);
+	const isHoverInfo = hoverInfo.node() == e.target;
 	return elementIsInside || isHoverInfo;
 }
 
 
-function handleClick(period) {
+function handleClick(period:TimePeriod) {
 	HoverInfoElement.selectEl().style("opacity", "0")
 	getSubPeriodsConn().sendEvent("click_period_title", period.id);
 }
