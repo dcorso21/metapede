@@ -1,4 +1,3 @@
-// @ts-check
 import * as d3 from "d3";
 import infoPanelTransitions from "./transitions";
 
@@ -64,7 +63,7 @@ async function setHTML() {
 
 async function getPageHTML(pageId: string | null) {
     if (!pageId) {
-        return "<div>Problem with Page Id</div>"
+        return "<div>Problem with Page Id</div>";
     }
     const baseURL = "https://en.wikipedia.org/w/api.php?origin=*&format=json&";
     const queryParams = "action=parse&prop=text&pageid=";
