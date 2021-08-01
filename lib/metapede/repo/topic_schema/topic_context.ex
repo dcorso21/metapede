@@ -6,6 +6,7 @@ defmodule Metapede.TopicSchema.TopicContext do
   import Ecto.Query, warn: false
   alias Metapede.Repo
   alias Metapede.TopicSchema.Topic
+  alias Metapede.TopicSchema.TopicContext
 
   @doc """
   Returns the list of topics.
@@ -50,6 +51,12 @@ defmodule Metapede.TopicSchema.TopicContext do
     |> Repo.insert()
   end
 
+  def create_topic!(topic) do
+    %Topic{}
+    |> Topic.changeset(topic)
+    |> Repo.insert!()
+  end
+
   @doc """
   Updates a topic.
 
@@ -86,6 +93,11 @@ defmodule Metapede.TopicSchema.TopicContext do
     Repo.delete(topic)
   end
 
+  def preload_time_period(topic) do
+    topic
+    |> Repo.preload([:time_period_id])
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking topic changes.
 
@@ -103,13 +115,10 @@ defmodule Metapede.TopicSchema.TopicContext do
     Repo.all(from t in Topic, where: ilike(t.title, ^"%#{query}%"))
   end
 
-
   def decode_and_format_topic(topic) do
     topic
     |> Poison.decode!()
     |> transform_wiki_data()
-    |> check_for_page_id()
-    |> get_topic_info()
   end
 
   def transform_wiki_data(data) do
@@ -122,12 +131,14 @@ defmodule Metapede.TopicSchema.TopicContext do
   defp pull_url(%{"thumbnail" => details}), do: details["source"]
   defp pull_url(_), do: nil
 
-  def check_for_page_id(topic) do
+  def create_or_pull(topic) do
     page_id = topic["page_id"]
     ids = Repo.all(from t in Topic, where: t.page_id == ^page_id, select: t.id)
+
     {topic, ids}
+    |> get_topic_info()
   end
 
   defp get_topic_info({_params, [id]}), do: {:existing, get_topic!(id)}
-  defp get_topic_info({params, []}), do: {:new, Topic.changeset(%Topic{}, params)}
+  defp get_topic_info({params, []}), do: {:new, create_topic!(params)}
 end
