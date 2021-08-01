@@ -1,11 +1,11 @@
 defmodule MetapedeWeb.TopicLive.Show do
   use MetapedeWeb, :live_view
-  alias Metapede.Collection
+  alias Metapede.TopicSchema.TopicContext
   alias Metapede.CommonSearchFuncs
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
-    topic = Collection.get_topic!(id)
+    topic = TopicContext.get_topic!(id)
 
     {:noreply,
      socket
@@ -15,9 +15,9 @@ defmodule MetapedeWeb.TopicLive.Show do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    topic = Collection.get_topic!(id)
-    {:ok, _} = Collection.delete_topic(topic)
-    {:noreply, assign(socket, :topic, Collection.get_topic!(socket.assigns.topic.id))}
+    topic = TopicContext.get_topic!(id)
+    {:ok, _} = TopicContext.delete_topic(topic)
+    {:noreply, assign(socket, :topic, TopicContext.get_topic!(socket.assigns.topic.id))}
   end
 
   def handle_event("new_sub_topic", %{"topic" => topic}, socket) do

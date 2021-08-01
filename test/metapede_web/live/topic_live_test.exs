@@ -3,7 +3,7 @@ defmodule MetapedeWeb.TopicLiveTest do
 
   import Phoenix.LiveViewTest
 
-  alias Metapede.Collection
+  alias Metapede.TopicSchema.TopicContext
 
   @create_attrs %{description: "some description", info: "some info", name: "some name", post_id: "some post_id"}
   @update_attrs %{description: "some updated description", info: "some updated info", name: "some updated name", post_id: "some updated post_id"}

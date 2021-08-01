@@ -1,6 +1,6 @@
 defmodule Metapede.TimelineContext.TimelineContextHelpers do
-  # alias Metapede.Collection.Topic
-  alias Metapede.Collection
+  # alias Metapede.TopicSchema.Topic
+  alias Metapede.TopicSchema.TopicContext
 
   @type given_topic_info :: %{
           title: binary(),
@@ -17,8 +17,8 @@ defmodule Metapede.TimelineContext.TimelineContextHelpers do
   @spec create_time_period(given_topic_info, given_time_period_info) :: any
   def create_time_period(topic_info, time_period_info) do
     topic_info
-    |> Collection.create_or_pull_topic()
-    |> Collection.check_if_has_time_period()
+    |> TopicContext.create_or_pull_topic()
+    |> TopicContext.check_if_has_time_period()
     |> associate_time_period(time_period_info)
   end
 

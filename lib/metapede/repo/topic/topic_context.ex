@@ -1,11 +1,11 @@
-defmodule Metapede.Collection do
+defmodule Metapede.TopicSchema.TopicContext do
   @moduledoc """
-  The Collection context.
+  The TopicContext context.
   """
 
   import Ecto.Query, warn: false
   alias Metapede.Repo
-  alias Metapede.Collection.Topic
+  alias Metapede.TopicSchema.Topic
 
   @doc """
   Returns the list of topics.

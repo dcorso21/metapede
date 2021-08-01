@@ -1,7 +1,7 @@
 defmodule MetapedeWeb.TimePeriodLive.Index do
   use MetapedeWeb, :live_view
   alias Metapede.TimelineContext.TimePeriodContext
-  alias Metapede.Collection
+  alias Metapede.TopicSchema.TopicContext
   alias MetapedeWeb.Controllers.Transforms.DatetimeOps
 
   def mount(_params, _session, socket) do
@@ -14,7 +14,7 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
 
   # For confirming topics
   def handle_params(%{"id" => id}, _url, socket) do
-    new_topic = Collection.get_topic!(id)
+    new_topic = TopicContext.get_topic!(id)
 
     {:noreply,
      socket

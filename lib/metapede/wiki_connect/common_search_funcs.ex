@@ -1,7 +1,7 @@
 defmodule Metapede.CommonSearchFuncs do
   alias MetapedeWeb.Controllers.Transforms.WikiTransforms
-  alias Metapede.Collection.Topic
-  alias Metapede.Collection
+  alias Metapede.TopicSchema.Topic
+  alias Metapede.TopicSchema.TopicContext
   alias Metapede.Repo
 
   @doc """
@@ -15,11 +15,11 @@ defmodule Metapede.CommonSearchFuncs do
     topic
     |> Poison.decode!
     |> WikiTransforms.transform_wiki_data
-    |> Collection.check_for_page_id
+    |> TopicContext.check_for_page_id
     |> get_topic_info
   end
 
-  defp get_topic_info({_params, [id]}), do: {:existing, Collection.get_topic!(id)}
+  defp get_topic_info({_params, [id]}), do: {:existing, TopicContext.get_topic!(id)}
   defp get_topic_info({params, []}), do: {:new, Topic.changeset(%Topic{}, params)}
 
   def add_association(new_assoc, parent_object, atom_name, assoc_func) do
@@ -41,6 +41,6 @@ defmodule Metapede.CommonSearchFuncs do
 
   def check_for_existing_time_period(any), do: any
 
-  def create_if_new({:new, new_topic}), do: Collection.create_topic_from_struct(new_topic)
+  def create_if_new({:new, new_topic}), do: TopicContext.create_topic_from_struct(new_topic)
   def create_if_new({:existing, topic}), do: {:existing, topic}
 end

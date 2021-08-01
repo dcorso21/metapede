@@ -42,7 +42,7 @@ IEx.configure(
 
 alias Metapede.Repo
 alias Metapede.Timeline.{TimePeriod, Event}
-alias Metapede.Collection.{Topic}
+alias Metapede.TopicSchema.Topic
 
 dwarves = [
   "Fili",

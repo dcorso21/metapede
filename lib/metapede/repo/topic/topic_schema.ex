@@ -1,8 +1,8 @@
-defmodule Metapede.Collection.Topic do
+defmodule Metapede.TopicSchema.Topic do
   use Ecto.Schema
 
   alias Metapede.Relations.TopicRelations
-  alias Metapede.Collection.Topic
+  alias Metapede.TopicSchema.Topic
   alias Metapede.Timeline.{Event, TimePeriod}
 
   @accepted_fields [
