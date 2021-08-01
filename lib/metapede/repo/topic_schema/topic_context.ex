@@ -103,9 +103,31 @@ defmodule Metapede.TopicSchema.TopicContext do
     Repo.all(from t in Topic, where: ilike(t.title, ^"%#{query}%"))
   end
 
+
+  def decode_and_format_topic(topic) do
+    topic
+    |> Poison.decode!()
+    |> transform_wiki_data()
+    |> check_for_page_id()
+    |> get_topic_info()
+  end
+
+  def transform_wiki_data(data) do
+    data
+    |> Map.take(["title", "description", "thumbnail"])
+    |> Map.put("page_id", data["pageid"])
+    |> Map.put("thumbnail", pull_url(data))
+  end
+
+  defp pull_url(%{"thumbnail" => details}), do: details["source"]
+  defp pull_url(_), do: nil
+
   def check_for_page_id(topic) do
     page_id = topic["page_id"]
     ids = Repo.all(from t in Topic, where: t.page_id == ^page_id, select: t.id)
     {topic, ids}
   end
+
+  defp get_topic_info({_params, [id]}), do: {:existing, get_topic!(id)}
+  defp get_topic_info({params, []}), do: {:new, Topic.changeset(%Topic{}, params)}
 end
