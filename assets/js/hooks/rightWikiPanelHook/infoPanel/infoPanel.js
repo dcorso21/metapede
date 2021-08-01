@@ -22,6 +22,7 @@ function toggleVisibility() {
     const wasOpen = window.localStorage.getItem("rightWikiPanelOpen");
     const updatedVal = wasOpen == "true" ? "false" : "true";
     const isOpen = updatedVal == "true";
+    console.log({isOpen, wasOpen});
     window.localStorage.setItem("rightWikiPanelOpen", updatedVal);
 
     d3.select("#left_info")
@@ -74,7 +75,9 @@ async function getPageHTML(pageId) {
 
     const res = await fetch(baseURL + queryParams + pageId, requestOptions);
     const data = await res.json();
-    return data.parse.text["*"];
+    const title = data.parse.title;
+    const bodyContent =  data.parse.text["*"];
+    return `<h1>${title}</h1>`+bodyContent;
 }
 
 const infoPanel = {

@@ -8,5 +8,6 @@ export default function enableToggleButtonEventHandlers(selection) {
 
 function handleClick(event) {
     event.preventDefault();
+    console.log("clicked");
     infoPanel.toggleVisibility();
 }

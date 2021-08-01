@@ -28,6 +28,7 @@ function mounted() {
 	rightWikiPanelConn = this;
 	initAllElements();
 	initState();
+	console.log("side panel mounted");
 }
 
 function updated() {

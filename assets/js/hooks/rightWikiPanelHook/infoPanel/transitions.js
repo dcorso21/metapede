@@ -2,18 +2,18 @@ const duration = 300;
 
 function fadeIn(selection) {
     selection
+        .style("z-index", 10)
         .transition()
         .duration(duration)
         .style("opacity", 1)
-        .style("z-index", 10)
 }
 
 function fadeOut(selection) {
     selection
+        .style("z-index", -10)
         .transition()
         .duration(duration)
         .style("opacity", 0)
-        .style("z-index", -10)
 }
 
 
