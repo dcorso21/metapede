@@ -23,7 +23,7 @@ defmodule Metapede.TimelineContext.TimelineContextHelpers do
   end
 
   def associate_time_period({:existing, topic}, _time_period_info) do
-    Metapede.Timeline.TimePeriodContext
+    Metapede.Timeline.TimePeriodSchema.TimePeriodContext
     topic.time_period.id
   end
 end

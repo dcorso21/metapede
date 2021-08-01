@@ -1,7 +1,7 @@
 defmodule Metapede.Timeline.Event do
   use Ecto.Schema
   alias Metapede.TopicSchema.Topic
-  alias Metapede.Timeline.TimePeriod
+  alias Metapede.Timeline.TimePeriodSchema.TimePeriod
   alias Metapede.Relations.TimePeriodAndEventRelations
   @accepted_fields [:datetime]
 

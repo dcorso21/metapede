@@ -21,10 +21,14 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
      |> assign(new_topic: new_topic)}
   end
 
-  def handle_params(_params, _url, socket), do: {:noreply, socket}
+  def handle_params(_params, _url, socket) do
+    {:noreply,
+     socket
+     |> assign(time_periods: TimePeriodContext.list_time_periods())}
+  end
 
   def handle_event("delete_all", _, socket) do
-    Metapede.Repo.delete_all(Metapede.Timeline.TimePeriod)
+    Metapede.Repo.delete_all(Metapede.Timeline.TimePeriodSchema.TimePeriod)
 
     {:noreply,
      socket

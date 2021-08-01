@@ -16,7 +16,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
           <div>
               Description: <%= @new_topic.description %>
           </div>
-          <%= form_for Metapede.Timeline.TimePeriod, "#",
+          <%= form_for Metapede.Timeline.TimePeriodSchema.TimePeriod, "#",
             id: "time_period_form",
             autocomplete: "off",
             phx_target: @myself,
@@ -64,7 +64,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
       {:ok, saved_period} ->
         loaded = Metapede.Repo.preload(saved_period, [:topic])
 
-        resp =
+        created_period =
           Metapede.CommonSearchFuncs.add_association(
             socket.assigns.new_topic,
             loaded,
@@ -72,7 +72,17 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
             fn el -> el end
           )
 
-        add_subtopic(resp, socket)
+        if socket.assigns.parent_time_period != "nil", do: add_subtopic(created_period, socket)
+
+        IO.puts("Return To")
+        IO.inspect(socket.assigns.return_to)
+
+
+        {:noreply,
+         socket
+         |> assign(refresh_sub_periods: true)
+         |> put_flash(:info, "New Period Added: #{created_period.topic.title}")
+         |> push_patch(to: socket.assigns.return_to)}
 
       {:error, message} ->
         IO.inspect(message)
@@ -89,7 +99,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
 
   def adding(topic, socket) do
     topic.time_period
-    |> block_self_reference(socket.assigns.time_period.id)
+    |> block_self_reference(socket.assigns.parent_time_period.id)
     |> add_to_subtopics(socket)
 
     {
@@ -97,7 +107,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
       socket
       |> put_flash(:info, "Sub Time Period Added: #{topic.title}")
       |> push_redirect(
-        to: Routes.time_period_show_path(socket, :main, socket.assigns.time_period)
+        to: Routes.time_period_show_path(socket, :main, socket.assigns.parent_time_period)
       )
     }
   end
@@ -115,16 +125,16 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
   def add_to_subtopics({:not_self, time_period}, socket) do
     CommonSearchFuncs.add_association(
       time_period,
-      socket.assigns.time_period,
+      socket.assigns.parent_time_period,
       :sub_time_periods,
       fn el ->
-        [el | socket.assigns.time_period.sub_time_periods]
+        [el | socket.assigns.parent_time_period.sub_time_periods]
       end
     )
   end
 
   def add_subtopic(sub_period, socket) do
-    par_period = socket.assigns.time_period
+    par_period = socket.assigns.parent_time_period
 
     Metapede.CommonSearchFuncs.add_association(
       sub_period,
@@ -132,11 +142,5 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
       :sub_time_periods,
       fn el -> [el | par_period.sub_time_periods] end
     )
-
-    {:noreply,
-     socket
-     |> assign(refresh_sub_periods: true)
-     |> put_flash(:info, "New Subtopic Added: #{sub_period.topic.title}")
-     |> push_patch(to: Routes.time_period_show_path(socket, :main, par_period))}
   end
 end
