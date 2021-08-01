@@ -1,24 +1,24 @@
 const duration = 300;
 
-function fadeIn(selection) {
+function fadeIn(selection: d3.Selection<any, any, any, any>) {
     selection
         .style("z-index", 10)
         .transition()
         .duration(duration)
-        .style("opacity", 1)
+        .style("opacity", 1);
 }
 
-function fadeOut(selection) {
+function fadeOut(selection: d3.Selection<any, any, any, any>) {
     selection
         .style("z-index", -10)
         .transition()
         .duration(duration)
-        .style("opacity", 0)
+        .style("opacity", 0);
 }
-
 
 const infoPanelTransitions = {
-    fadeIn, fadeOut
-}
+    fadeIn,
+    fadeOut,
+};
 
 export default infoPanelTransitions;
