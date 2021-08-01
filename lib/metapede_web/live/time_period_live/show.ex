@@ -23,7 +23,7 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
 
     new_topic =
       if(params["new_topic_id"],
-        do: Metapede.Collection.get_topic!(params["new_topic_id"]),
+        do: Metapede.TopicSchema.TopicContext.get_topic!(params["new_topic_id"]),
         else: nil
       )
 

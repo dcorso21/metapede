@@ -1,6 +1,6 @@
 defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   use MetapedeWeb, :live_component
-  alias Metapede.Collection
+  alias Metapede.TopicSchema.TopicContext
 
   def update(assigns, socket) do
 
@@ -51,7 +51,7 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   def handle_event("change", %{"my_form" => %{"query" => ""}}, socket) do
     {:noreply,
      socket
-     |> assign(topics: Collection.list_topics())
+     |> assign(topics: TopicContext.list_topics())
      |> assign(wiki_info: [])}
   end
 
@@ -62,12 +62,12 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
 
         {:noreply,
          socket
-         |> assign(topics: Collection.search_topics(query))
+         |> assign(topics: TopicContext.search_topics(query))
          |> assign(wiki_info: my_list)}
 
       {:error, message} ->
         IO.puts(message)
-        {:noreply, socket |> assign(topics: Collection.search_topics(query))}
+        {:noreply, socket |> assign(topics: TopicContext.search_topics(query))}
     end
   end
 

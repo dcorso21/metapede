@@ -2,14 +2,16 @@
 <%= live_modal @socket, MetapedeWeb.LiveComponents.SearchFormComponent,
 	event_name: "new_time_period",
 	id: :search_form,
+	target: ".root_target",
 	return_to: Routes.time_period_index_path(@socket, :main) %>
 <% end %>
 
 <%= if @live_action in [:confirm] do %>
-<%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.CreateForm,
-	id: :create_form,
+<%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm,
 	event_name: "save_period",
+	id: :create_form,
 	new_topic: @new_topic,
+	parent_time_period: "nil",
 	return_to: Routes.time_period_index_path(@socket, :main) %>
 <% end %>
 
@@ -26,5 +28,5 @@
 <% end %>
 </div>
 
-<div><%= live_patch "Add New Time Period", to: Routes.time_period_index_path(@socket, :search) %></div>
+<div class="root_target"><%= live_patch "Add New Time Period", to: Routes.time_period_index_path(@socket, :search) %></div>
 <button phx-click="delete_all">Delete All</button>

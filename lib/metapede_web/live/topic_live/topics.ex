@@ -1,7 +1,7 @@
 defmodule MetapedeWeb.TopicLive.Topics do
   use MetapedeWeb, :live_view
-  alias Metapede.Collection
-  alias Metapede.Collection.Topic
+  alias Metapede.TopicSchema.TopicContext
+  alias Metapede.TopicSchema.Topic
 
   def mount(_params, _session, socket) do
     {:ok, socket |> assign(show_topics: list_topics())}
@@ -12,8 +12,8 @@ defmodule MetapedeWeb.TopicLive.Topics do
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
-    topic = Collection.get_topic!(id)
-    {:ok, _} = Collection.delete_topic(topic)
+    topic = TopicContext.get_topic!(id)
+    {:ok, _} = TopicContext.delete_topic(topic)
     {:noreply, assign(socket, :show_topics, list_topics())}
   end
 
@@ -38,7 +38,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
   end
 
   def create_new_topic(new_topic, socket) do
-    case Collection.create_topic_from_struct(new_topic) do
+    case TopicContext.create_topic_from_struct(new_topic) do
       {:ok, _topic} ->
         {:noreply,
          socket
@@ -53,7 +53,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Topic")
-    |> assign(:topic, Collection.get_topic!(id))
+    |> assign(:topic, TopicContext.get_topic!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -75,6 +75,6 @@ defmodule MetapedeWeb.TopicLive.Topics do
   end
 
   defp list_topics do
-    Collection.list_topics()
+    TopicContext.list_topics()
   end
 end

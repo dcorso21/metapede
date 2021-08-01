@@ -17,13 +17,13 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.SubPeriodForms do
         %>
       <% end %>
 
-      <%# Create Form Modal %>
+      <%# Confirm Form Modal %>
       <%= if @live_action == :confirm_sub_period do %>
         <%= live_modal @socket, MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm,
           event_name: "confirmed_period",
           id: :confirm_form,
           new_topic: @new_topic,
-          time_period: @time_period,
+          parent_time_period: @time_period,
           return_to: Routes.time_period_show_path(@socket, :main, @time_period)
         %>
       <% end %>

@@ -1,10 +1,10 @@
 defmodule MetapedeWeb.TopicLive.FormComponent do
   use MetapedeWeb, :live_component
-  alias Metapede.Collection
+  alias Metapede.TopicSchema.TopicContext
 
   @impl true
   def update(%{topic: topic} = assigns, socket) do
-    changeset = Collection.change_topic(topic)
+    changeset = TopicContext.change_topic(topic)
 
     {:ok,
      socket
@@ -16,7 +16,7 @@ defmodule MetapedeWeb.TopicLive.FormComponent do
   def handle_event("validate", %{"topic" => topic_params}, socket) do
     changeset =
       socket.assigns.topic
-      |> Collection.change_topic(topic_params)
+      |> TopicContext.change_topic(topic_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
@@ -27,7 +27,7 @@ defmodule MetapedeWeb.TopicLive.FormComponent do
   end
 
   defp save_topic(socket, :edit, topic_params) do
-    case Collection.update_topic(socket.assigns.topic, topic_params) do
+    case TopicContext.update_topic(socket.assigns.topic, topic_params) do
       {:ok, _topic} ->
         {:noreply,
          socket
@@ -40,7 +40,7 @@ defmodule MetapedeWeb.TopicLive.FormComponent do
   end
 
   defp save_topic(socket, :new, topic_params) do
-    case Collection.create_topic(topic_params) do
+    case TopicContext.create_topic(topic_params) do
       {:ok, _topic} ->
         {:noreply,
          socket

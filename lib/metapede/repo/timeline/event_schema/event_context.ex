@@ -1,8 +1,8 @@
-defmodule Metapede.TimelineContext.EventContext do
+defmodule Metapede.Timeline.EventSchema.EventContext do
 
   import Ecto.Query, warn: false
   alias Metapede.Repo
-  alias Metapede.Timeline.{Event}
+  alias Metapede.Timeline.EventSchema.Event
   @preload [:topic, :parent_time_periods]
 
   def list_events() do

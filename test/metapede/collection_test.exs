@@ -1,10 +1,10 @@
-defmodule Metapede.CollectionTest do
+defmodule Metapede.TopicSchema.TopicContextTest do
   use Metapede.DataCase
 
-  alias Metapede.Collection
+  alias Metapede.TopicSchema.TopicContext
 
   describe "topics" do
-    alias Metapede.Collection.Topic
+    alias Metapede.TopicSchema.Topic
 
     @valid_attrs %{description: "some description", info: "some info", name: "some name", post_id: "some post_id"}
     @update_attrs %{description: "some updated description", info: "some updated info", name: "some updated name", post_id: "some updated post_id"}

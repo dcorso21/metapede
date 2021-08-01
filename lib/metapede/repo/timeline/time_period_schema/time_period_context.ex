@@ -1,7 +1,7 @@
 defmodule Metapede.TimelineContext.TimePeriodContext do
   import Ecto.Query, warn: false
   alias Metapede.Repo
-  alias Metapede.Timeline.{TimePeriod}
+  alias Metapede.Timeline.TimePeriodSchema.TimePeriod
 
   @preload [:topic, :events, :parent_time_periods, :sub_time_periods]
 
