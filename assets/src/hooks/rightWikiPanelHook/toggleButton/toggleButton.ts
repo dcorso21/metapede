@@ -1,4 +1,3 @@
-// @ts-check
 import * as d3 from "d3";
 import enableToggleButtonEventHandlers from "./eventHandlers";
 

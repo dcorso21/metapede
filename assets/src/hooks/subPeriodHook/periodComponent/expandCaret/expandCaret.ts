@@ -1,17 +1,16 @@
-// @ts-check
-// import * as d3 from "d3";
+import { TimePeriod } from "../../types";
 import periodComponent from "../period";
 import expandCaretTransitions from "./transitions";
 
 
-function selectEl(period) {
+function selectEl(period:TimePeriod) {
 	return periodComponent
 		.selectEl(period.id)
 		.select(".drop_caret")
 }
 
 
-function toggleTransition(period) {
+function toggleTransition(period:TimePeriod) {
 	const transition = period.expand
 		? expandCaretTransitions.rotateClose
 		: expandCaretTransitions.rotateOpen;
@@ -19,7 +18,7 @@ function toggleTransition(period) {
 	selectEl(period).call(transition)
 }
 
-function createEach(period) {
+function createEach(period:TimePeriod) {
 	if (period.has_sub_periods) {
 		periodComponent.selectEl(period.id)
 			.append("div")

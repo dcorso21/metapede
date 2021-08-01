@@ -3,13 +3,13 @@
 import infoPanel from "./infoPanel/infoPanel";
 import toggleButton from "./toggleButton/toggleButton";
 
-let rightWikiPanelConn;
+let rightWikiPanelConn:any;
 
 const selector = "#right_panel_wrap"
 
 function getConn() {
 	rightWikiPanelConn.sendEvent =
-		(event, payload) => rightWikiPanelConn.pushEventTo(selector, event, payload);
+		(event:string, payload:any) => rightWikiPanelConn.pushEventTo(selector, event, payload);
 
 	return rightWikiPanelConn;
 }
@@ -24,13 +24,14 @@ function initState() {
 	window.sessionStorage.setItem("selectedPageId", rightWikiPanelConn.el.dataset.page_id);
 }
 
-function mounted() {
+function mounted(this:any) {
 	rightWikiPanelConn = this;
 	initAllElements();
 	initState();
+	console.log("side panel mounted");
 }
 
-function updated() {
+function updated(this:any) {
 	rightWikiPanelConn = this;
 }
 
