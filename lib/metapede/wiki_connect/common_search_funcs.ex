@@ -1,5 +1,4 @@
 defmodule Metapede.CommonSearchFuncs do
-  alias MetapedeWeb.Controllers.Transforms.WikiTransforms
   alias Metapede.TopicSchema.Topic
   alias Metapede.TopicSchema.TopicContext
   alias Metapede.Repo
@@ -11,16 +10,6 @@ defmodule Metapede.CommonSearchFuncs do
 
   example: {:ok, new_topic}
   """
-  def decode_and_format_topic(topic) do
-    topic
-    |> Poison.decode!
-    |> WikiTransforms.transform_wiki_data
-    |> TopicContext.check_for_page_id
-    |> get_topic_info
-  end
-
-  defp get_topic_info({_params, [id]}), do: {:existing, TopicContext.get_topic!(id)}
-  defp get_topic_info({params, []}), do: {:new, Topic.changeset(%Topic{}, params)}
 
   def add_association(new_assoc, parent_object, atom_name, assoc_func) do
     parent_object

@@ -11,10 +11,10 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
       <div class="left_form">
           <h1>Confirm the period Creation Please</h1>
           <div>
-              Title: <%= @new_topic.title %>
+              Title: <%= @new_topic["title"] %>
           </div>
           <div>
-              Description: <%= @new_topic.description %>
+              Description: <%= @new_topic["description"] %>
           </div>
           <%= form_for Metapede.Timeline.TimePeriodSchema.TimePeriod, "#",
             id: "time_period_form",
@@ -44,8 +44,8 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
       <div class="right_page">
         <%= live_component @socket,
           MetapedeWeb.LiveComponents.WikiContent,
-          page_id: @new_topic.page_id,
-          id: @new_topic.title <> "_page"
+          page_id: @new_topic["pageId"],
+          id: @new_topic["title"] <> "_page"
         %>
       </div>
 
@@ -54,47 +54,24 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
     """
   end
 
+  @spec handle_event(binary(), any, any) :: {:noreply, Phoenix.LiveView.Socket.t()}
   def handle_event("submit_confirmed", params, socket) do
     new_period = %{
       start_datetime: DatetimeOps.make_datetimes(params, "sdt"),
       end_datetime: DatetimeOps.make_datetimes(params, "edt")
     }
 
-    case TimePeriodContext.create_time_period(new_period) do
-      {:ok, saved_period} ->
-        loaded = Metapede.Repo.preload(saved_period, [:topic])
+    time_period =
+      TimePeriodContext.create_new_with_topic(new_period, socket.assigns.new_topic)
 
-        created_period =
-          Metapede.CommonSearchFuncs.add_association(
-            socket.assigns.new_topic,
-            loaded,
-            :topic,
-            fn el -> el end
-          )
-
-        if socket.assigns.parent_time_period != "nil", do: add_subtopic(created_period, socket)
-
-        IO.puts("Return To")
-        IO.inspect(socket.assigns.return_to)
-
-
-        {:noreply,
-         socket
-         |> assign(refresh_sub_periods: true)
-         |> put_flash(:info, "New Period Added: #{created_period.topic.title}")
-         |> push_patch(to: socket.assigns.return_to)}
-
-      {:error, message} ->
-        IO.inspect(message)
-
-        {:noreply,
-         socket
-         |> put_flash(:error, "An Error Occurred")
-         |> push_redirect(to: Routes.time_period_index_path(socket, :main))}
-
-      resp ->
-        IO.inspect(resp)
+    if socket.assigns.parent_time_period != "nil" do
+      TimePeriodContext.add_sub_period(time_period, socket.assigns.parent_time_period)
     end
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "New Period Added: #{time_period.topic.title}")
+     |> push_patch(to: socket.assigns.return_to)}
   end
 
   def adding(topic, socket) do
@@ -133,14 +110,14 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
     )
   end
 
-  def add_subtopic(sub_period, socket) do
-    par_period = socket.assigns.parent_time_period
+  # def add_subtopic(sub_period, socket) do
+  #   par_period = socket.assigns.parent_time_period
 
-    Metapede.CommonSearchFuncs.add_association(
-      sub_period,
-      par_period,
-      :sub_time_periods,
-      fn el -> [el | par_period.sub_time_periods] end
-    )
-  end
+  #   Metapede.Utils.add_association(
+  #     sub_period,
+  #     par_period,
+  #     :sub_time_periods,
+  #     fn el -> [el | par_period.sub_time_periods] end
+  #   )
+  # end
 end

@@ -3,6 +3,7 @@ defmodule MetapedeWeb.TopicLive.Topics do
   alias Metapede.TopicSchema.TopicContext
   alias Metapede.TopicSchema.Topic
 
+  @spec mount(any, any, Phoenix.LiveView.Socket.t()) :: {:ok, Phoenix.LiveView.Socket.t()}
   def mount(_params, _session, socket) do
     {:ok, socket |> assign(show_topics: list_topics())}
   end
@@ -23,18 +24,8 @@ defmodule MetapedeWeb.TopicLive.Topics do
   end
 
   def handle_event("new_topic", %{"topic" => selected_topic}, socket) do
-    {status, topic} = Metapede.CommonSearchFuncs.decode_and_format_topic(selected_topic)
-
-    case status do
-      :new ->
-        create_new_topic(topic, socket)
-
-      :existing ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "Topic Already Exists")
-         |> push_redirect(to: Routes.topic_topics_path(socket, :topics))}
-    end
+    topic = TopicContext.decode_and_format_topic(selected_topic)
+    create_new_topic(topic, socket)
   end
 
   def create_new_topic(new_topic, socket) do

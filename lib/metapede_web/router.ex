@@ -18,11 +18,9 @@ defmodule MetapedeWeb.Router do
   scope "/", MetapedeWeb do
     pipe_through :browser
 
-    get "/tester", TopicController, :index, as: :topic_controller
-
     live "/time_periods", TimePeriodLive.Index, :main
     live "/time_periods/search", TimePeriodLive.Index, :search
-    live "/time_periods/:id/confirm/", TimePeriodLive.Index, :confirm
+    live "/time_periods/confirm", TimePeriodLive.Index, :confirm
 
     live "/time_periods/show/:id", TimePeriodLive.Show, :main
     live "/time_periods/show/:id/search", TimePeriodLive.Show, :search_sub_period
