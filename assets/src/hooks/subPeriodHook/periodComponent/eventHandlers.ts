@@ -14,13 +14,13 @@ export default function addAllPeriodEventListeners(
         .on("contextmenu", handleContextMenu);
 }
 
-function handleClick(e: Event, period: TimePeriod) {
+function handleClick(e: MouseEvent, period: TimePeriod) {
     e.preventDefault();
     expandCaretComponent.toggleTransition(period);
     getSubPeriodsConn().sendEvent("click_period_body", period.id);
 }
 
-function handleContextMenu(e: Event, period: TimePeriod) {
+function handleContextMenu(e: MouseEvent, period: TimePeriod) {
     e.preventDefault();
     periodContextMenu.create(e, period);
 }
