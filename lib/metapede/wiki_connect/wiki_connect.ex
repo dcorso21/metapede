@@ -46,7 +46,6 @@ defmodule Metapede.WikiConnect do
 
     Poison.decode!(res.body)
     |> transform_search_results()
-    |> IO.inspect()
   end
 
   defp transform_search_results(res) do

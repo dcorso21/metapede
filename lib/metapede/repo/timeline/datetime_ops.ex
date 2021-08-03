@@ -1,15 +1,21 @@
-defmodule MetapedeWeb.Controllers.Transforms.DatetimeOps do
+defmodule Metapede.Timeline.DatetimeOps do
 
   def make_datetimes(params, prefix) do
     year = params[prefix <> "_year"]
     month = params[prefix <> "_month"] |> get_month_number
     day = params[prefix <> "_day"] #|> ensure_2digits()
-    dt = format_datetime(year, month, day)
+    dt = format_datetime([year, month, day])
     IO.puts(dt)
     dt
   end
 
-  defp format_datetime(year, month, day), do: NaiveDateTime.from_iso8601!("#{year}-#{month}-#{day}T00:00:00Z")
+  def create_datetime_from_string(date_string) do
+    date_string
+    |> String.split("/")
+    |> format_datetime()
+  end
+
+  defp format_datetime([day, month, year]), do: NaiveDateTime.from_iso8601!("#{year}-#{month}-#{day}T00:00:00Z")
 
   # defp ensure_2digits(entry), do: if(String.length(entry) == 1, do: "0#{entry}", else: entry)
 

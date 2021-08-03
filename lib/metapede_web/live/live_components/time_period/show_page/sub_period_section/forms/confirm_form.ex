@@ -2,7 +2,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriod.ConfirmForm do
   use MetapedeWeb, :live_component
   alias Metapede.CommonSearchFuncs
   alias Metapede.TimelineContext.TimePeriodContext
-  alias MetapedeWeb.Controllers.Transforms.DatetimeOps
+  alias Metapede.Timeline.DatetimeOps
 
   def render(assigns) do
     ~L"""

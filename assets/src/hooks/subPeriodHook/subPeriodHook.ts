@@ -14,7 +14,7 @@ export function getSubPeriodsConn() {
     return subPeriodsConn;
 }
 
-function render() {
+function render(): void {
     const phxElement = subPeriodsConn.el;
     let sub_periods = JSON.parse(phxElement.dataset.sub_periods);
     sub_periods = subPeriodTransforms.transform(sub_periods);

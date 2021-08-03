@@ -7,11 +7,11 @@ import expandCaretComponent from "./expandCaret/expandCaret";
 
 const height = 30;
 
-export function selectEl(periodId: string) {
+function selectEl(periodId: string) {
     return d3.select(`#sub_per_${periodId}`);
 }
 
-export function enter(
+function enter(
     selection: d3.Selection<HTMLElement, TimePeriod, HTMLElement, any>
 ) {
     return selection
@@ -26,10 +26,10 @@ export function enter(
         .text((d) => d.topic.title)
         .style("color", "rgba(255, 255, 255, 0.0)")
         .call(periodTransitions.enterTransition)
-        .each(expandCaretComponent.createEach)
+        .each(expandCaretComponent.createEach);
 }
 
-export function update(
+function update(
     selection: d3.Selection<HTMLElement, TimePeriod, HTMLElement, any>
 ) {
     return selection.call((update) => {
@@ -42,7 +42,7 @@ export function update(
     });
 }
 
-export function exit(
+function exit(
     selection: d3.Selection<HTMLElement, TimePeriod, HTMLElement, any>
 ) {
     return selection.call(periodTransitions.exitTransition);
@@ -53,7 +53,7 @@ const periodComponent = {
     update,
     exit,
     selectEl,
-    height
+    height,
 };
 
 export default periodComponent;

@@ -2,7 +2,7 @@ defmodule MetapedeWeb.TimePeriodLive.Index do
   use MetapedeWeb, :live_view
   alias Metapede.TimelineContext.TimePeriodContext
   alias Metapede.TopicSchema.TopicContext
-  alias MetapedeWeb.Controllers.Transforms.DatetimeOps
+  alias Metapede.Timeline.DatetimeOps
 
   def mount(_params, _session, socket) do
     {:ok,
