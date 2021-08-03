@@ -19,22 +19,24 @@ tls = [
     title: "Socrates",
     start_datetime: "01/01/1000",
     end_datetime: "01/01/1080",
-    sub_time_periods: []
-  },
-  %{
-    res_type: "TimePeriod",
-    title: "Aristotle",
-    start_datetime: "01/01/1090",
-    end_datetime: "01/01/1120",
-    sub_time_periods: []
-  },
-  %{
-    res_type: "TimePeriod",
-    title: "Plato",
-    start_datetime: "01/01/1190",
-    end_datetime: "01/01/1220",
-    sub_time_periods: []
+    sub_time_periods: [
+      %{
+        res_type: "TimePeriod",
+        title: "Aristotle",
+        start_datetime: "01/01/1090",
+        end_datetime: "01/01/1120",
+        sub_time_periods: [
+          %{
+            res_type: "TimePeriod",
+            title: "Plato",
+            start_datetime: "01/01/1190",
+            end_datetime: "01/01/1220",
+            sub_time_periods: []
+          }
+        ]
+      }
+    ]
   }
 ]
 
-Enum.map(tls, &TimePeriodContext.seed_time_period(&1))
+Enum.map(tls, &TimePeriodContext.seed_time_period(&1, nil))

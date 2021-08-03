@@ -8,23 +8,31 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
 
   @preload [:topic, :events, :parent_time_periods, :sub_time_periods]
 
-  def seed_time_period(time_period) do
+  def seed_time_period(raw_period_data, parent_time_period) do
     topic_info =
-      time_period.title
+      raw_period_data.title
       |> Metapede.WikiConnect.search_by_term()
-      |> Enum.at(0) # Choose first result
+      # Choose first result
+      |> Enum.at(0)
       |> TopicContext.transform_wiki_data()
 
     time_period_info = %{
       start_datetime:
-        time_period.start_datetime
+        raw_period_data.start_datetime
         |> DatetimeOps.create_datetime_from_string(),
       end_datetime:
-        time_period.end_datetime
+        raw_period_data.end_datetime
         |> DatetimeOps.create_datetime_from_string()
     }
 
-    create_new_with_topic(time_period_info, topic_info)
+    resulting_period = create_new_with_topic(time_period_info, topic_info)
+
+    if(
+      parent_time_period != nil,
+      do: add_sub_period(resulting_period, parent_time_period)
+    )
+
+    Enum.map(raw_period_data.sub_time_periods, &seed_time_period(&1, resulting_period))
   end
 
   def list_time_periods() do
