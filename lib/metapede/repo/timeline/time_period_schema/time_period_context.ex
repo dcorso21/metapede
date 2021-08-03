@@ -2,10 +2,30 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
   import Ecto.Query, warn: false
   alias Metapede.Repo
   alias Metapede.Timeline.TimePeriodSchema.TimePeriod
+  alias Metapede.Timeline.DatetimeOps
   alias Metapede.TopicSchema.TopicContext
   alias Metapede.Utils
 
   @preload [:topic, :events, :parent_time_periods, :sub_time_periods]
+
+  def seed_time_period(time_period) do
+    topic_info =
+      time_period.title
+      |> Metapede.WikiConnect.search_by_term()
+      |> Enum.at(0) # Choose first result
+      |> TopicContext.transform_wiki_data()
+
+    time_period_info = %{
+      start_datetime:
+        time_period.start_datetime
+        |> DatetimeOps.create_datetime_from_string(),
+      end_datetime:
+        time_period.end_datetime
+        |> DatetimeOps.create_datetime_from_string()
+    }
+
+    create_new_with_topic(time_period_info, topic_info)
+  end
 
   def list_time_periods() do
     TimePeriod
@@ -45,14 +65,6 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
       time_period_info
       |> create_time_period()
 
-    IO.puts("PERIOD")
-
-    time_period
-    |> default_preload()
-    |> IO.inspect()
-
-    IO.puts("TOPIC")
-
     {_status, topic} =
       new_topic_info
       |> TopicContext.create_or_pull()
@@ -66,7 +78,6 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
     )
   end
 
-
   def add_sub_period(sub_period, parent_time_period) do
     Utils.add_association(
       sub_period,
@@ -75,5 +86,4 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
       fn el -> [el | parent_time_period.sub_time_periods] end
     )
   end
-
 end
