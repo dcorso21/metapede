@@ -2,7 +2,9 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
   import Ecto.Query, warn: false
   alias Metapede.Repo
   alias Metapede.Timeline.TimePeriodSchema.TimePeriod
+
   alias Metapede.Timeline.DatetimeOps
+
   alias Metapede.TopicSchema.TopicContext
   alias Metapede.Utils
 
@@ -86,6 +88,7 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
     )
   end
 
+
   def add_sub_period(sub_period, parent_time_period) do
     Utils.add_association(
       sub_period,
@@ -94,4 +97,5 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
       fn el -> [el | parent_time_period.sub_time_periods] end
     )
   end
+
 end
