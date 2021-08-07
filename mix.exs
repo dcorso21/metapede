@@ -48,7 +48,8 @@ defmodule Metapede.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.8"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:mongodb, "~> 0.5.1"}
     ]
   end
 
