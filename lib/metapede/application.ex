@@ -15,7 +15,7 @@ defmodule Metapede.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Metapede.PubSub},
 
-      {Mongo, [name: :mongo, database: "metapede", pool_size: 2]},
+      {Mongo, [name: :mongo, database: "metapede", pool_size: 10]},
       # Start the Endpoint (http/https)
       MetapedeWeb.Endpoint
       # Start a worker by calling: Metapede.Worker.start_link(arg)
