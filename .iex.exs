@@ -44,6 +44,7 @@ IEx.configure(
 # alias Metapede.Timeline.{TimePeriod, Event}
 # alias Metapede.TopicSchema.Topic
 alias Metapede.Db.Schemas.Project
+alias Metapede.Db.Schemas.TimePeriod
 
 dwarves = [
   "Fili",

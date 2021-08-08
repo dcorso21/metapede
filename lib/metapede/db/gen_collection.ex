@@ -1,4 +1,4 @@
-defmodule Metapede.Db.GenCrud do
+defmodule Metapede.Db.GenCollection do
   defmacro __using__([collection_name: collection_name]) do
     quote do
       @repo :mongo

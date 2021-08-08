@@ -1,7 +1,10 @@
 defmodule Metapede.Db.Schemas.Project do
-  use Metapede.Db.GenCrud, collection_name: "projects"
+  use Metapede.Db.GenCollection, collection_name: "projects"
 
-  defstruct Project: [:title, :description, :resources]
+  defstruct(
+    title: nil,
+    description: nil
+  )
 
   def validate(attr), do: attr
 end
