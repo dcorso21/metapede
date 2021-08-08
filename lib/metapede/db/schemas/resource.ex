@@ -1,6 +1,7 @@
 defmodule Metapede.Db.Schemas.Resource do
   alias Metapede.Db.Schemas.Topic
   alias Metapede.Db.Schemas.TimePeriod
+  alias Metapede.Db.Schemas.GenericResource
 
   defstruct(
     res_id: nil,
@@ -11,9 +12,10 @@ defmodule Metapede.Db.Schemas.Resource do
   @res_types %{
     "time_period" => TimePeriod,
     "topic" => Topic,
-    "event" => nil
+    "event" => GenericResource
   }
 
+  def get_res_schema(%{"res_type" => res_type}), do: Map.get(@res_types, res_type)
   def get_res_schema(resource), do: Map.get(@res_types, resource.res_type)
 
   def create_references(model) do
@@ -32,13 +34,8 @@ defmodule Metapede.Db.Schemas.Resource do
 
   defp pair_resource_schema(resource), do: {get_res_schema(resource), resource}
 
-  defp save_resource({nil, resource}) do
-    {nil,
-     resource
-     |> Map.update(:info, resource.info, fn info ->
-       Topic.extract_topic(info)
-     end)}
-  end
+  defp save_resource({nil, resource}),
+    do: {nil, Map.update(resource, :info, resource.info, &Topic.extract_topic/1)}
 
   defp save_resource({schema, resource}), do: {schema.extract_and_ref(resource.info), resource}
 
@@ -51,5 +48,7 @@ defmodule Metapede.Db.Schemas.Resource do
   end
 
   def load_all(resources), do: Enum.map(resources, &load(&1))
-  def load(resource), do: get_res_schema(resource).load(resource.res_id)
+
+  def load(%{"res_type" => "event"} = resource), do: resource
+  def load(resource), do: get_res_schema(resource).load(resource["res_id"])
 end

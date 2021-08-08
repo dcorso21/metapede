@@ -19,4 +19,9 @@ defmodule Metapede.Db.Schemas.TimePeriod do
     |> upsert(updated)
     |> Map.get("_id")
   end
+
+  def load(id) do
+    tp = get_by_id(id)
+    Map.put(tp, "topic", Topic.load(tp["topic_id"]))
+  end
 end
