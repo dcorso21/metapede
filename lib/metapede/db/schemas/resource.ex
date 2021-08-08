@@ -8,7 +8,14 @@ defmodule Metapede.Db.Schemas.Resource do
     info: nil
   )
 
-  #   defp validate(attr), do: attr
+  @res_types %{
+    "time_period" => TimePeriod,
+    "topic" => Topic,
+    "event" => nil
+  }
+
+  def get_res_schema(resource), do: Map.get(@res_types, resource.res_type)
+
   def create_references(model) do
     updated_resources =
       model.resources
@@ -23,16 +30,7 @@ defmodule Metapede.Db.Schemas.Resource do
     |> Map.replace(:resources, updated_resources)
   end
 
-  defp pair_resource_schema(resource) do
-    mod =
-      %{
-        "time_period" => TimePeriod,
-        "topic" => Topic
-      }
-      |> Map.get(resource.res_type)
-
-    {mod, resource}
-  end
+  defp pair_resource_schema(resource), do: {get_res_schema(resource), resource}
 
   defp save_resource({nil, resource}) do
     {nil,
@@ -51,4 +49,7 @@ defmodule Metapede.Db.Schemas.Resource do
     |> Map.put_new(ref_name, id)
     |> Map.drop([drop_name])
   end
+
+  def load_all(resources), do: Enum.map(resources, &load(&1))
+  def load(resource), do: get_res_schema(resource).load(resource.res_id)
 end

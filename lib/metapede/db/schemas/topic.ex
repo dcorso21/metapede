@@ -10,7 +10,7 @@ defmodule Metapede.Db.Schemas.Topic do
     thumbnail: nil
   )
 
-  def validate(attr), do: attr
+  # def validate(attr), do: attr
 
   def extract_topic(%{topic: nil} = parent), do: parent
   def extract_topic(parent) do
