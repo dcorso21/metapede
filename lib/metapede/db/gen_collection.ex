@@ -27,6 +27,8 @@ defmodule Metapede.Db.GenCollection do
           %{"$set" => updates},
           upsert: true
         )
+
+        find_one_by(filter)
         |> IO.inspect()
       end
 
