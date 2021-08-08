@@ -40,9 +40,10 @@ IEx.configure(
   width: 80
 )
 
-alias Metapede.Repo
-alias Metapede.Timeline.{TimePeriod, Event}
-alias Metapede.TopicSchema.Topic
+# alias Metapede.Repo
+# alias Metapede.Timeline.{TimePeriod, Event}
+# alias Metapede.TopicSchema.Topic
+alias Metapede.Db.Schemas.Project
 
 dwarves = [
   "Fili",
