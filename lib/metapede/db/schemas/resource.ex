@@ -35,11 +35,11 @@ defmodule Metapede.Db.Schemas.Resource do
   end
 
   defp save_resource({nil, resource}), do: resource
-  defp save_resource({schema, resource}), do: {schema.extract_to_ref(resource), resource}
+  defp save_resource({schema, resource}), do: {schema.extract_to_ref(resource.info), resource}
 
-  defp save_reference({document, resource}) do
+  def save_reference({document, resource}, ref_name \\ :res_id, drop_name \\ :info) do
     resource
-    |> Map.put_new(:res_id, document["_id"])
-    |> Map.drop([:info])
+    |> Map.put_new(ref_name, document["_id"])
+    |> Map.drop([drop_name])
   end
 end

@@ -42,7 +42,7 @@ defmodule Metapede.Db.GenCollection do
         |> Mongo.delete_one(@collection, %{_id: id})
       end
 
-      def extract_to_ref(resource), do: upsert(resource.info, resource.info)
+      def extract_to_ref(schema), do: upsert(schema, schema)
     end
   end
 end

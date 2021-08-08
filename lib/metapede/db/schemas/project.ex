@@ -19,10 +19,7 @@ defmodule Metapede.Db.Schemas.Project do
   end
 
   defp create_topic_reference(model) do
-    res = Topic.upsert(%{page_id: model.topic.page_id}, model.topic)
-
-    model
-    |> Map.put_new(:topic_id, res["_id"])
-    |> Map.drop([:topic])
+    res = Topic.extract_to_ref(model.topic)
+    Resource.save_reference({res, model}, :topic_id, :topic)
   end
 end
