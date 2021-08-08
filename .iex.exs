@@ -40,32 +40,6 @@ IEx.configure(
   width: 80
 )
 
-# alias Metapede.Repo
-# alias Metapede.Timeline.{TimePeriod, Event}
-# alias Metapede.TopicSchema.Topic
 alias Metapede.Db.Schemas.Project
 alias Metapede.Db.Schemas.TimePeriod
-
-dwarves = [
-  "Fili",
-  "Kili",
-  "Oin",
-  "Gloin",
-  "Thorin",
-  "Dwalin",
-  "Balin",
-  "Bifur",
-  "Bofur",
-  "Bombur",
-  "Dori",
-  "Nori",
-  "Ori"
-]
-
-fellowship = %{
-  hobbits: ["Frodo", "Samwise", "Merry", "Pippin"],
-  humans: ["Aragorn", "Boromir"],
-  dwarves: ["Gimli"],
-  elves: ["Legolas"],
-  wizards: ["Gandolf"]
-}
+alias Metapede.Db.Schemas.Event
