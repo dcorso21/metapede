@@ -20,8 +20,8 @@ defmodule Metapede.Db.Schemas.TimePeriod do
     |> Map.get("_id")
   end
 
-  def load(id) do
+  def load(id, _resource) do
     tp = get_by_id(id)
-    Map.put(tp, "topic", Topic.load(tp["topic_id"]))
+    Map.put(tp, "topic", Topic.load(tp["topic_id"], tp))
   end
 end

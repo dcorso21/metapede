@@ -48,7 +48,6 @@ defmodule Metapede.Db.Schemas.Resource do
   end
 
   def load_all(resources), do: Enum.map(resources, &load(&1))
+  def load(resource), do: get_res_schema(resource).load(resource["res_id"], resource)
 
-  def load(%{"res_type" => "event"} = resource), do: resource
-  def load(resource), do: get_res_schema(resource).load(resource["res_id"])
 end
