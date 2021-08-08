@@ -48,7 +48,8 @@ defmodule Metapede.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.8"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:mongodb, "~> 0.5.1"}
     ]
   end
 
@@ -61,6 +62,7 @@ defmodule Metapede.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
+      seed: ["run priv/db/seed.ex"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]

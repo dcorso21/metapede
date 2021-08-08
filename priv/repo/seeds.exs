@@ -11,7 +11,6 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Metapede.TimelineContext.TimePeriodContext
-alias Metapede.Timeline.TimePeriodSchema.TimePeriod
 
 tls = [
   %{
@@ -19,21 +18,42 @@ tls = [
     title: "Socrates",
     start_datetime: "01/01/1000",
     end_datetime: "01/01/1080",
+    sequence: [
+      %{
+        name: "Chapter 1",
+        res_type: "section",
+        description: "this is chapter 1 desc",
+        resources: [
+          %{
+            res_type: "image" | "quote" | "map"
+            title: "image title"
+            url: "image_url.jpeg"
+            description: "this is the image description."
+          }
+        ]
+      }
+    ],
     sub_time_periods: [
       %{
         res_type: "TimePeriod",
         title: "Aristotle",
         start_datetime: "01/01/1090",
         end_datetime: "01/01/1120",
-        sub_time_periods: [
-          %{
-            res_type: "TimePeriod",
-            title: "Plato",
-            start_datetime: "01/01/1190",
-            end_datetime: "01/01/1220",
-            sub_time_periods: []
-          }
-        ]
+        sub_time_periods: []
+      },
+      %{
+        res_type: "TimePeriod",
+        title: "Plato",
+        start_datetime: "01/01/1120",
+        end_datetime: "01/01/1170",
+        sub_time_periods: []
+      },
+      %{
+        res_type: "TimePeriod",
+        title: "Age_of_Enlightenment",
+        start_datetime: "01/01/1500",
+        end_datetime: "01/01/1770",
+        sub_time_periods: []
       }
     ]
   }
