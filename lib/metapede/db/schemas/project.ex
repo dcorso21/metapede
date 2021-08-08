@@ -19,7 +19,7 @@ defmodule Metapede.Db.Schemas.Project do
   end
 
   defp create_topic_reference(model) do
-    res = Topic.extract_to_ref(model.topic)
-    Resource.save_reference({res, model}, :topic_id, :topic)
+    id = Topic.extract_and_ref(model.topic)
+    Resource.save_reference({id, model}, :topic_id, :topic)
   end
 end

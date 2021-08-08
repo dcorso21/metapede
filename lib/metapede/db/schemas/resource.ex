@@ -34,12 +34,21 @@ defmodule Metapede.Db.Schemas.Resource do
     {mod, resource}
   end
 
-  defp save_resource({nil, resource}), do: resource
-  defp save_resource({schema, resource}), do: {schema.extract_to_ref(resource.info), resource}
+  defp save_resource({nil, resource}) do
+    {nil,
+     resource
+     |> Map.update(:info, resource.info, fn info ->
+       Topic.extract_topic(info)
+     end)}
+  end
 
-  def save_reference({document, resource}, ref_name \\ :res_id, drop_name \\ :info) do
+  defp save_resource({schema, resource}), do: {schema.extract_and_ref(resource.info), resource}
+
+  def save_reference({nil, resource}), do: resource
+
+  def save_reference({id, resource}, ref_name \\ :res_id, drop_name \\ :info) do
     resource
-    |> Map.put_new(ref_name, document["_id"])
+    |> Map.put_new(ref_name, id)
     |> Map.drop([drop_name])
   end
 end
