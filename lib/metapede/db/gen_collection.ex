@@ -41,6 +41,8 @@ defmodule Metapede.Db.GenCollection do
         @repo
         |> Mongo.delete_one(@collection, %{_id: id})
       end
+
+      def extract_to_ref(resource), do: upsert(resource.info, resource.info)
     end
   end
 end

@@ -10,4 +10,5 @@ defmodule Metapede.Db.Schemas.Topic do
   )
 
   def validate(attr), do: attr
+
 end
