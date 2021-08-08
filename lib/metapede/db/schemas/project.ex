@@ -29,7 +29,6 @@ defmodule Metapede.Db.Schemas.Project do
   def load(project) do
     topic =
       Topic.get_by_id(project["topic_id"])
-      |> IO.inspect()
 
     resources = Resource.load_all(project["resources"])
 

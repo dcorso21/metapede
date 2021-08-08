@@ -1,5 +1,5 @@
 defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
-  @syntax_colors [number: :yellow, atom: :cyan, string: :green, boolean: :magenta, nil: :magenta]
+  # @syntax_colors [number: :yellow, atom: :cyan, string: :green, boolean: :magenta, nil: :magenta]
 
   def path_helper(id, periods) do
     periods
@@ -41,7 +41,7 @@ defmodule MetapedeWeb.Controllers.Transforms.ManageShown do
     picked_subperiod = Enum.at(period.sub_time_periods, index)
     load = preload_element({id, rest}, picked_subperiod)
 
-    IO.inspect(load, syntax_colors: @syntax_colors, label: "PASS LOAD")
+    # IO.inspect(load, syntax_colors: @syntax_colors, label: "PASS LOAD")
 
     updated_sub_periods =
       List.replace_at(

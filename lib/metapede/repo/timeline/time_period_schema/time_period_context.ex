@@ -78,7 +78,6 @@ defmodule Metapede.TimelineContext.TimePeriodContext do
     {_status, topic} =
       new_topic_info
       |> TopicContext.create_or_pull()
-      |> IO.inspect()
 
     Utils.add_association(
       topic,

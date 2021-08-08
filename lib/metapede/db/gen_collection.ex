@@ -30,7 +30,6 @@ defmodule Metapede.Db.GenCollection do
         )
 
         find_one_by(filter)
-        |> IO.inspect()
       end
 
       def find_one_by(filter, opts \\ []) do
@@ -43,7 +42,7 @@ defmodule Metapede.Db.GenCollection do
         |> Mongo.delete_one(@collection, %{_id: id})
       end
 
-      def load(id, _resource), do: get_by_id(id) |> IO.inspect()
+      def load(id, _resource), do: get_by_id(id)
       def extract_and_ref(schema), do: upsert(schema, schema) |> Map.get("_id")
 
       defoverridable extract_and_ref: 1, load: 2

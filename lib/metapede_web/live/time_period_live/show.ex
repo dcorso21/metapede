@@ -19,9 +19,6 @@ defmodule MetapedeWeb.TimePeriodLive.Show do
   end
 
   def handle_params(params, _url, socket) do
-    IO.puts("SOCKET")
-    IO.inspect(params)
-
     tp = get_time_period(params)
 
     new_topic =

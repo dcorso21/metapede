@@ -6,7 +6,7 @@ defmodule Metapede.TopicSchema.TopicContext do
   import Ecto.Query, warn: false
   alias Metapede.Repo
   alias Metapede.TopicSchema.Topic
-  alias Metapede.TopicSchema.TopicContext
+  # alias Metapede.TopicSchema.TopicContext
 
   @doc """
   Returns the list of topics.
@@ -88,8 +88,6 @@ defmodule Metapede.TopicSchema.TopicContext do
 
   """
   def delete_topic(%Topic{} = topic) do
-    # IO.puts("See Deleted Topic Here")
-    # IO.inspect(topic)
     Repo.delete(topic)
   end
 

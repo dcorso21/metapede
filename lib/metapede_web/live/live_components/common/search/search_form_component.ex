@@ -3,11 +3,6 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   alias Metapede.TopicSchema.TopicContext
 
   def update(assigns, socket) do
-
-    IO.puts("TARGET:")
-    IO.inspect(assigns)
-
-
     {:ok,
      socket
      |> assign(:wiki_info, [])
