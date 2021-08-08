@@ -17,6 +17,8 @@ defmodule Metapede.Db.GenCollection do
       def get_all() do
         @repo
         |> Mongo.find(@collection, %{})
+        |> Enum.to_list()
+        |> IO.inspect()
       end
 
       def upsert(filter, updates) do
@@ -42,9 +44,7 @@ defmodule Metapede.Db.GenCollection do
         |> Mongo.delete_one(@collection, %{_id: id})
       end
 
-
       def load(id), do: get_by_id(id)
-
       def extract_and_ref(schema), do: upsert(schema, schema) |> Map.get("_id")
 
       defoverridable extract_and_ref: 1, load: 1

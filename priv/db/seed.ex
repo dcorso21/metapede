@@ -1,6 +1,5 @@
 alias Metapede.Db.Schemas.Project
 
-
 top = %{
     title: "Socrates",
     description: "First Philosopher",

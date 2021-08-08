@@ -43,3 +43,4 @@ IEx.configure(
 alias Metapede.Db.Schemas.Project
 alias Metapede.Db.Schemas.TimePeriod
 alias Metapede.Db.Schemas.Event
+alias Metapede.Db.Schemas.Topic
