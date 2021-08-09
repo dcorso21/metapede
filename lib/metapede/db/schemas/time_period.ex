@@ -12,16 +12,28 @@ defmodule Metapede.Db.Schemas.TimePeriod do
 
   def validate(attr), do: attr
 
-  def extract_and_ref(time_period) do
-    updated = Topic.extract_topic(time_period)
+  def unload(time_period) do
+    updated =
+      Topic.extract_topic(time_period)
+      |> Map.update(:sub_time_periods, [], fn tps ->
+        Enum.map(tps, &unload/1)
+      end)
 
     updated
     |> upsert(updated)
     |> Map.get("_id")
   end
 
-  def load(id, _resource) do
+  def load(id, _resource, depth \\ 2) do
     tp = get_by_id(id)
-    Map.put(tp, "topic", Topic.load(tp["topic_id"], tp))
+
+    tp
+    |> Map.put("topic", Topic.load(tp["topic_id"], tp))
+    |> Map.update("sub_time_periods", [], fn tps ->
+      Enum.map(
+        tps,
+        &load(&1, &1, depth - 1)
+      )
+    end)
   end
 end

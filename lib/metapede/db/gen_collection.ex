@@ -43,9 +43,9 @@ defmodule Metapede.Db.GenCollection do
       end
 
       def load(id, _resource), do: get_by_id(id)
-      def extract_and_ref(schema), do: upsert(schema, schema) |> Map.get("_id")
+      def unload(schema), do: upsert(schema, schema) |> Map.get("_id")
 
-      defoverridable extract_and_ref: 1, load: 2
+      defoverridable unload: 1, load: 2
     end
   end
 end

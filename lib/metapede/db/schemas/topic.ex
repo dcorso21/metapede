@@ -14,7 +14,7 @@ defmodule Metapede.Db.Schemas.Topic do
 
   def extract_topic(%{topic: nil} = parent), do: parent
   def extract_topic(parent) do
-    id = extract_and_ref(parent.topic)
+    id = unload(parent.topic)
     Resource.save_reference({id, parent}, :topic_id, :topic)
   end
 

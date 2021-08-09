@@ -34,12 +34,12 @@ defmodule Metapede.Db.Schemas.Resource do
 
   defp pair_resource_schema(resource), do: {get_res_schema(resource), resource}
 
-  defp save_resource({nil, resource}),
-    do: {nil, Map.update(resource, :info, resource.info, &Topic.extract_topic/1)}
+  defp save_resource({GenericResource, resource}),
+    do: {GenericResource, Map.update(resource, :info, resource.info, &Topic.extract_topic/1)}
 
-  defp save_resource({schema, resource}), do: {schema.extract_and_ref(resource.info), resource}
+  defp save_resource({schema, resource}), do: {schema.unload(resource.info), resource}
 
-  def save_reference({nil, resource}), do: resource
+  def save_reference({GenericResource, resource}), do: resource
 
   def save_reference({id, resource}, ref_name \\ :res_id, drop_name \\ :info) do
     resource
@@ -49,5 +49,4 @@ defmodule Metapede.Db.Schemas.Resource do
 
   def load_all(resources), do: Enum.map(resources, &load(&1))
   def load(resource), do: get_res_schema(resource).load(resource["res_id"], resource)
-
 end
