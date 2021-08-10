@@ -10,8 +10,6 @@ defmodule Metapede.Db.Schemas.Project do
     resources: []
   )
 
-  # defp validate(attr), do: attr
-
   def unload(project) do
     project
     |> Topic.unload_topic()
@@ -25,6 +23,4 @@ defmodule Metapede.Db.Schemas.Project do
     |> Map.put("topic", Topic.load(project["topic_id"]))
     |> Map.replace("resources", Resource.load_all(project["resources"]))
   end
-
-  def load_topic_only(project), do: Map.put(project, "topic", Topic.load(project["topic_id"]))
 end
