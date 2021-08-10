@@ -8,7 +8,7 @@ top = %{
 }
 
 projects = [
-  %Project{
+  %{
     topic: top,
     resources: [
       %{
@@ -29,7 +29,14 @@ projects = [
               topic: top,
               start_datetime: "2000",
               end_datetime: "2021",
-              sub_time_periods: []
+              sub_time_periods: [
+                %{
+                  topic: top,
+                  start_datetime: "2000",
+                  end_datetime: "2021",
+                  sub_time_periods: []
+                }
+              ]
             }
           ]
         }
@@ -48,7 +55,5 @@ projects = [
 ]
 
 projects
-|> Enum.map(fn el ->
-  el
-  |> Project.submit_full()
-end)
+|> Enum.map(&Project.submit/1)
+|> IO.inspect(label: "seed")

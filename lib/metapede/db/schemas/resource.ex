@@ -35,7 +35,7 @@ defmodule Metapede.Db.Schemas.Resource do
   defp pair_resource_schema(resource), do: {get_res_schema(resource), resource}
 
   defp unload({GenericResource, resource}),
-    do: {nil, Map.update(resource, :info, resource.info, &Topic.extract_topic/1)}
+    do: {nil, Map.update(resource, :info, resource.info, &Topic.unload_topic/1)}
 
   defp unload({schema, resource}), do: {schema.unload(resource.info), resource}
 

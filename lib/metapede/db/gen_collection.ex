@@ -12,6 +12,10 @@ defmodule Metapede.Db.GenCollection do
       def unload(schema), do: upsert(schema, schema) |> Map.get("_id")
       def delete(id), do: Mongo.delete_one(@repo, @collection, %{_id: id})
 
+      def submit(attrs) do
+        update = unload(attrs)
+        upsert(update, update)
+      end
 
       def upsert(filter, updates) do
         Mongo.update_one(
@@ -24,7 +28,6 @@ defmodule Metapede.Db.GenCollection do
 
         find_one_by(filter)
       end
-
 
       defoverridable unload: 1, load: 1, load: 2
     end
