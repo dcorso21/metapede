@@ -12,7 +12,7 @@ defmodule Metapede.Db.Schemas.Topic do
 
   # def validate(attr), do: attr
 
-  def extract_topic(%{topic: nil} = parent), do: parent
+  # def extract_topic(%{topic: nil} = parent), do: parent
   def extract_topic(parent) do
     id = unload(parent.topic)
     Resource.save_reference({id, parent}, :topic_id, :topic)

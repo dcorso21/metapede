@@ -15,7 +15,7 @@ defmodule Metapede.Db.Schemas.Project do
   def submit_full(model) do
     model
     |> Topic.extract_topic()
-    |> IO.inspect()
+    |> IO.inspect(label: "after_extract")
     |> Resource.create_references()
     |> create()
   end

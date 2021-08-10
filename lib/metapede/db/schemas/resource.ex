@@ -24,7 +24,7 @@ defmodule Metapede.Db.Schemas.Resource do
       |> Enum.map(fn res ->
         res
         |> pair_resource_schema
-        |> save_resource
+        |> unload
         |> save_reference
       end)
 
@@ -34,16 +34,16 @@ defmodule Metapede.Db.Schemas.Resource do
 
   defp pair_resource_schema(resource), do: {get_res_schema(resource), resource}
 
-  defp save_resource({GenericResource, resource}),
-    do: {GenericResource, Map.update(resource, :info, resource.info, &Topic.extract_topic/1)}
+  defp unload({GenericResource, resource}),
+    do: {nil, Map.update(resource, :info, resource.info, &Topic.extract_topic/1)}
 
-  defp save_resource({schema, resource}), do: {schema.unload(resource.info), resource}
+  defp unload({schema, resource}), do: {schema.unload(resource.info), resource}
 
-  def save_reference({GenericResource, resource}), do: resource
 
+  def save_reference({nil, resource}), do: resource
   def save_reference({id, resource}, ref_name \\ :res_id, drop_name \\ :info) do
     resource
-    |> Map.put_new(ref_name, id)
+    |> Map.put(ref_name, id)
     |> Map.drop([drop_name])
   end
 
