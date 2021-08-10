@@ -14,26 +14,17 @@ defmodule Metapede.Db.Schemas.Project do
 
   def submit_full(model) do
     model
-    |> create_topic_reference()
+    |> Topic.extract_topic()
+    |> IO.inspect()
     |> Resource.create_references()
     |> create()
-  end
-
-  defp create_topic_reference(model) do
-    id = Topic.unload(model.topic)
-    Resource.save_reference({id, model}, :topic_id, :topic)
   end
 
   def load_all(projects), do: Enum.map(projects, &load/1)
 
   def load(project) do
-    topic =
-      Topic.get_by_id(project["topic_id"])
-
-    resources = Resource.load_all(project["resources"])
-
     project
-    |> Map.put("topic", topic)
-    |> Map.replace("resources", resources)
+    |> Map.put("topic", Topic.load(project["topic_id"]))
+    |> Map.replace("resources", Resource.load_all(project["resources"]))
   end
 end

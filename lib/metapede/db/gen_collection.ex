@@ -4,25 +4,18 @@ defmodule Metapede.Db.GenCollection do
       @repo :mongo
       @collection unquote(collection_name)
 
-      def create(attrs) do
-        @repo
-        |> Mongo.insert_one(@collection, attrs)
-      end
+      def create(attrs), do: Mongo.insert_one(@repo, @collection, attrs)
+      def get_by_id(id), do: Mongo.find_one(@repo, @collection, %{_id: id})
+      def get_all(), do: Mongo.find(@repo, @collection, %{}) |> Enum.to_list()
+      def find_one_by(filter, opts \\ []), do: Mongo.find_one(@repo, @collection, filter, opts)
+      def load(id, _resource \\ nil), do: get_by_id(id)
+      def unload(schema), do: upsert(schema, schema) |> Map.get("_id")
+      def delete(id), do: Mongo.delete_one(@repo, @collection, %{_id: id})
 
-      def get_by_id(id) do
-        @repo
-        |> Mongo.find_one(@collection, %{_id: id})
-      end
-
-      def get_all() do
-        @repo
-        |> Mongo.find(@collection, %{})
-        |> Enum.to_list()
-      end
 
       def upsert(filter, updates) do
-        @repo
-        |> Mongo.update_one(
+        Mongo.update_one(
+          @repo,
           @collection,
           filter,
           %{"$set" => updates},
@@ -32,20 +25,8 @@ defmodule Metapede.Db.GenCollection do
         find_one_by(filter)
       end
 
-      def find_one_by(filter, opts \\ []) do
-        @repo
-        |> Mongo.find_one(@collection, filter, opts)
-      end
 
-      def delete(id) do
-        @repo
-        |> Mongo.delete_one(@collection, %{_id: id})
-      end
-
-      def load(id, _resource), do: get_by_id(id)
-      def unload(schema), do: upsert(schema, schema) |> Map.get("_id")
-
-      defoverridable unload: 1, load: 2
+      defoverridable unload: 1, load: 1, load: 2
     end
   end
 end

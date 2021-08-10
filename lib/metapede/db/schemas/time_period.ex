@@ -29,11 +29,10 @@ defmodule Metapede.Db.Schemas.TimePeriod do
 
     tp
     |> Map.put("topic", Topic.load(tp["topic_id"], tp))
-    |> Map.update("sub_time_periods", [], fn tps ->
-      Enum.map(
-        tps,
-        &load(&1, &1, depth - 1)
-      )
-    end)
+    |> Map.update("sub_time_periods", [], &load_sub_periods(&1, depth))
   end
+
+  defp load_sub_periods(sub_time_periods, depth) when depth === 0, do: sub_time_periods
+  defp load_sub_periods(sub_time_periods, depth),
+    do: Enum.map(sub_time_periods, &load(&1, &1, depth - 1))
 end
