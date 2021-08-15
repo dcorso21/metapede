@@ -17,7 +17,7 @@ defmodule MetapedeWeb.Router do
   scope "/api", MetapedeWeb do
     pipe_through :api
 
-    get "/hello", TestApi, :get
+    resources "/project", TestApi
   end
 
   scope "/", MetapedeWeb do
