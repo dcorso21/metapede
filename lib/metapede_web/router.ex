@@ -19,6 +19,7 @@ defmodule MetapedeWeb.Router do
     pipe_through :browser
 
     live "/projects", ProjectsLive.Index, :main
+    live "/projects/show/:id", ProjectsLive.Show, :main
 
 
     live "/time_periods", TimePeriodLive.Index, :main

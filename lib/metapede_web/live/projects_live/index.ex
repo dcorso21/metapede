@@ -15,11 +15,10 @@ defmodule MetapedeWeb.ProjectsLive.Index do
 
   def render(assigns) do
     ~L"""
+    <h1>Projects</h1>
     <div>
       <%= for project <- @projects do %>
-        <h1><%= project["topic"]["title"] %></h1>
-        <div><%= project["topic"]["description"] %></div>
-        <img src="<%= project["topic"]["thumbnail"] %>"/>
+        <%= live_component MetapedeWeb.LiveComponents.ProjectComponent, project: project, id: project["_id"] %>
       <% end %>
     </div>
     """
