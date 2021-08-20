@@ -17,7 +17,7 @@ defmodule MetapedeWeb.Router do
   scope "/api", MetapedeWeb do
     pipe_through :api
 
-    resources "/project", TestApi
+    resources "/project", Controllers.ProjectController, except: [:index, :edit, :new]
   end
 
   scope "/", MetapedeWeb do

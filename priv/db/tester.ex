@@ -1,7 +1,7 @@
-alias Metapede.Db.Schemas.Project
+alias Metapede.Db.Schemas.Archive
 
 IO.puts("Starting")
-ps = Project.get_all()
+ps =Archive.get_all()
 
 Project.load_all(ps)
 |> IO.inspect()

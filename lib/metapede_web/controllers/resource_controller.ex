@@ -1,4 +1,4 @@
-defmodule MetapedeWeb.TestApi do
+defmodule MetapedeWeb.Controllers.ResourceController do
   use Phoenix.Controller
 
   def index(conn, _options) do

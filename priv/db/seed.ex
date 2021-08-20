@@ -1,4 +1,4 @@
-alias Metapede.Db.Schemas.Project
+alias Metapede.Db.Schemas.Archive
 
 top = %{
   title: "Socrates",

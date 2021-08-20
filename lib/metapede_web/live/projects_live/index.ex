@@ -1,6 +1,6 @@
 defmodule MetapedeWeb.ProjectsLive.Index do
   use MetapedeWeb, :live_view
-  alias Metapede.Db.Schemas.Project
+  alias Metapede.Db.Schemas.Archive
   alias Metapede.Db.Schemas.Topic
 
   def mount(_params, _session, socket) do
@@ -25,7 +25,7 @@ defmodule MetapedeWeb.ProjectsLive.Index do
   end
 
   defp load_projects() do
-    Project.get_all()
+   Archive.get_all()
     |> Enum.map(&Topic.load_topic/1)
   end
 end

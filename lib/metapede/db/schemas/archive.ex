@@ -1,5 +1,5 @@
-defmodule Metapede.Db.Schemas.Project do
-  use Metapede.Db.GenCollection, collection_name: "projects"
+defmodule Metapede.Db.Schemas.Archive do
+  use Metapede.Db.GenCollection, collection_name: "archives"
 
   alias Metapede.Db.Schemas.Topic
   alias Metapede.Db.Schemas.Resource

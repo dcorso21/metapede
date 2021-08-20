@@ -1,14 +1,14 @@
 defmodule MetapedeWeb.ProjectsLive.Show do
   use MetapedeWeb, :live_view
-  alias Metapede.Db.Schemas.Project
+  alias Metapede.Db.Schemas.Archive
   alias Metapede.Db.Schemas.Topic
 
   def handle_params(params, _url, socket) do
     tp = Topic.find_one_by(%{title: params["id"]})
 
     pr =
-      Project.find_one_by(%{topic_id: tp["_id"]})
-      |> Project.load()
+     Archive.find_one_by(%{topic_id: tp["_id"]})
+      |>Archive.load()
 
     {:noreply, socket |> assign(project: pr)}
   end
