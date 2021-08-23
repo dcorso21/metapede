@@ -15,12 +15,12 @@ defmodule Metapede.Db.Schemas.TimePeriod do
   def unload(time_period) do
     updated =
       Topic.unload_topic(time_period)
-      |> Map.update(:sub_time_periods, [], fn tps ->
+      |> Map.update("sub_time_periods", [], fn tps ->
         Enum.map(tps, &unload/1)
       end)
 
     updated
-    |> upsert(updated)
+    |> upsert()
     |> Map.get("_id")
   end
 

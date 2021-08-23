@@ -13,15 +13,15 @@ defmodule Metapede.Db.Schemas.Topic do
 
   def load_topic(parent), do: Map.put(parent, "topic", load(parent["topic_id"]))
 
-  def unload_topic(%{topic_seed: term} = parent) do
+  def unload_topic(%{"topic_seed" => term} = parent) do
     parent
-    |> Map.drop([:topic_seed])
-    |> Map.put(:topic, seed_topic_with_term(term))
+    |> Map.drop(["topic_seed"])
+    |> Map.put("topic", seed_topic_with_term(term))
     |> unload_topic()
   end
 
   def unload_topic(parent),
-    do: Resource.save_reference({unload(parent.topic), parent}, :topic_id, :topic)
+    do: Resource.save_reference({unload(parent["topic"]), parent}, "topic_id", "topic")
 
   defp transform_wiki_data(data) do
     data

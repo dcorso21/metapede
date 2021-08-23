@@ -4,8 +4,8 @@ defmodule Metapede.Db.Schemas.Archive do
   alias Metapede.Db.Schemas.TimePeriod
 
   defstruct(
-    archive_type: "",
-    archive_id: nil,
+    resource_type: "",
+    resource_id: nil,
     data: %{}
   )
 
@@ -21,13 +21,13 @@ defmodule Metapede.Db.Schemas.Archive do
     |> unload_schema()
   end
 
-  defp pair_schema(%{archive_type: at} = archive), do: {@res_types[at], archive}
+  defp pair_schema(%{"resource_type" => at} = archive), do: {@res_types[at], archive}
 
   defp unload_schema({schema, archive}) do
-    id = schema.unload(archive.data)
+    id = schema.unload(archive["data"])
 
     archive
-    |> Map.put(:archive_id, id)
-    |> Map.drop([:data])
+    |> Map.put("resource_id", id)
+    |> Map.drop(["data"])
   end
 end

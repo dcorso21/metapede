@@ -1,26 +1,26 @@
 alias Metapede.Db.Schemas.Archive
 
-top = %{
-  title: "Socrates",
-  description: "First Philosopher",
-  thumbnail: "456",
-  page_id: "123"
-}
+# top = %{
+#   "title" => "Socrates",
+#   "description" =>  "First Philosopher",
+#   "thumbnail" => "456",
+#   "page_id" => "123"
+# }
 
 archives = [
 
       %{
-        archive_type: "time_period",
-        data: %{
-          topic_seed: "Aristotle",
-          start_datetime: "-0200",
-          end_datetime: "-0200",
-          sub_time_periods: [
+        "resource_type" => "time_period",
+        "data" => %{
+          "topic_seed" => "Aristotle",
+          "start_datetime" => "-0200",
+          "end_datetime" => "-0200",
+          "sub_time_periods" => [
             %{
-              topic_seed: "Plato",
-              start_datetime: "2000",
-              end_datetime: "2021",
-              sub_time_periods: []
+              "topic_seed" => "Plato",
+              "start_datetime" => "2000",
+              "end_datetime" => "2021",
+              "sub_time_periods" => []
             }
           ]
         }
