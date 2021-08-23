@@ -40,6 +40,7 @@ IEx.configure(
   width: 80
 )
 
-alias Metapede.Db.Schemas.Project
+alias Metapede.Db.Schemas.Archive
 alias Metapede.Db.Schemas.TimePeriod
 alias Metapede.Db.Schemas.Event
+alias Metapede.Db.Schemas.Topic

@@ -49,7 +49,8 @@ defmodule Metapede.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.8"},
       {:poison, "~> 3.1"},
-      {:mongodb, "~> 0.5.1"}
+      {:mongodb, "~> 0.5.1"},
+      {:uuid, "~> 1.1"}
     ]
   end
 
@@ -63,6 +64,7 @@ defmodule Metapede.MixProject do
     [
       setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
       seed: ["run priv/db/seed.ex"],
+      tester: ["run priv/db/tester.ex"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]

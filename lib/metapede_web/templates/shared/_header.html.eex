@@ -2,4 +2,5 @@
 	<%= link "Metapede", to: "/", class: "page_title" %>
 	<%= link "Topics", to: "/topics", class: "page_link" %>
 	<%= link "Time Periods", to: "/time_periods", class: "page_link" %>
+	<%= link "Projects", to: "/projects", class: "page_link" %>
 </div>

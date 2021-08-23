@@ -49,12 +49,9 @@ defmodule Metapede.WikiConnect do
   end
 
   defp transform_search_results(res) do
-    #  Get pages from result
     pages = res["query"]["pages"]
-    #  convert to an array, (empty if no results)
     page_list = if pages == nil, do: [], else: Map.to_list(pages)
     trans = for {_page_num, info} <- page_list, do: info
-    #  Sort by index and return
     Enum.sort(trans, &(&1["index"] < &2["index"]))
   end
 end

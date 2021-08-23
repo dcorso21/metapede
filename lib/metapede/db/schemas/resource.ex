@@ -1,6 +1,7 @@
 defmodule Metapede.Db.Schemas.Resource do
   alias Metapede.Db.Schemas.Topic
   alias Metapede.Db.Schemas.TimePeriod
+  alias Metapede.Db.Schemas.GenericResource
 
   defstruct(
     res_id: nil,
@@ -8,14 +9,29 @@ defmodule Metapede.Db.Schemas.Resource do
     info: nil
   )
 
-  #   defp validate(attr), do: attr
+  @res_types %{
+    "time_period" => TimePeriod,
+    "topic" => Topic,
+    "event" => GenericResource
+  }
+
+  def get_res_schema(%{"res_type" => res_type}), do: Map.get(@res_types, res_type)
+  def get_res_schema(resource), do: Map.get(@res_types, resource.res_type)
+
+  def unload_reference(res) do
+    res
+    |> pair_resource_schema
+    |> unload
+    |> save_reference
+  end
+
   def create_references(model) do
     updated_resources =
       model.resources
       |> Enum.map(fn res ->
         res
         |> pair_resource_schema
-        |> save_resource
+        |> unload
         |> save_reference
       end)
 
@@ -23,23 +39,21 @@ defmodule Metapede.Db.Schemas.Resource do
     |> Map.replace(:resources, updated_resources)
   end
 
-  defp pair_resource_schema(resource) do
-    mod =
-      %{
-        "time_period" => TimePeriod,
-        "topic" => Topic
-      }
-      |> Map.get(resource.res_type)
+  defp pair_resource_schema(resource), do: {get_res_schema(resource), resource}
 
-    {mod, resource}
-  end
+  defp unload({GenericResource, resource}),
+    do: {nil, Map.update(resource, :info, resource.info, &Topic.unload_topic/1)}
 
-  defp save_resource({nil, resource}), do: resource
-  defp save_resource({schema, resource}), do: {schema.extract_to_ref(resource.info), resource}
+  defp unload({schema, resource}), do: {schema.unload(resource.info), resource}
 
-  def save_reference({document, resource}, ref_name \\ :res_id, drop_name \\ :info) do
+  def save_reference({nil, resource}), do: resource
+
+  def save_reference({id, resource}, ref_name \\ :res_id, drop_name \\ :info) do
     resource
-    |> Map.put_new(ref_name, document["_id"])
+    |> Map.put(ref_name, id)
     |> Map.drop([drop_name])
   end
+
+  def load_all(resources), do: Enum.map(resources, &load(&1))
+  def load(resource), do: get_res_schema(resource).load(resource["res_id"], resource)
 end
