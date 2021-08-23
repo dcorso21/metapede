@@ -15,6 +15,14 @@ defmodule Metapede.Db.Schemas.Archive do
     "event" => GenericResource
   }
 
+  def load_all(archives), do: Enum.map(archives, &load/1)
+
+  def load(archive) do
+    archive
+    |> pair_schema()
+    |> load_schema()
+  end
+
   def unload(archive) do
     archive
     |> pair_schema()
@@ -29,5 +37,9 @@ defmodule Metapede.Db.Schemas.Archive do
     archive
     |> Map.put("resource_id", id)
     |> Map.drop(["data"])
+  end
+
+  defp load_schema({schema, archive}) do
+    Map.put(archive, "data", schema.load(archive["resource_id"]))
   end
 end

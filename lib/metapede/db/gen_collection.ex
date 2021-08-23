@@ -32,18 +32,6 @@ defmodule Metapede.Db.GenCollection do
       def upsert(%{"_id" => _id} = attrs), do: update(attrs)
       def upsert(attrs), do: create(attrs)
 
-      # def upsert(filter, updates) do
-      #   Mongo.update_one(
-      #     @repo,
-      #     @collection,
-      #     filter,
-      #     %{"$set" => updates},
-      #     upsert: true
-      #   )
-
-      #   find_one_by(filter)
-      # end
-
       defp gen_unique_id() do
         id = gen_id()
         if(is_unique_id(id), do: id, else: gen_unique_id())
