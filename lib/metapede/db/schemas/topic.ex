@@ -1,6 +1,6 @@
 defmodule Metapede.Db.Schemas.Topic do
-  @collection_name "resources.topics"
-  use Metapede.Db.GenCollection, collection_name: @collection_name
+  @collection_name "topics"
+  use Metapede.Db.GenCollection, collection_name: @collection_name, prefix: "tpc"
   alias Metapede.Db.Schemas.Resource
   alias Metapede.WikiConnect
 
