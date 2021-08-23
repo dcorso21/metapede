@@ -55,5 +55,5 @@ projects = [
 ]
 
 projects
-|> Enum.map(&Project.submit/1)
+|> Enum.map(&Archive.submit/1)
 |> IO.inspect(label: "seed")

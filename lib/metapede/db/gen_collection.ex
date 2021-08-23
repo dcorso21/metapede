@@ -12,6 +12,10 @@ defmodule Metapede.Db.GenCollection do
       def unload(schema), do: upsert(schema, schema) |> Map.get("_id")
       def delete(id), do: Mongo.delete_one(@repo, @collection, %{_id: id})
 
+      def unique_id(id) do
+        Mongo.count!(@repo, @collection, %{_id: id}) === 0
+      end
+
       def submit(attrs) do
         update = unload(attrs)
         upsert(update, update)

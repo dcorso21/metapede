@@ -20,10 +20,10 @@ defmodule Metapede.CommonSearchFuncs do
 
   def check_for_existing_time_period({:existing, topic}) do
     case Repo.preload(topic, [:time_period]) do
-      %Topic{time_period: nil} ->
+      %{time_period: nil} ->
         {:existing, topic}
 
-      %Topic{time_period: _found} = with_period ->
+      %{time_period: _found} = with_period ->
         {:has_time_period, with_period}
     end
   end

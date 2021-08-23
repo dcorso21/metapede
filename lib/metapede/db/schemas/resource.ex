@@ -18,6 +18,13 @@ defmodule Metapede.Db.Schemas.Resource do
   def get_res_schema(%{"res_type" => res_type}), do: Map.get(@res_types, res_type)
   def get_res_schema(resource), do: Map.get(@res_types, resource.res_type)
 
+  def unload_reference(res) do
+    res
+    |> pair_resource_schema
+    |> unload
+    |> save_reference
+  end
+
   def create_references(model) do
     updated_resources =
       model.resources
@@ -39,8 +46,8 @@ defmodule Metapede.Db.Schemas.Resource do
 
   defp unload({schema, resource}), do: {schema.unload(resource.info), resource}
 
-
   def save_reference({nil, resource}), do: resource
+
   def save_reference({id, resource}, ref_name \\ :res_id, drop_name \\ :info) do
     resource
     |> Map.put(ref_name, id)
