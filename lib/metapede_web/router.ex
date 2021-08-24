@@ -16,15 +16,13 @@ defmodule MetapedeWeb.Router do
 
   scope "/api", MetapedeWeb do
     pipe_through :api
-
-    resources "/project", Controllers.ProjectController, except: [:index, :edit, :new]
   end
 
   scope "/", MetapedeWeb do
     pipe_through :browser
 
-    live "/projects", ProjectsLive.Index, :main
-    live "/projects/show/:id", ProjectsLive.Show, :main
+    live "/archives", ArchivesLive.Index, :main
+    live "/archives/show/:id", ArchivesLive.Show, :main
 
     live "/time_periods", TimePeriodLive.Index, :main
     live "/time_periods/search", TimePeriodLive.Index, :search

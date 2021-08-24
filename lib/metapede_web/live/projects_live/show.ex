@@ -1,31 +1,30 @@
-defmodule MetapedeWeb.ProjectsLive.Show do
+defmodule MetapedeWeb.ArchivesLive.Show do
   use MetapedeWeb, :live_view
   alias Metapede.Db.Schemas.Archive
-  alias Metapede.Db.Schemas.Topic
 
   def handle_params(params, _url, socket) do
-    tp = Topic.find_one_by(%{title: params["id"]})
+    archive =
+      params["id"]
+      |> Archive.get_by_id()
+      |> Archive.load()
 
-    pr =
-     Archive.find_one_by(%{topic_id: tp["_id"]})
-      |>Archive.load()
-
-    {:noreply, socket |> assign(project: pr)}
+    {:noreply, socket |> assign(archive: archive)}
   end
 
   def render(assigns) do
     ~L"""
-    <img src="<%= @project["topic"]["thumbnail"] %>">
-    <h1><%= @project["topic"]["title"] %></h1>
+    <img src="<%= @archive["topic"]["thumbnail"] %>">
+    <h1><%= @archive["topic"]["title"] %></h1>
     <div>
-    <%= inspect @project %>
+    <%= inspect @archive %>
     </div>
 
-    <%= for resource <- @project["resources"] do %>
-      <%= live_component MetapedeWeb.LiveComponents.ResourceComponent,
-          resource: resource,
-          id: resource["_id"] %>
-    <% end %>
     """
   end
+
+  # <%= for resource <- @project["resources"] do %>
+  #   <%= live_component MetapedeWeb.LiveComponents.ResourceComponent,
+  #       resource: resource,
+  #       id: resource["_id"] %>
+  # <% end %>
 end
