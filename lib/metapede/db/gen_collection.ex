@@ -1,5 +1,8 @@
 defmodule Metapede.Db.GenCollection do
-  defmacro __using__(collection_name: collection_name, prefix: prefix) do
+  defmacro __using__(
+             collection_name: collection_name,
+             prefix: prefix
+           ) do
     quote do
       @repo :mongo
       @collection unquote(collection_name)
@@ -16,6 +19,8 @@ defmodule Metapede.Db.GenCollection do
       def find_one_by(filter, opts \\ []), do: Mongo.find_one(@repo, @collection, filter, opts)
       def load(id, _resource \\ nil), do: get_by_id(id)
       def unload(schema), do: upsert(schema) |> Map.get("_id")
+      def load_all(schemas), do: Enum.map(schemas, &load/1)
+      def unload_all(schemas), do: Enum.map(schemas, &unload/1)
 
       def update(attrs) do
         Mongo.update_one(@repo, @collection, %{_id: attrs["_id"]}, attrs)

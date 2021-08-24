@@ -2,6 +2,7 @@ defmodule Metapede.Db.Schemas.Archive do
   use Metapede.Db.GenCollection, collection_name: "archives", prefix: "arc"
   alias Metapede.Db.Schemas.Topic
   alias Metapede.Db.Schemas.TimePeriod
+  alias Metapede.Db.Schemas.Event
 
   defstruct(
     resource_type: "",
@@ -12,10 +13,8 @@ defmodule Metapede.Db.Schemas.Archive do
   @res_types %{
     "time_period" => TimePeriod,
     "topic" => Topic,
-    "event" => GenericResource
+    "event" => Event
   }
-
-  def load_all(archives), do: Enum.map(archives, &load/1)
 
   def load(archive) do
     archive
@@ -29,7 +28,7 @@ defmodule Metapede.Db.Schemas.Archive do
     |> unload_schema()
   end
 
-  defp pair_schema(%{"resource_type" => at} = archive), do: {@res_types[at], archive}
+  defp pair_schema(%{"resource_type" => type} = archive), do: {@res_types[type], archive}
 
   defp unload_schema({schema, archive}) do
     id = schema.unload(archive["data"])

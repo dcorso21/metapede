@@ -1,7 +1,10 @@
 defmodule Metapede.Db.Schemas.Topic do
   @collection_name "topics"
-  use Metapede.Db.GenCollection, collection_name: @collection_name, prefix: "tpc"
-  alias Metapede.Db.Schemas.Resource
+
+  use Metapede.Db.GenCollection,
+    collection_name: @collection_name,
+    prefix: "tpc"
+
   alias Metapede.WikiConnect
 
   defstruct(
@@ -20,8 +23,11 @@ defmodule Metapede.Db.Schemas.Topic do
     |> unload_topic()
   end
 
-  def unload_topic(parent),
-    do: Resource.save_reference({unload(parent["topic"]), parent}, "topic_id", "topic")
+  def unload_topic(parent) do
+    parent
+    |> Map.put("topic_id", unload(parent["topic"]))
+    |> Map.drop(["topic"])
+  end
 
   defp transform_wiki_data(data) do
     data

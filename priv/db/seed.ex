@@ -25,6 +25,13 @@ archives = [
           ]
         }
       },
+      %{
+        "resource_type" => "event",
+        "data" => %{
+          "topic_seed" => "Biden",
+          "datetime" => "-0200",
+        }
+      },
 ]
 
 archives
