@@ -1,31 +1,26 @@
 defmodule MetapedeWeb.ProjectsLive.Index do
   use MetapedeWeb, :live_view
   alias Metapede.Db.Schemas.Archive
-  alias Metapede.Db.Schemas.Topic
 
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(projects: load_projects())}
-  end
-
-  def handle_params(_params, _url, socket) do
-    {:noreply, socket}
+     |> assign(archives: load_projects())}
   end
 
   def render(assigns) do
     ~L"""
     <h1>Projects</h1>
     <div>
-      <%= for project <- @projects do %>
-        <%= live_component MetapedeWeb.LiveComponents.ProjectComponent, project: project, id: project["_id"] %>
-      <% end %>
+    <%= for archive <- @archives do %>
+        <%= live_component MetapedeWeb.LiveComponents.ArchiveComponent, project: archive, id: archive["_id"] %>
+    <% end %>
     </div>
     """
   end
 
   defp load_projects() do
-   Archive.get_all()
-    |> Enum.map(&Topic.load_topic/1)
+    Archive.get_all()
+    |> Enum.map(&Archive.load/1)
   end
 end

@@ -33,8 +33,8 @@ defmodule Metapede.Db.Schemas.TimePeriod do
   end
 
   defp unload_sub_time_periods(tps), do: Enum.map(tps, &unload/1)
-  defp load_sub_periods(sub_time_periods, depth) when depth === 0, do: sub_time_periods
 
+  defp load_sub_periods(sub_time_periods, depth) when depth === 0, do: sub_time_periods
   defp load_sub_periods(sub_time_periods, depth),
     do: Enum.map(sub_time_periods, &load(&1, &1, depth - 1))
 end
