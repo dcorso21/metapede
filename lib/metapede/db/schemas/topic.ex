@@ -3,7 +3,8 @@ defmodule Metapede.Db.Schemas.Topic do
 
   use Metapede.Db.GenCollection,
     collection_name: @collection_name,
-    prefix: "tpc"
+    prefix: "tpc",
+    has_topic: true
 
   alias Metapede.WikiConnect
 

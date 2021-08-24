@@ -1,5 +1,9 @@
 defmodule Metapede.Db.Schemas.Archive do
-  use Metapede.Db.GenCollection, collection_name: "archives", prefix: "arc"
+  use Metapede.Db.GenCollection,
+    collection_name: "archives",
+    prefix: "arc",
+    has_topic: false
+
   alias Metapede.Db.Schemas.Topic
   alias Metapede.Db.Schemas.TimePeriod
   alias Metapede.Db.Schemas.Event

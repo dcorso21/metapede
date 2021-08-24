@@ -1,5 +1,5 @@
 defmodule Metapede.Db.Schemas.TimePeriod do
-  use Metapede.Db.GenCollection, collection_name: "time_periods", prefix: "tpd"
+  use Metapede.Db.GenCollection, collection_name: "time_periods", prefix: "tpd", has_topic: true
   alias Metapede.Db.Schemas.Topic
 
   defstruct(
@@ -33,6 +33,7 @@ defmodule Metapede.Db.Schemas.TimePeriod do
   end
 
   defp load_sub_periods(sub_time_periods, depth) when depth === 0, do: sub_time_periods
+
   defp load_sub_periods(sub_time_periods, depth),
     do: Enum.map(sub_time_periods, &load(&1, &1, depth - 1))
 end
