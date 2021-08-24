@@ -1,5 +1,9 @@
 defmodule Metapede.Db.Schemas.TimePeriod do
-  use Metapede.Db.GenCollection, collection_name: "time_periods", prefix: "tpd", has_topic: true
+  use Metapede.Db.GenCollection,
+    collection_name: "time_periods",
+    prefix: "tpd",
+    has_topic: true
+
   alias Metapede.Db.Schemas.Topic
 
   defstruct(

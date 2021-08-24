@@ -1,4 +1,6 @@
 defmodule Metapede.Db.GenCollection do
+  alias Metapede.Db.Schemas.Topic
+
   defmacro __using__(
              collection_name: collection_name,
              prefix: prefix,
@@ -8,7 +10,6 @@ defmodule Metapede.Db.GenCollection do
       @repo :mongo
       @collection unquote(collection_name)
       @prefix unquote(prefix)
-      # @has_topic unquote(has_topic)
 
       def create(attrs) do
         with_id = Map.put(attrs, "_id", gen_unique_id())
@@ -57,17 +58,27 @@ defmodule Metapede.Db.GenCollection do
     end
   end
 
-  def with_topic_loaders() do
+  def no_topic_loaders() do
     quote do
       def load(id, _resource \\ nil), do: get_by_id(id)
       def unload(schema), do: upsert(schema) |> Map.get("_id")
     end
   end
 
-  def no_topic_loaders() do
+  def with_topic_loaders() do
     quote do
-      def load(id, _resource \\ nil), do: get_by_id(id)
-      def unload(schema), do: upsert(schema) |> Map.get("_id")
+      def load(id, _resource \\ nil) do
+        id
+        |> get_by_id()
+        |> Topic.load_topic()
+      end
+
+      def unload(schema) do
+        schema
+        |> Topic.unload_topic()
+        |> upsert()
+        |> Map.get("_id")
+      end
     end
   end
 end
