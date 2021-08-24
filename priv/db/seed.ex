@@ -1,12 +1,5 @@
 alias Metapede.Db.Schemas.Archive
 
-# top = %{
-#   "title" => "Socrates",
-#   "description" =>  "First Philosopher",
-#   "thumbnail" => "456",
-#   "page_id" => "123"
-# }
-
 archives = [
 
       %{
@@ -28,7 +21,7 @@ archives = [
       %{
         "resource_type" => "event",
         "data" => %{
-          "topic_seed" => "Biden",
+          "topic_seed" => "John Lennon",
           "datetime" => "-0200",
         }
       },

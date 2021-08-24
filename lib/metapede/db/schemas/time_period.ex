@@ -17,13 +17,9 @@ defmodule Metapede.Db.Schemas.TimePeriod do
   def validate(attr), do: attr
 
   def unload(time_period) do
-    updated =
-      Topic.unload_topic(time_period)
-      |> Map.update("sub_time_periods", [], fn tps ->
-        Enum.map(tps, &unload/1)
-      end)
-
-    updated
+    time_period
+    |> Topic.unload_topic()
+    |> Map.update("sub_time_periods", [], &unload_sub_time_periods/1)
     |> upsert()
     |> Map.get("_id")
   end
@@ -36,6 +32,7 @@ defmodule Metapede.Db.Schemas.TimePeriod do
     |> Map.update("sub_time_periods", [], &load_sub_periods(&1, depth))
   end
 
+  defp unload_sub_time_periods(tps), do: Enum.map(tps, &unload/1)
   defp load_sub_periods(sub_time_periods, depth) when depth === 0, do: sub_time_periods
 
   defp load_sub_periods(sub_time_periods, depth),
