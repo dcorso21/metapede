@@ -10,7 +10,7 @@ defmodule MetapedeWeb.LiveComponents.Resources.EventComponent do
 
   def render(assigns) do
     ~L"""
-    <div>Hello</div>
+    <div>Event Component Placeholder</div>
     """
   end
 end

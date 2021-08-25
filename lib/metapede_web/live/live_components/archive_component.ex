@@ -19,14 +19,12 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
 
   def render(assigns) do
     ~L"""
-
-
     <div class="res_type <%= @res_type %>">
     <%= @res_type %>
     </div>
 
     <%= live_redirect to: Routes.archives_show_path(@socket, :main, @archive["_id"]) do %>
-    <div>click me</div>
+    <div>go to page</div>
     <% end %>
 
       <img src="<%= @topic["thumbnail"] %>">

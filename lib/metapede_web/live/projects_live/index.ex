@@ -6,7 +6,7 @@ defmodule MetapedeWeb.ArchivesLive.Index do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(archives: load_archives())}
+     |> assign(archives: get_archives())}
   end
 
   def render(assigns) do
@@ -20,8 +20,5 @@ defmodule MetapedeWeb.ArchivesLive.Index do
     """
   end
 
-  defp load_archives() do
-    Archive.get_all()
-    |> Enum.map(&Archive.load/1)
-  end
+  defp get_archives(), do: Archive.get_all() |> Enum.map(&Archive.load/1)
 end
