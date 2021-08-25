@@ -21,7 +21,7 @@ function handleMouseOver(e:Event, per:TimePeriod) {
 }
 
 
-function handleMouseOut(e:Event, per:TimePeriod) {
+function handleMouseOut(e:Event) {
 	if (isHoverElement(e)) return;
 	HoverInfoElement
 		.selectEl()
@@ -40,7 +40,7 @@ function isHoverElement(e:Event) {
 
 function handleClick(period:TimePeriod) {
 	HoverInfoElement.selectEl().style("opacity", "0")
-	getSubPeriodsConn().sendEvent("click_period_title", period.id);
+	getSubPeriodsConn().sendEvent("click_period_title", period._id);
 }
 
 const periodHoverElementEventHandlers = {

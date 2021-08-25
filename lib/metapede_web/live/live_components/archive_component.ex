@@ -3,18 +3,13 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
   alias MetapedeWeb.LiveComponents.Resources.TimePeriodComponent
   alias MetapedeWeb.LiveComponents.Resources.EventComponent
 
-  @component_types %{
-    "time_period" => TimePeriodComponent,
-    "event" => EventComponent
-  }
-
   def update(assigns, socket) do
     {:ok,
      socket
      |> assign(:archive, assigns.archive)
      |> assign(:topic, assigns.archive["data"]["topic"])
      |> assign(:res_type, assigns.archive["resource_type"])
-     |> assign(:component, @component_types[assigns.archive["resource_type"]])}
+     |> assign(:component, get_resource_component(assigns.archive))}
   end
 
   def render(assigns) do
@@ -39,5 +34,14 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
       <%= live_component @component, resource: @archive["data"], id: @archive["data"]["_id"] %>
 
     """
+  end
+
+  defp get_resource_component(archive) do
+    component_types = %{
+      "time_period" => TimePeriodComponent,
+      "event" => EventComponent
+    }
+
+    component_types[archive["resource_type"]]
   end
 end

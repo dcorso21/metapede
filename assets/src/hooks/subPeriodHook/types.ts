@@ -1,5 +1,5 @@
 export interface TimePeriod {
-    id: string;
+    _id: string;
     inserted_at: string;
     updated_at: string;
     start_datetime: string;
