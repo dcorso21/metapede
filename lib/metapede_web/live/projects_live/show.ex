@@ -14,7 +14,9 @@ defmodule MetapedeWeb.ArchivesLive.Show do
 
   def render(assigns) do
     ~L"""
-        <%= live_component ArchiveComponent, archive: @archive, id: @archive["_id"] %>
+    <div>
+      <%= live_component ArchiveComponent, archive: @archive, id: @archive["_id"] %>
+    </div>
     """
   end
 end
