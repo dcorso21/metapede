@@ -1,6 +1,7 @@
 defmodule MetapedeWeb.ArchivesLive.Show do
   use MetapedeWeb, :live_view
   alias Metapede.Db.Schemas.Archive
+  alias MetapedeWeb.LiveComponents.ArchiveComponent
 
   def handle_params(params, _url, socket) do
     archive =
@@ -13,18 +14,7 @@ defmodule MetapedeWeb.ArchivesLive.Show do
 
   def render(assigns) do
     ~L"""
-    <img src="<%= @archive["topic"]["thumbnail"] %>">
-    <h1><%= @archive["topic"]["title"] %></h1>
-    <div>
-    <%= inspect @archive %>
-    </div>
-
+        <%= live_component ArchiveComponent, archive: @archive, id: @archive["_id"] %>
     """
   end
-
-  # <%= for resource <- @project["resources"] do %>
-  #   <%= live_component MetapedeWeb.LiveComponents.ResourceComponent,
-  #       resource: resource,
-  #       id: resource["_id"] %>
-  # <% end %>
 end
