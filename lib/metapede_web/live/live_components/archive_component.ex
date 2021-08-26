@@ -15,6 +15,7 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
      socket
      |> assign(:archive, assigns.archive)
      |> assign(:class_name, class_name)
+     |> assign(:display_mode, assigns.display_mode)
      |> assign(:res_type, assigns.archive["resource_type"])
      |> assign(:component, get_resource_component(assigns.archive))}
   end
@@ -25,20 +26,19 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
 
       <%= live_component TopicComponent,
         topic: @archive["data"]["topic"],
-        res_type: @res_type
+        res_type: @res_type,
+        page_route: Routes.archives_show_path(@socket, :main, @archive["_id"]),
+        display_mode: @display_mode
       %>
 
-      <%= live_redirect to: Routes.archives_show_path(@socket, :main, @archive["_id"]) do %>
-        <div>go to page</div>
-      <% end %>
-
-      <button phx-click="expand_component" phx-target="<%= @myself %>">Click to Expand</button>
 
       <%= if @expand_component do %>
         <%= live_component @component,
           resource: @archive["data"],
           id: @archive["data"]["_id"] %>
       <% end %>
+
+      <div class="expand_component_button" phx-click="expand_component" phx-target="<%= @myself %>">Toggle Expand</div>
     </div>
     """
   end

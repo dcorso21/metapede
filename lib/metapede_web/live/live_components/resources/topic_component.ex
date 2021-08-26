@@ -9,11 +9,21 @@ defmodule MetapedeWeb.LiveComponents.Resources.TopicComponent do
 
       <div class="info">
         <div class="title_and_type">
-          <div class="title">
-            <%= @topic["title"] %>
-          </div>
 
-          <div class="res_type">
+        <%= if @display_mode === "page" do %>
+            <div class="title">
+              <%= @topic["title"] %>
+            </div>
+        <% else %>
+          <%= live_redirect to: @page_route do %>
+            <div class="title">
+              <%= @topic["title"] %>
+            </div>
+          <% end %>
+        <% end %>
+
+
+          <div class="res_type_tag <%= @res_type %>">
             <%= @res_type %>
           </div>
         </div>
@@ -21,7 +31,8 @@ defmodule MetapedeWeb.LiveComponents.Resources.TopicComponent do
         <div class="description">
         <%= @topic["description"] %>
         </div>
-      </div>
+        </div>
+      <i class="wiki_icon_link fab fa-wikipedia-w"></i>
     </div>
     """
   end
