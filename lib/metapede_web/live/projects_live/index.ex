@@ -14,7 +14,10 @@ defmodule MetapedeWeb.ArchivesLive.Index do
     <h1>Archives</h1>
     <div>
     <%= for archive <- @archives do %>
-        <%= live_component ArchiveComponent, archive: archive, id: archive["_id"] %>
+        <%= live_component ArchiveComponent,
+          display_mode: "embed",
+          archive: archive,
+          id: archive["_id"] %>
     <% end %>
     </div>
     """

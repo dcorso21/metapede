@@ -4,9 +4,12 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
   alias MetapedeWeb.LiveComponents.Resources.EventComponent
 
   def update(assigns, socket) do
+    className = "#{assigns.archive["resource_type"]} #{assigns.display_mode}"
+
     {:ok,
      socket
      |> assign(:archive, assigns.archive)
+     |> assign(:className, className)
      |> assign(:topic, assigns.archive["data"]["topic"])
      |> assign(:res_type, assigns.archive["resource_type"])
      |> assign(:component, get_resource_component(assigns.archive))}
@@ -14,22 +17,24 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
 
   def render(assigns) do
     ~L"""
-    <div class="res_type <%= @res_type %>">
-    <%= @res_type %>
-    </div>
-
-    <%= live_redirect to: Routes.archives_show_path(@socket, :main, @archive["_id"]) do %>
-    <div>go to page</div>
-    <% end %>
-
-      <img src="<%= @topic["thumbnail"] %>">
-
-      <div class="title">
-        <%= @topic["title"] %>
+    <div class="archive <%= @className %>">
+      <div class="res_type">
+      <%= @res_type %>
       </div>
 
-      <div class="description">
-        <%= @topic["description"] %>
+        <%= live_redirect to: Routes.archives_show_path(@socket, :main, @archive["_id"]) do %>
+        <div>go to page</div>
+        <% end %>
+
+        <img src="<%= @topic["thumbnail"] %>">
+
+        <div class="title">
+          <%= @topic["title"] %>
+        </div>
+
+        <div class="description">
+          <%= @topic["description"] %>
+        </div>
       </div>
       <%= live_component @component, resource: @archive["data"], id: @archive["data"]["_id"] %>
 

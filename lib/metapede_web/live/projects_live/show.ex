@@ -15,7 +15,10 @@ defmodule MetapedeWeb.ArchivesLive.Show do
   def render(assigns) do
     ~L"""
     <div>
-      <%= live_component ArchiveComponent, archive: @archive, id: @archive["_id"] %>
+      <%= live_component ArchiveComponent,
+        display_mode: "page",
+        archive: @archive,
+        id: @archive["_id"] %>
     </div>
     """
   end
