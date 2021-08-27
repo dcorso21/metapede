@@ -14,7 +14,13 @@ defmodule Metapede.Db.Schemas.Archive do
     data: %{}
   )
 
-  @res_types %{
+  @res_prefixes %{
+    "tpd" => "time_period",
+    "tpc" => "topic",
+    "evt" => "event"
+  }
+
+  @res_schemas %{
     "time_period" => TimePeriod,
     "topic" => Topic,
     "event" => Event
@@ -32,7 +38,7 @@ defmodule Metapede.Db.Schemas.Archive do
     |> unload_schema()
   end
 
-  defp pair_schema(%{"resource_type" => type} = archive), do: {@res_types[type], archive}
+  defp pair_schema(%{"resource_type" => type} = archive), do: {@res_schemas[type], archive}
 
   defp unload_schema({schema, archive}) do
     id = schema.unload(archive["data"])
@@ -44,5 +50,16 @@ defmodule Metapede.Db.Schemas.Archive do
 
   defp load_schema({schema, archive}) do
     Map.put(archive, "data", schema.load(archive["resource_id"]))
+  end
+
+  def get_res_name_and_schema(resource_id) do
+    prefix =
+      resource_id
+      |> String.split("_")
+      |> Enum.at(0)
+
+    IO.inspect(prefix, label: "prefix")
+    name = @res_prefixes[prefix]
+    {name, @res_schemas[name]}
   end
 end

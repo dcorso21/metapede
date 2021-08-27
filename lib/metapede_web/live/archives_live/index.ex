@@ -17,6 +17,7 @@ defmodule MetapedeWeb.ArchivesLive.Index do
         <%= live_component ArchiveComponent,
           display_mode: "embed",
           archive: archive,
+          expand_component: false,
           id: archive["_id"] %>
     <% end %>
     </div>

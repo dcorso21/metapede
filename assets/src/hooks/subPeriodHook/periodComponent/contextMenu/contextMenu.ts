@@ -25,10 +25,10 @@ function create(e:MouseEvent, _period:TimePeriod) {
         .style("top", clickY + "px")
         .call(periodContextMenuEventHandlers.enableEventHandlers)
         .call(select => {
-            options.map(o => {
+            options.map(optionName => {
                 select.append("div")
                     .attr("class", "option")
-                    .text(o)
+                    .text(optionName)
             })
         })
 }

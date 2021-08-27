@@ -39,6 +39,7 @@ function isHoverElement(e:Event) {
 
 
 function handleClick(period:TimePeriod) {
+	console.log({period});
 	HoverInfoElement.selectEl().style("opacity", "0")
 	getSubPeriodsConn().sendEvent("click_period_title", period._id);
 }

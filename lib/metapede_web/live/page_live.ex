@@ -8,8 +8,7 @@ defmodule MetapedeWeb.PageLive do
   def render(assigns) do
     ~L"""
       <h1>Welcome to Metapede</h1>
-      <div><%= live_redirect "Topics", to: Routes.topic_topics_path(@socket, :topics) %></div>
-      <div><%= live_redirect "Time Periods", to: Routes.time_period_index_path(@socket, :main) %></div>
+      <div><%= live_redirect "Archives", to: Routes.archives_index_path(@socket, :main) %></div>
     """
   end
 

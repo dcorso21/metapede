@@ -29,9 +29,12 @@ defmodule MetapedeWeb.LiveComponents.Resources.TimePeriodComponent do
   # end
 
   def handle_event("click_period_title", clicked_period_id, socket) do
+
+    IO.inspect(clicked_period_id, label: "clicked")
+
     {:noreply,
      socket
-     |> push_patch(to: Routes.time_period_show_path(socket, :main, clicked_period_id))}
+     |> push_patch(to: Routes.archives_resource_page_path(socket, :main, clicked_period_id))}
   end
 
   defp initialize_sub_periods(time_period) do

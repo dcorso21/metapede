@@ -4,16 +4,13 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
   alias MetapedeWeb.LiveComponents.Resources.EventComponent
   alias MetapedeWeb.LiveComponents.Resources.TopicComponent
 
-  def mount(socket) do
-    {:ok, socket |> assign(:expand_component, false)}
-  end
-
   def update(assigns, socket) do
     class_name = "#{assigns.archive["resource_type"]} #{assigns.display_mode}"
 
     {:ok,
      socket
      |> assign(:archive, assigns.archive)
+     |> assign(:expand_component, assigns.expand_component)
      |> assign(:class_name, class_name)
      |> assign(:display_mode, assigns.display_mode)
      |> assign(:res_type, assigns.archive["resource_type"])
@@ -31,14 +28,23 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
         display_mode: @display_mode
       %>
 
-
       <%= if @expand_component do %>
+      <div class="resource_wrap">
         <%= live_component @component,
           resource: @archive["data"],
           id: @archive["data"]["_id"] %>
+      </div>
       <% end %>
 
-      <div class="expand_component_button" phx-click="expand_component" phx-target="<%= @myself %>">Toggle Expand</div>
+      <%= if @display_mode === "embed" do %>
+        <div
+          class="expand_component_button"
+          phx-click="expand_component"
+          phx-target="<%= @myself %>"
+          >
+          Toggle Expand
+        </div>
+      <% end %>
     </div>
     """
   end

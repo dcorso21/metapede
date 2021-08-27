@@ -18,6 +18,7 @@ defmodule MetapedeWeb.ArchivesLive.Show do
       <%= live_component ArchiveComponent,
         display_mode: "page",
         archive: @archive,
+        expand_component: true,
         id: @archive["_id"] %>
     </div>
     """

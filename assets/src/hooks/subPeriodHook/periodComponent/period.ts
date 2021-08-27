@@ -18,7 +18,7 @@ function enter(
         .append("div")
         .call((select) => addAllPeriodEventListeners(select))
         .attr("class", "sub_period")
-        .attr("id", (d) => "sub_per_" + d.id)
+        .attr("id", (d) => "sub_per_" + d._id)
         .style("left", (d) => d.ml)
         .style("top", (_, i) => height * i + "px")
         .style("height", () => "0px")
