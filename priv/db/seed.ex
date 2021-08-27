@@ -6,13 +6,13 @@ archives = [
         "resource_type" => "time_period",
         "data" => %{
           "topic_seed" => "Aristotle",
-          "start_datetime" => "-0200",
-          "end_datetime" => "-0200",
+          "start_datetime" => "-000200",
+          "end_datetime" => "-000300",
           "sub_time_periods" => [
             %{
               "topic_seed" => "Plato",
-              "start_datetime" => "2000",
-              "end_datetime" => "2021",
+              "start_datetime" => "-000399",
+              "end_datetime" => "-000429",
               "sub_time_periods" => []
             }
           ]
@@ -22,7 +22,7 @@ archives = [
         "resource_type" => "event",
         "data" => %{
           "topic_seed" => "John Lennon",
-          "datetime" => "-0200",
+          "datetime" => "1941",
         }
       },
 ]
