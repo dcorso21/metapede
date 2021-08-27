@@ -21,7 +21,7 @@ function handleMouseOver(e:Event, per:TimePeriod) {
 }
 
 
-function handleMouseOut(e:Event) {
+function handleMouseOut(e:MouseEvent) {
 	if (isHoverElement(e)) return;
 	HoverInfoElement
 		.selectEl()
@@ -29,11 +29,13 @@ function handleMouseOut(e:Event) {
 }
 
 
-function isHoverElement(e:Event) {
+function isHoverElement(e:MouseEvent) {
 	const hoverInfo = HoverInfoElement.selectEl()
 	// @ts-ignore
-	const elementIsInside = hoverInfo.node().contains(e.target);
-	const isHoverInfo = hoverInfo.node() == e.target;
+	const elementIsInside = hoverInfo.node().contains(e.toElement);
+	// @ts-ignore
+	const isHoverInfo = (hoverInfo.node() == e.toElement);
+	console.log({elementIsInside, isHoverInfo});
 	return elementIsInside || isHoverInfo;
 }
 
