@@ -34,7 +34,7 @@ defmodule MetapedeWeb.LiveComponents.Resources.TimePeriodComponent do
 
     {:noreply,
      socket
-     |> push_patch(to: Routes.archives_resource_page_path(socket, :main, clicked_period_id))}
+     |> push_redirect(to: Routes.archives_resource_page_path(socket, :main, clicked_period_id))}
   end
 
   defp initialize_sub_periods(time_period) do
