@@ -37,7 +37,6 @@ function render(): void {
 }
 
 function mounted(this: any) {
-    console.log("Hello");
     HoverInfo.createBlank();
     subPeriodsConn = this;
     render();

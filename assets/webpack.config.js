@@ -1,5 +1,5 @@
 const path = require('path');
-const glob = require('glob');
+// const glob = require('glob');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -26,6 +26,9 @@ module.exports = (env, options) => {
       publicPath: '/js/'
     },
     devtool: devMode ? 'eval-cheap-module-source-map' : undefined,
+    resolve: {
+      extensions: ['.ts']
+    },
     module: {
       rules: [
         {
@@ -33,10 +36,12 @@ module.exports = (env, options) => {
           exclude: /node_modules/,
           use: [
             {
-              loader: 'babel-loader'
-            },
-            {
-              loader: 'ts-loader'
+              loader: 'ts-loader',
+              options: {
+                compilerOptions: {
+                  noEmit: false,
+                },
+              },
             }
           ]
         },

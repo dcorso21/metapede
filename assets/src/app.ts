@@ -12,15 +12,13 @@ import "../styles/app.scss";
 //     import {Socket} from "phoenix"
 //     import socket from "./socket"
 //
-console.log("variable");
-
 import "phoenix_html";
 import { Socket } from "phoenix";
 // @ts-ignore
 import topbar from "topbar";
 import { LiveSocket } from "phoenix_live_view";
-
 import Hooks from "./hooks/allHooks";
+
 
 // @ts-ignore
 let csrfToken = document
