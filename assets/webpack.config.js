@@ -17,7 +17,8 @@ module.exports = (env, options) => {
       ]
     },
     entry: {
-      'app': glob.sync('./vendor/**/*.ts').concat(['./src/app.ts'])
+      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.ts'])
+
     },
     output: {
       filename: '[name].js',
@@ -30,9 +31,10 @@ module.exports = (env, options) => {
         {
           test: /\.ts$/,
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
+          use: [
+            {
+              loader: 'babel-loader'
+            }]
         },
         {
           test: /\.[s]?css$/,
