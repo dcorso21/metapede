@@ -6,13 +6,13 @@ archives = [
         "resource_type" => "time_period",
         "data" => %{
           "topic_seed" => "Aristotle",
-          "start_datetime" => "-000200",
-          "end_datetime" => "-000300",
+          "start_datetime" => "-000300",
+          "end_datetime" => "-000200",
           "sub_time_periods" => [
             %{
               "topic_seed" => "Plato",
-              "start_datetime" => "-000399",
-              "end_datetime" => "-000429",
+              "start_datetime" => "-000499",
+              "end_datetime" => "-000329",
               "sub_time_periods" => []
             }
           ]

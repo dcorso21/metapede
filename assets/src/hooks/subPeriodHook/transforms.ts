@@ -26,7 +26,9 @@ function transform(periods: TimePeriod[]) {
             d.depth = depth;
 
             console.log({
+                startd: d.start_datetime,
                 start: d.start,
+                endd: d.end_datetime,
                 end: d.end,
             });
 
@@ -52,11 +54,13 @@ function transform(periods: TimePeriod[]) {
 
     let beginning = Math.min(...startTimes);
     let ending = Math.max(...endTimes);
-    let denom = ending - beginning;
+    let denom = Math.abs(ending - beginning);
     return flattened.map((p, i) => {
-        p.width = (p.end - p.start / denom) * 100 + "%";
-        p.ml = (p.start - beginning / denom) * 100 + "%";
+        p.width =(Math.abs(p.end - p.start) / denom) * 100 + "%";
+        p.ml = (Math.abs(p.start - beginning) / denom) * 100 + "%";
         p.sub_time_periods = countSubPeriods(flattened, p.depth, i);
+
+        console.log(p.width, p.ml, denom);
 
         return p;
     });
