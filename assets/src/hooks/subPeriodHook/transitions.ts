@@ -1,4 +1,4 @@
-import { TimePeriod } from "./types";
+// import { TimePeriod } from "./types";
 
 export function setHeight(
     selection: d3.Selection<any, unknown, any, any>,

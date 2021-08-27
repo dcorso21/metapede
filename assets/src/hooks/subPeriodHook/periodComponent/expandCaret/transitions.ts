@@ -1,21 +1,20 @@
 // @ts-check
-import * as d3 from "d3";
 
-function rotateOpen(selection) {
+function rotateOpen(selection:any) {
 	selection
 		.transition()
 		.duration(500)
 		.style("transform", "rotate(90deg)")
 }
 
-function rotateClose(selection) {
+function rotateClose(selection:any) {
 	selection
 		.transition()
 		.duration(500)
 		.style("transform", "rotate(0deg)")
 }
 
-function fadeIn(selection) {
+function fadeIn(selection:any) {
 	selection
 		.style("opacity", 0)
 		.transition()
@@ -23,13 +22,13 @@ function fadeIn(selection) {
 		.style("opacity", 1)
 }
 
-function fadeOut(selection) {
-	selection
-		.style("opacity", 1)
-		.transition()
-		.duration(200)
-		.style("opacity", 0)
-}
+// function fadeOut(selection:any) {
+// 	selection
+// 		.style("opacity", 1)
+// 		.transition()
+// 		.duration(200)
+// 		.style("opacity", 0)
+// }
 
 const expandCaretTransitions = { rotateOpen, rotateClose, fadeIn };
 

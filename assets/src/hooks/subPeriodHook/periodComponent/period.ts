@@ -22,7 +22,7 @@ function enter(
         .style("left", (d) => d.ml)
         .style("top", (_, i) => height * i + "px")
         .style("height", () => "0px")
-        .style("width", (d) => "0px")
+        .style("width", () => "0px")
         .text((d) => d.topic.title)
         .style("color", "rgba(255, 255, 255, 0.0)")
         .call(periodTransitions.enterTransition)
