@@ -20,17 +20,14 @@ import { Socket } from "phoenix";
 import topbar from "topbar";
 import { LiveSocket } from "phoenix_live_view";
 
-// import Hooks from "./hooks/allHooks";
-
-// let hooks = { Testing };
+import Hooks from "./hooks/allHooks";
 
 // @ts-ignore
 let csrfToken = document
     .querySelector("meta[name='csrf-token']")
     .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
-    // hooks: Hooks,
-    // hooks,
+    hooks: Hooks,
     params: { _csrf_token: csrfToken },
 });
 
