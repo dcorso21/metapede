@@ -16,35 +16,16 @@ defmodule MetapedeWeb.Router do
 
   scope "/api", MetapedeWeb do
     pipe_through :api
-
-    resources "/project", Controllers.ProjectController, except: [:index, :edit, :new]
   end
 
   scope "/", MetapedeWeb do
     pipe_through :browser
 
-    live "/projects", ProjectsLive.Index, :main
-    live "/projects/show/:id", ProjectsLive.Show, :main
-
-    live "/time_periods", TimePeriodLive.Index, :main
-    live "/time_periods/search", TimePeriodLive.Index, :search
-    live "/time_periods/confirm", TimePeriodLive.Index, :confirm
-
-    live "/time_periods/show/:id", TimePeriodLive.Show, :main
-    live "/time_periods/show/:id/search", TimePeriodLive.Show, :search_sub_period
-    live "/time_periods/show/:id/confirm", TimePeriodLive.Show, :confirm_sub_period
-
-    live "/topics", TopicLive.Topics, :topics
-    live "/topics/new", TopicLive.Topics, :new
-    live "/topics/:id/edit", TopicLive.Topics, :edit
-
-    live "/topics/search", TopicLive.Topics, :search
-    live "/topics/review", TopicLive.Topics, :review
-
-    live "/topics/:id", TopicLive.Show, :show
-    live "/topics/:id/search", TopicLive.Show, :search
-    live "/topics/:id/show/edit", TopicLive.Show, :edit
+    live "/archives", ArchivesLive.Index, :main
+    live "/archives/show/:id", ArchivesLive.Show, :main
+    live "/archives/resource/:id", ArchivesLive.ResourcePage, :main
     live "/", PageLive, :index
+
   end
 
   # Other scopes may use custom stacks.

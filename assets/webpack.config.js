@@ -17,7 +17,8 @@ module.exports = (env, options) => {
       ]
     },
     entry: {
-      './src/app.ts': ['./src/app.ts'].concat(glob.sync('./vendor/**/*.js'))
+      'app': glob.sync('./vendor/**/*.js').concat(['./src/app.ts'])
+
     },
     output: {
       filename: '[name].js',
@@ -25,14 +26,24 @@ module.exports = (env, options) => {
       publicPath: '/js/'
     },
     devtool: devMode ? 'eval-cheap-module-source-map' : undefined,
+    resolve: {
+      extensions: ['.ts']
+    },
     module: {
       rules: [
         {
           test: /\.ts$/,
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {
+                compilerOptions: {
+                  noEmit: false,
+                },
+              },
+            }
+          ]
         },
         {
           test: /\.[s]?css$/,

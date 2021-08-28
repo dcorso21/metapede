@@ -17,7 +17,7 @@ export default function addAllPeriodEventListeners(
 function handleClick(e: MouseEvent, period: TimePeriod) {
     e.preventDefault();
     expandCaretComponent.toggleTransition(period);
-    getSubPeriodsConn().sendEvent("click_period_body", period.id);
+    getSubPeriodsConn().sendEvent("click_period_body", period._id);
 }
 
 function handleContextMenu(e: MouseEvent, period: TimePeriod) {

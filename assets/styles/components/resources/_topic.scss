@@ -1,0 +1,48 @@
+.topic_component {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .info {
+        margin-left: 20px;
+        width: 100%;
+    }
+
+    .title_and_type {
+        display: flex;
+        align-items: center;
+
+        .title {
+            font-size: 200%;
+        }
+
+        .res_type_tag {
+            padding: 0 10px;
+            border-radius: 10px;
+            margin-left: 10px;
+            
+            &.time_period {
+                background-color: rgba(45, 228, 241, 0.356);
+            }
+            &.event {
+                background-color: rgba(212, 241, 45, 0.356);
+            }
+        }
+
+
+    }
+
+    .description {
+        border-bottom: 1px solid grey;
+    }
+    .wiki_icon_link {
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--link_color);
+        }
+    }
+}

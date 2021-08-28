@@ -8,13 +8,13 @@ function selectEl(periodId: string) {
 }
 
 function createOrPull(period: TimePeriod) {
-    let el = selectEl(period.id);
+    let el = selectEl(period._id);
     if (!el.empty()) return el;
 
     return periodComponent
-        .selectEl(period.id)
+        .selectEl(period._id)
         .append("div")
-        .attr("id", `sub_per_exp_${period.id}`)
+        .attr("id", `sub_per_exp_${period._id}`)
         .attr("class", "per_expansion");
 }
 
@@ -26,7 +26,7 @@ function update(period: TimePeriod) {
             // @ts-ignore
             .style("height", periodComponent.height * period.sub_time_periods + "px");
     } else {
-        selectEl(period.id).remove();
+        selectEl(period._id).remove();
     }
 }
 

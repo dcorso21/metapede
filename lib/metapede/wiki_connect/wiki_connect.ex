@@ -44,7 +44,8 @@ defmodule Metapede.WikiConnect do
 
     res = HTTPoison.get!(@endpoint, headers, params: query_params)
 
-    Poison.decode!(res.body)
+    res.body
+    |> Poison.decode!()
     |> transform_search_results()
   end
 

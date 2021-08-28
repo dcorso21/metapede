@@ -5,7 +5,7 @@ import expandCaretTransitions from "./transitions";
 
 function selectEl(period:TimePeriod) {
 	return periodComponent
-		.selectEl(period.id)
+		.selectEl(period._id)
 		.select(".drop_caret")
 }
 
@@ -20,7 +20,7 @@ function toggleTransition(period:TimePeriod) {
 
 function createEach(period:TimePeriod) {
 	if (period.has_sub_periods) {
-		periodComponent.selectEl(period.id)
+		periodComponent.selectEl(period._id)
 			.append("div")
 			.attr("class", "drop_caret fas fa-chevron-right")
 	}

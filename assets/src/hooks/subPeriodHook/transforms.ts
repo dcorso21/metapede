@@ -1,6 +1,3 @@
-// @ts-check
-
-import moment from "moment";
 import { TimePeriod } from "./types";
 
 const subPeriodTransforms = {
@@ -21,8 +18,8 @@ function transform(periods: TimePeriod[]) {
         depth: number
     ): TimePeriod[] {
         let with_times = periods.map((d) => {
-            d.start = moment(d.start_datetime, moment.ISO_8601).unix();
-            d.end = moment(d.end_datetime, moment.ISO_8601).unix();
+            d.start = Date.parse(d.start_datetime);
+            d.end = Date.parse(d.end_datetime);
             d.depth = depth;
 
             startTimes.push(d.start);
@@ -47,10 +44,10 @@ function transform(periods: TimePeriod[]) {
 
     let beginning = Math.min(...startTimes);
     let ending = Math.max(...endTimes);
-    let denom = moment(ending).diff(beginning);
+    let denom = Math.abs(ending - beginning);
     return flattened.map((p, i) => {
-        p.width = (moment(p.end).diff(p.start) / denom) * 100 + "%";
-        p.ml = (moment(p.start).diff(beginning) / denom) * 100 + "%";
+        p.width =(Math.abs(p.end - p.start) / denom) * 100 + "%";
+        p.ml = (Math.abs(p.start - beginning) / denom) * 100 + "%";
         p.sub_time_periods = countSubPeriods(flattened, p.depth, i);
 
         return p;
