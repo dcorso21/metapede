@@ -3,8 +3,15 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
   alias MetapedeWeb.LiveComponents.SearchFormComponent
   alias MetapedeWeb.LiveComponents.PickResourceForm
   alias MetapedeWeb.LiveComponents.MultiPartForm
+  alias MetapedeWeb.LiveComponents.TimePeriodForm
+  alias MetapedeWeb.LiveComponents.EventForm
 
   @target "#create_archive_form"
+
+  @resource_forms %{
+    "time_period" => TimePeriodForm,
+    "event" => EventForm,
+  }
 
   def mount(socket) do
     options = [
@@ -45,15 +52,25 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
 
     {:noreply,
      socket
-     |> assign(:outline_step, 1)
      |> assign(:selected_topic, params["topic"])
+     |> assign(:outline_step, 1)
      |> assign(:create_component, PickResourceForm)
      |> assign(:create_component_options, options)}
   end
 
   def handle_event("pick_resource", %{"resource" => picked}, socket) do
+    options = [
+      id: :confirm_info,
+      event_name: "confirm_info",
+      selected_topic: socket.assigns.selected_topic,
+      target: @target
+    ]
+
     {:noreply,
      socket
-     |> assign(selected_resource_type: picked)}
+     |> assign(selected_resource_type: picked)
+     |> assign(:outline_step, 2)
+     |> assign(:create_component, @resource_forms[picked])
+     |> assign(:create_component_options, options)}
   end
 end
