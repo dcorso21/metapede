@@ -25,7 +25,9 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
         topic: @archive["data"]["topic"],
         res_type: @res_type,
         page_route: Routes.archives_show_path(@socket, :main, @archive["_id"]),
-        display_mode: @display_mode
+        display_mode: @display_mode,
+        expanded: @expand_component,
+        target: @myself
       %>
 
       <%= if @expand_component do %>
@@ -34,16 +36,6 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
           resource: @archive["data"],
           id: @archive["data"]["_id"] %>
       </div>
-      <% end %>
-
-      <%= if @display_mode === "embed" do %>
-        <div
-          class="expand_component_button"
-          phx-click="expand_component"
-          phx-target="<%= @myself %>"
-          >
-          Toggle Expand
-        </div>
       <% end %>
     </div>
     """

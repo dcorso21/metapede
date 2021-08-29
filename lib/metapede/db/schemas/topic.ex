@@ -30,7 +30,7 @@ defmodule Metapede.Db.Schemas.Topic do
     |> Map.drop(["topic"])
   end
 
-  defp transform_wiki_data(data) do
+  def transform_wiki_data(data) do
     data
     |> Map.take(["title", "description", "thumbnail"])
     |> Map.put("page_id", data["pageid"])

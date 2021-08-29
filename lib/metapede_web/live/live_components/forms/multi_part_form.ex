@@ -1,11 +1,6 @@
 defmodule MetapedeWeb.LiveComponents.MultiPartForm do
   use MetapedeWeb, :live_component
 
-  def mount(socket) do
-    IO.inspect(socket, label: "The Best")
-    {:ok, socket}
-  end
-
   def render(assigns) do
     ~L"""
     <div class="multi_part_form">

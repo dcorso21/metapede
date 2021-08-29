@@ -13,7 +13,6 @@ defmodule MetapedeWeb.LiveComponents.EventForm do
       <%= form_for :confirm_resource,
         "#",
         [
-          phx_change: "change",
           phx_submit: @event_name,
           autocomplete: "off",
           phx_target: @target
@@ -23,6 +22,7 @@ defmodule MetapedeWeb.LiveComponents.EventForm do
           <label for="datetime">Datetime</label>
           <input type="text" name="datetime"/>
         </div>
+        <%= submit "Create Archive" %>
       <% end %>
     """
   end

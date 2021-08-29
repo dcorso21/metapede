@@ -13,7 +13,6 @@ defmodule MetapedeWeb.LiveComponents.TimePeriodForm do
       <%= form_for :confirm_resource,
         "#",
         [
-          phx_change: "change",
           phx_submit: @event_name,
           autocomplete: "off",
           phx_target: @target
@@ -27,6 +26,7 @@ defmodule MetapedeWeb.LiveComponents.TimePeriodForm do
           <label for="end_datetime">End Datetime</label>
           <input type="text" name="end_datetime"/>
         </div>
+        <%= submit "Create Archive" %>
       <% end %>
     """
   end

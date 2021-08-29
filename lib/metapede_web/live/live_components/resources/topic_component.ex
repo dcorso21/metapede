@@ -26,6 +26,16 @@ defmodule MetapedeWeb.LiveComponents.Resources.TopicComponent do
           <div class="res_type_tag <%= @res_type %>">
             <%= @res_type %>
           </div>
+          <div class="icon_tray">
+            <i class="fab fa-wikipedia-w"></i>
+            <%= if @display_mode === "embed" do %>
+              <%= if @expanded do %>
+                <i phx-target="<%= @target %>" phx-click="expand_component" class="fas fa-compress"></i>
+              <% else %>
+                <i phx-target="<%= @target %>" phx-click="expand_component" class="fas fa-expand"></i>
+              <% end %>
+            <% end %>
+          </div>
         </div>
 
         <div class="description">

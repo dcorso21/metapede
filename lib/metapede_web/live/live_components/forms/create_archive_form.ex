@@ -1,5 +1,7 @@
 defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
   use MetapedeWeb, :live_component
+  alias Metapede.Db.Schemas.Archive
+  alias Metapede.Db.Schemas.Topic
   alias MetapedeWeb.LiveComponents.SearchFormComponent
   alias MetapedeWeb.LiveComponents.PickResourceForm
   alias MetapedeWeb.LiveComponents.MultiPartForm
@@ -10,7 +12,7 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
 
   @resource_forms %{
     "time_period" => TimePeriodForm,
-    "event" => EventForm,
+    "event" => EventForm
   }
 
   def mount(socket) do
@@ -43,16 +45,21 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
   end
 
   def handle_event("new_archive_topic", params, socket) do
+    topic =
+      params["topic"]
+      |> Poison.decode!()
+      |> Topic.transform_wiki_data()
+
     options = [
       id: :pick_resource,
       event_name: "pick_resource",
-      selected_topic: params["topic"],
+      selected_topic: topic,
       target: @target
     ]
 
     {:noreply,
      socket
-     |> assign(:selected_topic, params["topic"])
+     |> assign(:selected_topic, topic)
      |> assign(:outline_step, 1)
      |> assign(:create_component, PickResourceForm)
      |> assign(:create_component_options, options)}
@@ -61,7 +68,7 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
   def handle_event("pick_resource", %{"resource" => picked}, socket) do
     options = [
       id: :confirm_info,
-      event_name: "confirm_info",
+      event_name: "create_archive",
       selected_topic: socket.assigns.selected_topic,
       target: @target
     ]
@@ -72,5 +79,22 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
      |> assign(:outline_step, 2)
      |> assign(:create_component, @resource_forms[picked])
      |> assign(:create_component_options, options)}
+  end
+
+  def handle_event("create_archive", params, socket) do
+    data =
+      params
+      |> Map.drop(["_csrf_token"])
+      |> Map.put("topic", socket.assigns.selected_topic)
+
+    Archive.submit(%{
+      "resource_type" => socket.assigns.selected_resource_type,
+      "data" => data
+    })
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "Archive Created!")
+     |> push_patch(to: Routes.archives_index_path(socket, :main))}
   end
 end
