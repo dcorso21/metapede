@@ -37,6 +37,8 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
           id: @archive["data"]["_id"] %>
       </div>
       <% end %>
+
+      <i class="archive_context_menu fas fa-ellipsis-h"></i>
     </div>
     """
   end

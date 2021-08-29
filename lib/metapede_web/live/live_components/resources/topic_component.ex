@@ -42,7 +42,6 @@ defmodule MetapedeWeb.LiveComponents.Resources.TopicComponent do
         <%= @topic["description"] %>
         </div>
         </div>
-      <i class="wiki_icon_link fab fa-wikipedia-w"></i>
     </div>
     """
   end
