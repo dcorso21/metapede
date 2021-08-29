@@ -2,10 +2,10 @@ defmodule MetapedeWeb.LiveComponents.WikiTopicComponent do
   use MetapedeWeb, :live_component
 
   def render(assigns) do
+    # phx-target="<%= @target %>"
     ~L"""
     <div
       phx-click="<%= @event_name %>"
-      phx-target="<%= @target %>"
       phx-value-topic = "<%= Poison.encode!(@topic) %>"
       id="<%= @topic["pageid"] %>"
     >
