@@ -3,6 +3,7 @@ defmodule MetapedeWeb.ArchivesLive.Index do
   alias Metapede.Db.Schemas.Archive
   alias MetapedeWeb.LiveComponents.ArchiveComponent
   alias MetapedeWeb.LiveComponents.CreateArchiveForm
+  alias MetapedeWeb.LiveComponents.Common.RightWikiPanel
 
   def handle_params(params, _url, socket) do
     {:noreply, socket |> assign(archives: get_archives())}
@@ -12,6 +13,7 @@ defmodule MetapedeWeb.ArchivesLive.Index do
     ~L"""
     <h1>Archives</h1>
     <%= live_patch to: Routes.archives_index_path(@socket, :create) do %>
+    Create New
     <i class="fas fa-plus"></i>
     <% end %>
 
@@ -28,6 +30,11 @@ defmodule MetapedeWeb.ArchivesLive.Index do
           expand_component: false,
           id: archive["_id"] %>
     <% end %>
+
+    <%= live_component RightWikiPanel,
+        id: :right_panel,
+        page_id: nil
+         %>
     """
   end
 

@@ -1,16 +1,13 @@
 import * as d3 from "d3";
+import rightWikiPanelHook from "../rightWikiPanelHook";
 import infoPanelTransitions from "./transitions";
-
-let currentPageId: string | null;
-let selectedPageId: string | null;
-let pageInfo: string | null;
 
 function selectEl() {
     return d3.select("#infoPanel");
 }
 
 function create() {
-    d3.select(".container")
+    d3.select("body")
         .append("div")
         .attr("id", "infoPanel")
         .style("width", "40%")
@@ -26,25 +23,31 @@ function toggleVisibility() {
     console.log({ isOpen, wasOpen });
     window.localStorage.setItem("rightWikiPanelOpen", updatedVal);
 
-    d3.select("#left_info")
+    d3.select(".container")
         .call(() => {
-            if (!isOpen) {
-                hide();
-            }
+            if (!isOpen) hide();
         })
         .transition()
         .duration(200)
         .ease(d3.easeCircle)
         .style("width", isOpen ? "60%" : "100%")
         .on("end", () => {
-            if (isOpen) {
-                show();
-            }
+            if (isOpen) show();
         });
 }
 
 function show() {
-    selectEl().call(setHTML).call(infoPanelTransitions.fadeIn);
+    d3.select(".container")
+        .transition()
+        .duration(200)
+        .ease(d3.easeCircle)
+        .style("width", "55%")
+        .style("margin", "2.5%");
+
+
+    selectEl()
+    
+    .call(setHTML).call(infoPanelTransitions.fadeIn);
 }
 
 function hide() {
@@ -52,13 +55,11 @@ function hide() {
 }
 
 async function setHTML() {
-    selectedPageId = window.sessionStorage.getItem("selectedPageId");
-
-    if (!pageInfo || currentPageId != selectedPageId) {
-        pageInfo = await getPageHTML(selectedPageId);
-        currentPageId = selectedPageId;
-        selectEl().html(pageInfo);
-    }
+    let el = selectEl();
+    el.html("Loading...");
+    let pageId = rightWikiPanelHook.getConn().el.dataset.page_id;
+    let pageInfo = await getPageHTML(pageId);
+    el.html(pageInfo)
 }
 
 async function getPageHTML(pageId: string | null) {
@@ -83,6 +84,8 @@ const infoPanel = {
     selectEl,
     create,
     toggleVisibility,
+    show,
+    hide
 };
 
 export default infoPanel;

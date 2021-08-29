@@ -27,7 +27,11 @@ defmodule MetapedeWeb.LiveComponents.Resources.TopicComponent do
             <%= @res_type %>
           </div>
           <div class="icon_tray">
-            <i class="fab fa-wikipedia-w"></i>
+            <i
+              phx-click="change_page_id"
+              phx-target="#right_panel_wrap"
+              phx-value-page_id="<%= @topic["page_id"] %>"
+              class="fab fa-wikipedia-w"></i>
             <%= if @display_mode === "embed" do %>
               <%= if @expanded do %>
                 <i phx-target="<%= @target %>" phx-click="expand_component" class="fas fa-compress"></i>

@@ -1,7 +1,5 @@
-// @ts-check
-
 import infoPanel from "./infoPanel/infoPanel";
-import toggleButton from "./toggleButton/toggleButton";
+// import toggleButton from "./toggleButton/toggleButton";
 
 let rightWikiPanelConn:any;
 
@@ -15,24 +13,24 @@ function getConn() {
 }
 
 function initAllElements() {
-	toggleButton.create();
 	infoPanel.create();
 }
 
-function initState() {
-	window.sessionStorage.setItem("open", "false");
+function setPageId() {
 	window.sessionStorage.setItem("selectedPageId", rightWikiPanelConn.el.dataset.page_id);
 }
 
 function mounted(this:any) {
 	rightWikiPanelConn = this;
 	initAllElements();
-	initState();
+	setPageId();
 	console.log("side panel mounted");
 }
 
 function updated(this:any) {
 	rightWikiPanelConn = this;
+	setPageId()
+	infoPanel.show();
 }
 
 const rightWikiPanelHook = {
