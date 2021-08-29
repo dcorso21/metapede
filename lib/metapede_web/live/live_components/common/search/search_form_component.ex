@@ -42,6 +42,7 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
         <%= for w_topic <- @wiki_info do %>
           <%= live_component WikiTopicComponent,
             topic: w_topic,
+            target: @target,
             event_name: @event_name
           %>
         <% end %>

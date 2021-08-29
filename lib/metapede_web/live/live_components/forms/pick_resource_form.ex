@@ -22,8 +22,13 @@ defmodule MetapedeWeb.LiveComponents.PickResourceForm do
     ~L"""
     <h1>Pick Resource</h1>
     <%= for resource <- @resources do %>
-      <div>
-        <div><%= resource.display_name %></div>
+      <div class="resource_option"
+          phx-click="<%= @event_name %>"
+          phx-target="<%= @target %>"
+          phx-value-resource = "<%= resource.value %>"
+      >
+        <div class="name"><%= resource.display_name %></div>
+        <div class="description"><%= resource.description %></div>
       </div>
     <% end %>
     """

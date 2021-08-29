@@ -14,7 +14,7 @@ defmodule MetapedeWeb.LiveComponents.MultiPartForm do
         <div class="outline">
         <ol>
           <%= for { item, index } <- Enum.with_index(@outline_items) do %>
-            <%= if index === 2 do %>
+            <%= if index === @outline_step do %>
               <li class="outline_item selected %>">
                 <%= item %>
               </li>
