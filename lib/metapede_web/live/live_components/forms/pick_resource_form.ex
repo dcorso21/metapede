@@ -20,17 +20,21 @@ defmodule MetapedeWeb.LiveComponents.PickResourceForm do
 
   def render(assigns) do
     ~L"""
-    <h1>Pick Resource</h1>
-    <%= for resource <- @resources do %>
-      <div class="resource_option"
-          phx-click="<%= @event_name %>"
-          phx-target="<%= @target %>"
-          phx-value-resource = "<%= resource.value %>"
-      >
-        <div class="name"><%= resource.display_name %></div>
-        <div class="description"><%= resource.description %></div>
+    <div class="pick_resource_form">
+      <h1 class="sub_form_title"><%= @form_title %></h1>
+      <div class="resource_options">
+      <%= for resource <- @resources do %>
+        <div class="resource_option"
+            phx-click="<%= @event_name %>"
+            phx-target="<%= @target %>"
+            phx-value-resource = "<%= resource.value %>"
+        >
+          <div class="name"><%= resource.display_name %></div>
+          <div class="description"><%= resource.description %></div>
+        </div>
+      <% end %>
       </div>
-    <% end %>
+    </div>
     """
   end
 end

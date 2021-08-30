@@ -21,7 +21,7 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
   def render(assigns) do
     ~L"""
     <div id="form_wrapper">
-      <h1>Search</h1>
+    <h1 class="search_title"><%= @search_title %></h1>
 
       <%# Input Form %>
       <%= form_for :my_form,
@@ -33,9 +33,7 @@ defmodule MetapedeWeb.LiveComponents.SearchFormComponent do
           phx_target: @myself
         ],
         fn f -> %>
-        <div id="form_elements">
           <%= search_input f, :query, [id: "wiki_search_input"]%>
-        </div>
       <% end %>
 
       <%= if length(@wiki_info) > 0 do %>

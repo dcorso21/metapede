@@ -15,16 +15,20 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
     "event" => EventForm
   }
 
+  @outline_items ["Pick Topic", "Select Resource Type", "Confirm Info"]
+
   def mount(socket) do
     options = [
       event_name: "new_archive_topic",
       id: :search_form,
+      search_title: Enum.at(@outline_items, 0),
       target: @target
     ]
 
     {:ok,
      socket
      |> assign(outline_step: 0)
+     |> assign(outline_items: @outline_items)
      |> assign(create_component: SearchFormComponent)
      |> assign(create_component_options: options)}
   end
@@ -35,7 +39,7 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
       <%= live_component MultiPartForm,
         id: :create_archive_form,
         form_name: "Create Archive",
-        outline_items: ["Pick Topic", "Select Resource Type", "Confirm Info"],
+        outline_items: @outline_items,
         outline_step: @outline_step,
         component: @create_component,
         component_options: @create_component_options
@@ -54,6 +58,7 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
       id: :pick_resource,
       event_name: "pick_resource",
       selected_topic: topic,
+      form_title: Enum.at(@outline_items, 1),
       target: @target
     ]
 
