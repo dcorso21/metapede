@@ -14,7 +14,10 @@ defmodule MetapedeWeb.LiveComponents.Common.RightWikiPanel do
   end
 
   def handle_event("change_page_id", %{"page_id" => page_id}, socket) do
-    # IO.inspect(page_id, label: "page_id")
-    {:noreply, socket |> assign(:page_id, page_id)}
+    {:noreply,
+     socket
+     |> assign(:page_id, page_id)
+     |> push_event("ensure_open", %{page_id: page_id})
+    }
   end
 end

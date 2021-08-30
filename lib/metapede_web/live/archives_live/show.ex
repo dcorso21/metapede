@@ -2,6 +2,7 @@ defmodule MetapedeWeb.ArchivesLive.Show do
   use MetapedeWeb, :live_view
   alias Metapede.Db.Schemas.Archive
   alias MetapedeWeb.LiveComponents.ArchiveComponent
+  alias MetapedeWeb.LiveComponents.Common.RightWikiPanel
 
   def handle_params(params, _url, socket) do
     archive =
@@ -21,6 +22,11 @@ defmodule MetapedeWeb.ArchivesLive.Show do
         expand_component: true,
         id: @archive["_id"] %>
     </div>
+
+    <%= live_component RightWikiPanel,
+    id: :right_panel,
+    page_id: @archive["data"]["topic"]["page_id"]
+    %>
     """
   end
 end

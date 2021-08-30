@@ -2,6 +2,9 @@ import * as d3 from "d3";
 import rightWikiPanelHook from "../rightWikiPanelHook";
 import infoPanelTransitions from "./transitions";
 
+let openState: boolean = false;
+let currentPageId: string = "";
+
 function selectEl() {
     return d3.select("#infoPanel");
 }
@@ -44,22 +47,28 @@ function show() {
         .style("width", "55%")
         .style("margin", "2.5%");
 
-
-    selectEl()
-    
-    .call(setHTML).call(infoPanelTransitions.fadeIn);
+    selectEl().call(setHTML).call(infoPanelTransitions.fadeIn);
+    openState = !openState;
 }
 
 function hide() {
     selectEl().call(infoPanelTransitions.fadeOut);
 }
 
+function isOpen() {
+    return openState;
+}
+
 async function setHTML() {
-    let el = selectEl();
-    el.html("Loading...");
-    let pageId = rightWikiPanelHook.getConn().el.dataset.page_id;
-    let pageInfo = await getPageHTML(pageId);
-    el.html(pageInfo)
+    let pageId = rightWikiPanelHook.getConn().getVar("page_id");
+    console.log({pageId, currentPageId});
+    if(pageId !== currentPageId) {
+        let el = selectEl();
+        el.html("Loading...");
+        let pageInfo = await getPageHTML(pageId);
+        el.html(pageInfo);
+        currentPageId = pageId;
+    }
 }
 
 async function getPageHTML(pageId: string | null) {
@@ -85,7 +94,8 @@ const infoPanel = {
     create,
     toggleVisibility,
     show,
-    hide
+    hide,
+    isOpen,
 };
 
 export default infoPanel;
