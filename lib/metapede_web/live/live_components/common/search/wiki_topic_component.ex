@@ -2,6 +2,7 @@ defmodule MetapedeWeb.LiveComponents.WikiTopicComponent do
   use MetapedeWeb, :live_component
 
   def render(assigns) do
+    # phx-target="<%= @target %>"
     ~L"""
     <div
       phx-click="<%= @event_name %>"

@@ -10,6 +10,9 @@ defmodule MetapedeWeb.LiveComponents.Resources.TimePeriodComponent do
 
   def render(assigns) do
     ~L"""
+    <div><strong>Start: </strong> <%= @time_period["start_datetime"] %></div>
+    <div><strong>End: </strong> <%= @time_period["end_datetime"] %></div>
+
     <div
         phx-hook="subPeriodHook"
         id="sub_period_wrap"

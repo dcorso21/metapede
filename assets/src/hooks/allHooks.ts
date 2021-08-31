@@ -3,7 +3,7 @@ import subPeriodHook from "./subPeriodHook/subPeriodHook";
 
 const Hooks = {
     rightWikiPanelHook,
-    subPeriodHook,
+    subPeriodHook
 };
 
 export default Hooks;

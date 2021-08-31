@@ -1,34 +1,26 @@
-#form_wrapper {
-	position: relative;
+h1 {
+    font-size: 40px;
+}
 
-	h1 {
-		font-size: 40px;
-	}
+#search_results {
+    background-color: white;
+    position: absolute;
+    top: 110px;
+    width: 100%;
+}
 
-	#form_elements {
-		display: flex;
-	}
+#wiki_search_input {
+    width: 100%;
+    border-radius: 20px;
+    height: 30px;
+    padding: 20px;
+    outline: none;
+    background-color: grey;
+    color: white;
+    font-size: 25px;
+    border: 1px solid grey;
 
-	#search_results {
-		background-color: white;
-		position: absolute;
-		top: 110px;
-		width: 100%;
-	}
-
-	#wiki_search_input {
-		width: 90vw;
-		border-radius: 20px;
-		height: 30px;
-		padding: 20px;
-		outline: none;
-		background-color: grey;
-		color: white;
-		font-size: 25px;
-		border: 1px solid grey;
-
-		&:focus {
-			border: 1px solid rgb(255, 255, 255);
-		}
+    &:focus {
+        border: 1px solid rgb(255, 255, 255);
 	}
 }

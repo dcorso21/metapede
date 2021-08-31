@@ -1,14 +1,6 @@
 defmodule MetapedeWeb.LiveComponents.Common.RightWikiPanel do
   use MetapedeWeb, :live_component
 
-  def mount(socket) do
-    if connected?(socket) do
-      send(socket.root_pid, {:right_info_pid, self()})
-    end
-
-    {:ok, socket}
-  end
-
   def render(assigns) do
     ~L"""
     <div
@@ -19,5 +11,13 @@ defmodule MetapedeWeb.LiveComponents.Common.RightWikiPanel do
     >
     </div>
     """
+  end
+
+  def handle_event("change_page_id", %{"page_id" => page_id}, socket) do
+    {:noreply,
+     socket
+     |> assign(:page_id, page_id)
+     |> push_event("ensure_open", %{page_id: page_id})
+    }
   end
 end

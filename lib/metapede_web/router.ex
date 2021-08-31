@@ -22,6 +22,7 @@ defmodule MetapedeWeb.Router do
     pipe_through :browser
 
     live "/archives", ArchivesLive.Index, :main
+    live "/archives/create", ArchivesLive.Index, :create
     live "/archives/show/:id", ArchivesLive.Show, :main
     live "/archives/resource/:id", ArchivesLive.ResourcePage, :main
     live "/", PageLive, :index

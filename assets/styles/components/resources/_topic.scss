@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    height: 150px;
 
     .info {
         margin-left: 20px;
@@ -17,32 +18,36 @@
         }
 
         .res_type_tag {
-            padding: 0 10px;
-            border-radius: 10px;
+            padding: 5px 10px;
+            border-radius: 20px;
             margin-left: 10px;
-            
+
             &.time_period {
                 background-color: rgba(45, 228, 241, 0.356);
             }
             &.event {
-                background-color: rgba(212, 241, 45, 0.356);
+                background-color: rgb(253, 171, 76);
+                color: black;
             }
         }
 
-
+        .icon_tray {
+            margin: 0;
+            i {
+                cursor: pointer;
+                margin-left: 10px;
+                padding: 10px;
+                background-color: rgba(255, 255, 255, 0.055);
+                border-radius: 50%;
+                &:hover {
+                    color: var(--link_color);
+                }
+            }
+        }
     }
 
     .description {
-        border-bottom: 1px solid grey;
-    }
-    .wiki_icon_link {
-        position: absolute;
-        right: 0;
-        top: 0;
-        cursor: pointer;
-
-        &:hover {
-            color: var(--link_color);
-        }
+        // border-bottom: 1px solid grey;
+        font-style: italic;
     }
 }

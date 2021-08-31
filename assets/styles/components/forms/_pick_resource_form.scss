@@ -1,0 +1,32 @@
+.pick_resource_form {
+    height: 100%;
+    width: 100%;
+
+    .resource_options {
+        display: flex;
+        flex-wrap: wrap;
+
+        .resource_option {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+
+            width: 200px;
+            height: 150px;
+
+            padding: 20px;
+            background-color: var(--muted_grey);
+            border-radius: 50px;
+            cursor: pointer;
+
+            .name {
+                font-size: 140%;
+                border-bottom: 1px solid var(--main_color);
+            }
+
+            .description {
+                font-style: italic;
+            }
+        }
+    }
+}

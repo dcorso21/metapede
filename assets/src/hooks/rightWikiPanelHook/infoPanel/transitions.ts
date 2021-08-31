@@ -1,3 +1,5 @@
+import d3 from "d3";
+
 const duration = 300;
 
 function fadeIn(selection: d3.Selection<any, any, any, any>) {
