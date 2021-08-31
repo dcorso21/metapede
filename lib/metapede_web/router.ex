@@ -2,31 +2,31 @@ defmodule MetapedeWeb.Router do
   use MetapedeWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {MetapedeWeb.LayoutView, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, {MetapedeWeb.LayoutView, :root})
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/api", MetapedeWeb do
-    pipe_through :api
+    pipe_through(:api)
   end
 
   scope "/", MetapedeWeb do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    live "/archives", ArchivesLive.Index, :main
-    live "/archives/create", ArchivesLive.Index, :create
-    live "/archives/show/:id", ArchivesLive.Show, :main
-    live "/archives/resource/:id", ArchivesLive.ResourcePage, :main
-    live "/", PageLive, :index
-
+    live("/archives", ArchivesLive.Index, :main)
+    live("/archives/create", ArchivesLive.Index, :create)
+    live("/archives/create/:collection_id", ArchivesLive.Index, :create_for_collection)
+    live("/archives/show/:id", ArchivesLive.Show, :main)
+    live("/archives/resource/:id", ArchivesLive.ResourcePage, :main)
+    live("/", PageLive, :index)
   end
 
   # Other scopes may use custom stacks.
@@ -45,8 +45,8 @@ defmodule MetapedeWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
-      live_dashboard "/dashboard", metrics: MetapedeWeb.Telemetry
+      pipe_through(:browser)
+      live_dashboard("/dashboard", metrics: MetapedeWeb.Telemetry)
     end
   end
 end

@@ -5,7 +5,7 @@ defmodule MetapedeWeb.ArchivesLive.Index do
   alias MetapedeWeb.LiveComponents.CreateArchiveForm
   alias MetapedeWeb.LiveComponents.Common.RightWikiPanel
 
-  def handle_params(params, _url, socket) do
+  def handle_params(_params, _url, socket) do
     {:noreply, socket |> assign(archives: get_archives())}
   end
 
