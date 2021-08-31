@@ -11,6 +11,11 @@ defmodule MetapedeWeb.LiveComponents.PickResourceForm do
       display_name: "Event",
       description: "A resource for events",
       value: "event"
+    },
+    %{
+      display_name: "Collection",
+      description: "A group of archives",
+      value: "collection"
     }
   ]
 

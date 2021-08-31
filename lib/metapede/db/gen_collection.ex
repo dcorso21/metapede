@@ -28,11 +28,6 @@ defmodule Metapede.Db.GenCollection do
 
       def delete(id), do: Mongo.delete_one(@repo, @collection, %{"_id" => id})
 
-      def submit(attrs) do
-        update = unload(attrs)
-        upsert(update)
-      end
-
       def upsert(%{"_id" => _id} = attrs), do: update(attrs)
       def upsert(attrs), do: create(attrs)
 

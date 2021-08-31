@@ -4,6 +4,7 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
   alias MetapedeWeb.LiveComponents.Resources.TimePeriodComponent
   alias MetapedeWeb.LiveComponents.Resources.EventComponent
   alias MetapedeWeb.LiveComponents.Resources.TopicComponent
+  alias MetapedeWeb.LiveComponents.Resources.CollectionComponent
 
   def mount(socket) do
     {:ok, socket |> assign(menu_is_open: false)}
@@ -80,7 +81,8 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
   defp get_resource_component(archive) do
     component_types = %{
       "time_period" => TimePeriodComponent,
-      "event" => EventComponent
+      "event" => EventComponent,
+      "collection" => CollectionComponent,
     }
 
     component_types[archive["resource_type"]]

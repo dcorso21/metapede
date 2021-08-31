@@ -22,6 +22,9 @@
             border-radius: 20px;
             margin-left: 10px;
 
+            &.collection {
+                background-color: rgba(216, 61, 61, 0.774);
+            }
             &.time_period {
                 background-color: rgba(45, 228, 241, 0.356);
             }

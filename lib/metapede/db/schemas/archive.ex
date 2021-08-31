@@ -7,6 +7,7 @@ defmodule Metapede.Db.Schemas.Archive do
   alias Metapede.Db.Schemas.Topic
   alias Metapede.Db.Schemas.TimePeriod
   alias Metapede.Db.Schemas.Event
+  alias Metapede.Db.Schemas.Collection
 
   defstruct(
     resource_type: "",
@@ -17,13 +18,15 @@ defmodule Metapede.Db.Schemas.Archive do
   @res_prefixes %{
     "tpd" => "time_period",
     "tpc" => "topic",
-    "evt" => "event"
+    "evt" => "event",
+    "col" => "collection"
   }
 
   @res_schemas %{
     "time_period" => TimePeriod,
     "topic" => Topic,
-    "event" => Event
+    "event" => Event,
+    "collection" => Collection
   }
 
   def load(archive) do
@@ -36,6 +39,7 @@ defmodule Metapede.Db.Schemas.Archive do
     archive
     |> pair_schema()
     |> unload_schema()
+    |> upsert()
   end
 
   defp pair_schema(%{"resource_type" => type} = archive), do: {@res_schemas[type], archive}
@@ -49,6 +53,7 @@ defmodule Metapede.Db.Schemas.Archive do
   end
 
   defp load_schema({schema, archive}) do
+    IO.inspect({schema, archive}, label: "Loader")
     Map.put(archive, "data", schema.load(archive["resource_id"]))
   end
 
