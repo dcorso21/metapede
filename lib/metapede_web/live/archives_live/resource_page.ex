@@ -25,6 +25,7 @@ defmodule MetapedeWeb.ArchivesLive.ResourcePage do
         display_mode: "page",
         archive: @resource,
         expand_component: true,
+        return_to: Routes.archives_resource_page_path(@socket, :main, @id),
         id: @id %>
     </div>
     """

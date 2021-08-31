@@ -46,10 +46,20 @@ $bor_col_hover: rgb(104, 103, 103);
         cursor: pointer;
         border: 1px solid $bor_col_hover;
         border-radius: 40%;
-        
+
         &:hover {
             color: var(--link_color);
             border: 1px solid var(--link_color);
+        }
+
+        .context_menu {
+            position: absolute;
+            background-color: rgb(53, 53, 53);
+            border-radius: 10px;
+            .menu_option {
+                padding: 5px 10px;
+                width: 100px;
+            }
         }
     }
 }

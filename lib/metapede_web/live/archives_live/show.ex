@@ -20,6 +20,7 @@ defmodule MetapedeWeb.ArchivesLive.Show do
         display_mode: "page",
         archive: @archive,
         expand_component: true,
+        return_to: Routes.archives_show_path(@socket, :main, @archive["_id"]),
         id: @archive["_id"] %>
     </div>
 

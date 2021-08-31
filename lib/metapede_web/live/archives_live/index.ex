@@ -28,6 +28,7 @@ defmodule MetapedeWeb.ArchivesLive.Index do
           display_mode: "embed",
           archive: archive,
           expand_component: false,
+          return_to: Routes.archives_index_path(@socket, :main),
           id: archive["_id"] %>
     <% end %>
 
