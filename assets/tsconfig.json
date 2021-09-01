@@ -1,24 +1,55 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "jsx": "react",
-    "strict": true,
-    "strictFunctionTypes": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true
-  },
-  "include": [
-    "./src/**/*"
-  ]
+    "compilerOptions": {
+        "target": "es5",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noEmit": true,
+        "jsx": "react",
+        "strict": true,
+        "strictFunctionTypes": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        // "noImplicitReturns": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true
+    },
+    "include": [
+        "./src/**/*"
+    ]
 }
+
+
+// {
+//     "compilerOptions": {
+//         "jsx": "react",
+//         "lib": [
+//             "es6",
+//             "dom"
+//         ],
+//         "rootDir": "src",
+//         "module": "commonjs",
+//         "target": "es5",
+//         "sourceMap": true,
+//         "moduleResolution": "node",
+//         "noImplicitReturns": true,
+//         "noImplicitThis": true,
+//         "noImplicitAny": true,
+//         "strictNullChecks": true,
+//         "baseUrl": "../.",
+//         "paths": {
+
+//         }
+//     },
+//     "include": [
+//         "./src/**/*"
+//     ],
+//     "exclude": [
+//         "node_modules",
+//         "../priv/**/*"
+//     ]
+// }

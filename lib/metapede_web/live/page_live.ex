@@ -7,9 +7,9 @@ defmodule MetapedeWeb.PageLive do
 
   def render(assigns) do
     ~L"""
-      <h1>Welcome to Metapede</h1>
-      <div><%= live_redirect "Archives", to: Routes.archives_index_path(@socket, :main) %></div>
+    <h1>Welcome to Metapede</h1>
+    <div><%= live_redirect "Archives", to: Routes.archives_index_path(@socket, :main) %></div>
+    <div id="hellomeee" phx-hook="reactTestHook">Yoooo</div>
     """
   end
-
 end
