@@ -7,12 +7,14 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
   alias MetapedeWeb.LiveComponents.MultiPartForm
   alias MetapedeWeb.LiveComponents.TimePeriodForm
   alias MetapedeWeb.LiveComponents.EventForm
+  alias MetapedeWeb.LiveComponents.CollectionForm
 
   @target "#create_archive_form"
 
   @resource_forms %{
     "time_period" => TimePeriodForm,
-    "event" => EventForm
+    "event" => EventForm,
+    "collection" => CollectionForm,
   }
 
   @outline_items ["Pick Topic", "Select Resource Type", "Confirm Info"]
@@ -92,7 +94,7 @@ defmodule MetapedeWeb.LiveComponents.CreateArchiveForm do
       |> Map.drop(["_csrf_token"])
       |> Map.put("topic", socket.assigns.selected_topic)
 
-    Archive.submit(%{
+    Archive.unload(%{
       "resource_type" => socket.assigns.selected_resource_type,
       "data" => data
     })

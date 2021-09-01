@@ -4,6 +4,7 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
   alias MetapedeWeb.LiveComponents.Resources.TimePeriodComponent
   alias MetapedeWeb.LiveComponents.Resources.EventComponent
   alias MetapedeWeb.LiveComponents.Resources.TopicComponent
+  alias MetapedeWeb.LiveComponents.Resources.CollectionComponent
 
   def mount(socket) do
     {:ok, socket |> assign(menu_is_open: false)}
@@ -40,6 +41,7 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
       <div class="resource_wrap">
         <%= live_component @component,
           resource: @archive["data"],
+          current_page: @return_to,
           id: @archive["data"]["_id"] %>
       </div>
       <% end %>
@@ -71,16 +73,18 @@ defmodule MetapedeWeb.LiveComponents.ArchiveComponent do
 
   def handle_event("delete_archive", _, socket) do
     Archive.delete(socket.assigns.archive["_id"])
-    {:noreply, socket
-    |> push_patch(to: socket.assigns.return_to)
-    |> put_flash(:error, "Archive deleted")
-  }
+
+    {:noreply,
+     socket
+     |> push_patch(to: socket.assigns.return_to)
+     |> put_flash(:error, "Archive deleted")}
   end
 
   defp get_resource_component(archive) do
     component_types = %{
       "time_period" => TimePeriodComponent,
-      "event" => EventComponent
+      "event" => EventComponent,
+      "collection" => CollectionComponent
     }
 
     component_types[archive["resource_type"]]
