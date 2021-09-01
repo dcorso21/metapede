@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { ModalComponent } from "./ModalComponent/ModalComponent";
 
-function ReactTest() {
-    return <div>Hello There</div>;
-}
-
-function mounted(this:any) {
+function mounted(this: any) {
     ReactDOM.render(
         <React.StrictMode>
-            <ReactTest />
+            <ModalComponent msg="Hey there" />
         </React.StrictMode>,
         this.el
     );
@@ -21,4 +18,6 @@ const reactTestHook = {
     update,
 };
 
-export default reactTestHook
+export default reactTestHook;
+
+
